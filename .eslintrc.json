@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "extends": ["plugin:react/recommended", "plugin:prettier/recommended"],
   "parserOptions": {
     "ecmaVersion": 6,
@@ -12,7 +12,30 @@
   "rules": {
     "semi": 2,
     "@typescript-eslint/explicit-function-return-type": "off",
-    "prettier/prettier": "off"
+    "spaced-comment": ["error", "always", { "markers": ["/"] }], // ? 주석에 이후 1 공백 (markers 안에 있는 것들은 예외) (예를 들어 '//' 이후 '/' 를 쓸 때 1 공백 있어야 하는 룰에 예외처리)
+    "object-curly-spacing": ["error", "always", { "objectsInObjects": true }], // ? 중괄호 내부에 일정한 간격을 적용, 중괄호 내부에 공백이 필요합니다(제외 {}).
+    "one-var": ["error", "never"], // ? var a = 5, b = 4 금지
+    "no-mixed-spaces-and-tabs": ["error", "smart-tabs"], // 들여쓰기에 공백과 탭을 동시에 사용X
+    "func-style": ["error", "expression"], // ? var foo = function() {} 스타일만 허용
+    "comma-dangle": ["warn", "always-multiline"], // 후행 쉼표 주의, 마지막 요소 또는 속성이있을 때 후행 쉼표 필요
+    "import/prefer-default-export": "off", // ? import { merge, find } from 'module'; 만 허용...  import { merge } from 'module', import { find } from 'module 허용 X
+    "react/jsx-uses-react": "off", // ? import React from 'react' 강제하던 것 예외처리
+    "react/react-in-jsx-scope": "off", // ? import React from 'react' 강제하던 것 예외처리
+    "arrow-body-style": "off", // ? let foo = () => 0; 허용 (error이면 let foo = () => { return 0; } 해야됨)
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "moment",
+            "message": "Recommended to use Dayjs instead"
+          }
+        ]
+      }
+    ],
+    "no-console": "warn", // ? console.log 경고
+    "consistent-return": "off", // ? 굳이 꼭 무언가를 리턴할 필요가 없게끔 설정
+    "react-hooks/exhaustive-deps": "warn" // ? hook 안의 관련 dependency 전부 추가하게끔 하는 설정 off (warn으로 하고 useEffect 확인)
   },
   "settings": {
     "react": {
