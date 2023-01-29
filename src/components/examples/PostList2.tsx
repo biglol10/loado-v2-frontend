@@ -19,7 +19,7 @@ const PostList2 = () => {
 
   const postsQuery = useQuery({
     queryKey: ['posts'],
-    queryFn: () => wait(1000).then(() => [...POSTS]),
+    queryFn: () => wait(1000).then(() => [...JSON.parse(localStorage.getItem('POSTS')!)]),
     // queryFn: () => Promise.reject('Error Message'),
   });
 

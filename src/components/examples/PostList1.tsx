@@ -1,11 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 // import { getPosts } from './api/posts';
 
-const POSTS = [
-  { id: '1_1', title: 'Post 1_1' },
-  { id: '1_2', title: 'Post 1_2' },
-];
-
 const wait = (duration: number) => {
   return new Promise(resolve => setTimeout(resolve, duration));
 };
@@ -19,9 +14,12 @@ const PostList1 = () => {
 
   const postsQuery = useQuery({
     queryKey: ['posts'],
-    queryFn: () => wait(1000).then(() => [...POSTS]),
+    queryFn: () => wait(1000).then(() => [...JSON.parse(localStorage.getItem('POSTS')!)]),
+    refetchInterval: 100000, // 데이터를 1초마다 가져오기
     // queryFn: () => Promise.reject('Error Message'),
   });
+
+  // postsQuery.fetchStatus === ''
 
   if (postsQuery.status === 'loading') return <h1>Loading...</h1>;
   if (postsQuery.status === 'error') {
