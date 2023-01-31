@@ -11,8 +11,8 @@ const POSTS = [
 ];
 
 const getPost = (id: string) => {
-  return new Promise(rs => {
-    rs(POSTS.filter(el => el.id === id));
+  return new Promise((rs) => {
+    rs(POSTS.filter((el) => el.id === id));
   });
 };
 

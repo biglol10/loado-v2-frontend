@@ -12,7 +12,7 @@ const POSTS = [
 // /posts/2/comments -> ["posts", 1, "comments"]
 
 const wait = (duration: number) => {
-  return new Promise(resolve => setTimeout(resolve, duration));
+  return new Promise((resolve) => setTimeout(resolve, duration));
 };
 
 // queryKey => unique key that you will uniquely identify this query

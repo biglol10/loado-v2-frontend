@@ -7,7 +7,7 @@ const POSTS = [
 ];
 
 const wait = (duration: number) => {
-  return new Promise(resolve => setTimeout(resolve, duration));
+  return new Promise((resolve) => setTimeout(resolve, duration));
 };
 
 const PostList2 = () => {
@@ -32,7 +32,7 @@ const PostList2 = () => {
     <div>
       <h1>Posts List 2</h1>
       <ol>
-        {postsQuery.data.map(post => (
+        {postsQuery.data.map((post) => (
           <li key={post.id}>{post.title}</li>
         ))}
       </ol>

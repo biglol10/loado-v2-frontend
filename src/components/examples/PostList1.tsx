@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 // import { getPosts } from './api/posts';
 
 const wait = (duration: number) => {
-  return new Promise(resolve => setTimeout(resolve, duration));
+  return new Promise((resolve) => setTimeout(resolve, duration));
 };
 
 const PostList1 = () => {
@@ -30,7 +30,7 @@ const PostList1 = () => {
     <div>
       <h1>Posts List 1</h1>
       <ol>
-        {postsQuery.data.map(post => (
+        {postsQuery.data.map((post) => (
           <li key={post.id}>{post.title}</li>
         ))}
       </ol>

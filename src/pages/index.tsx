@@ -17,6 +17,10 @@ const routeElementMatch = Object.freeze([
     path: '/useQueryExample',
     elementPath: './pages/examplePages/useQueryBasics',
   },
+  {
+    path: '/inputExample',
+    elementPath: './pages/examplePages/InputExample',
+  },
 ]);
 
 export default routeElementMatch;
