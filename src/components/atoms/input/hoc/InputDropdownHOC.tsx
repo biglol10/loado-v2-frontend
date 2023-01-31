@@ -3,7 +3,7 @@ import React, { useState, useCallback, SyntheticEvent } from 'react';
 
 interface ICommInput {
   value?: string;
-  onChange: Function;
+  onChange?: Function;
 }
 
 const InputDropdownHOC = <P extends object>(OriginalComponent: React.ComponentType<P>) => {
