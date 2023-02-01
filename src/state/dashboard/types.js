@@ -1,0 +1,1 @@
+export const SET_DEPARTMENT = 'SET_DEPARTMENT';
