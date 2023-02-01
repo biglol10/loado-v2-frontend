@@ -9,5 +9,5 @@
   "bracketSpacing": true,
   "jsxBracketSameLint": false,
   "arrowParens": "always",
-  "endOfLine": "lf"
+  "endOfLine": "auto"
 }
