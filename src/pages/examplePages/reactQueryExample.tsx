@@ -1,57 +1,42 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
-const POSTS = [
-  { id: '1', title: 'Post 1_1' },
-  { id: '2', title: 'Post 1_2' },
-];
+import { useQueryClient } from '@tanstack/react-query';
+import Post from '@components/examples/Post';
+import CreatePost from '@components/examples/CreatePost';
 
-// ! Styles can vary
-// /posts -> ["posts"]
-// /posts/1 -> ["posts", 1]
-// /posts?authorId=1 -> ["posts", { authorId: 1 }]
-// /posts/2/comments -> ["posts", 1, "comments"]
+import PostsList1 from '../../components/examples/PostList1';
+import PostsList2 from '../../components/examples/PostList2';
+import PostListPaginated from '../../components/examples/PostListPaginated';
+import { getPost } from '../../components/examples/api/posts';
 
-const wait = (duration: number) => {
-  return new Promise((resolve) => setTimeout(resolve, duration));
-};
-
-// queryKey => unique key that you will uniquely identify this query
-// queryFn => always receives a promise
-const useQueryExample = () => {
+const UseQueryBasics = () => {
+  const [currentPage, setCurrentPage] = useState(<PostsList1 />);
   const queryClient = useQueryClient();
 
-  console.log(POSTS); // react-query의 caching이랑 작동방법 때문에 console에서는 바로 보여지지만 화면에선 좀 느리게 표시
-  const postsQuery = useQuery({
-    queryKey: ['posts'],
-    queryFn: () => wait(1000).then(() => [...POSTS]),
-    // queryFn: () => Promise.reject('Error Message'),
-  });
-
-  const newPostMutation = useMutation({
-    mutationFn: (title: string) =>
-      wait(1000).then(() => POSTS.push({ id: crypto.randomUUID(), title })),
-    onSuccess: () => {
-      // whenever we have a successful mutation you would invalidate your posts
-      queryClient.invalidateQueries(['posts']);
-    },
-  });
-
-  if (postsQuery.isLoading) return <h1>Loading...</h1>;
-  if (postsQuery.isError) return <pre>{JSON.stringify(postsQuery.error)}</pre>;
+  // preFetch data
+  const onHoverPostOneLink = () => {
+    queryClient.prefetchQuery({
+      queryKey: ['posts', 1],
+      queryFn: () => getPost(1),
+    });
+  };
 
   return (
-    <>
-      {postsQuery.data.map((el, idx) => {
-        return <div key={`asdf_${idx}`}>{el.title}</div>;
-      })}
-      <button
-        disabled={newPostMutation.isLoading}
-        onClick={() => newPostMutation.mutate('New Post')}
-      >
-        Add New
+    <div>
+      <button onClick={() => setCurrentPage(<PostsList1 />)}>Posts List 1</button>
+      <button onClick={() => setCurrentPage(<PostsList2 />)}>Posts List 2</button>
+      <button onMouseEnter={onHoverPostOneLink} onClick={() => setCurrentPage(<Post id={'1'} />)}>
+        First Post
       </button>
-    </>
+      <button onClick={() => setCurrentPage(<CreatePost setCurrentPage={setCurrentPage} />)}>
+        New Post
+      </button>
+      <button onClick={() => setCurrentPage(<PostListPaginated />)}>Post List Paginated</button>
+      {/* <button onClick={() => setCurrentPage(<PostListInfinite />)}>Post List Infinite</button> */}
+      <br />
+      {currentPage}
+    </div>
   );
 };
 
-export default useQueryExample;
+export default UseQueryBasics;

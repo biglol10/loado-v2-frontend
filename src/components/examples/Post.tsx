@@ -1,37 +1,19 @@
 /* eslint-disable no-nested-ternary */
 import { useQuery } from '@tanstack/react-query';
-
-const getPost = (id: string) => {
-  return new Promise((rs) => {
-    const POSTS = JSON.parse(localStorage.getItem('POSTS')!);
-
-    const arr = POSTS.filter((el: any) => el.id === id);
-
-    rs(arr);
-  });
-};
-
-const getUser = (id: string) => {
-  return new Promise((rs) => {
-    const USERS = JSON.parse(localStorage.getItem('USERS')!);
-
-    const arr = USERS.filter((el: any) => el.id === id);
-
-    rs(arr);
-  });
-};
+import { getPost } from './api/posts';
+import { getUser } from './api/users';
 
 const Post = ({ id }: { id: string }) => {
-  const postQuery: any = useQuery({
+  const postQuery = useQuery({
     queryKey: ['posts', id],
-    queryFn: () => getPost(id).then((res: any) => res[0]),
+    queryFn: () => getPost(id),
   });
 
   // we want this to run after we have postQuery data (use enabled)
-  const userQuery: any = useQuery({
+  const userQuery = useQuery({
     queryKey: ['users', postQuery?.data?.userId],
     enabled: postQuery?.data?.userId != null,
-    queryFn: () => getUser(postQuery.data.userId).then((res: any) => res[0]),
+    queryFn: () => getUser(postQuery.data.userId),
   });
 
   if (postQuery.status === 'loading') return <h1>Loading...</h1>;
@@ -43,10 +25,6 @@ const Post = ({ id }: { id: string }) => {
     <>
       <h1>
         {postQuery.data.title} <br />
-        <span>{JSON.stringify(userQuery.data)}</span>
-        <br />
-        <span>{JSON.stringify(postQuery.data)}</span>
-        <br />
         <small>
           {userQuery.isLoading
             ? 'Loading User...'

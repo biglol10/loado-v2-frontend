@@ -10,12 +10,12 @@ const routeElementMatch = Object.freeze([
     elementPath: './pages/Home',
   },
   {
-    path: '/reactQueryExample',
-    elementPath: './pages/examplePages/reactQueryExample',
+    path: '/reactQueryExampleTest',
+    elementPath: './pages/examplePages/reactQueryExampleTest',
   },
   {
-    path: '/useQueryExample',
-    elementPath: './pages/examplePages/useQueryBasics',
+    path: '/reactQueryExample',
+    elementPath: './pages/examplePages/reactQueryExample',
   },
   {
     path: '/inputExample',
