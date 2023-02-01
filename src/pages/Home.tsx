@@ -1,6 +1,18 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputDefault from '@components/atoms/input/InputDefault';
+import styled from 'styled-components';
+
+const StyledButton = styled.button`
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid lightgray;
+  color: gray;
+  background: white;
+  margin: 10px;
+`;
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,7 +27,7 @@ const Home = () => {
         <li onClick={() => navigate('/reactQueryExample')}>reactQuery Example Page</li>
         <li onClick={() => navigate('/inputExample')}>Input Example Page</li>
       </ul>
-      <button
+      <StyledButton
         onClick={() => {
           console.log('ref is ');
           console.log(aa);
@@ -25,7 +37,7 @@ const Home = () => {
         }}
       >
         asdfdsa
-      </button>
+      </StyledButton>
       <InputDefault
         key="key"
         id="title"
