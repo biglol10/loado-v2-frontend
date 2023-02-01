@@ -25,7 +25,7 @@ export interface IInputDropdown {
   id?: string;
   className?: string;
   placeholder?: string;
-  value?: string | string[];
+  value?: any;
   options?: object[];
   onChange?: Function;
   loading?: boolean;

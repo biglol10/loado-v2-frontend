@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { useState, useCallback, SyntheticEvent } from 'react';
+import React, { useState, useCallback, SyntheticEvent, forwardRef } from 'react';
 
 interface ICommInput {
   value?: string;
@@ -7,7 +7,7 @@ interface ICommInput {
 }
 
 const InputDropdownHOC = <P extends object>(OriginalComponent: React.ComponentType<P>) => {
-  return (props: P & ICommInput) => {
+  return forwardRef((props: P & ICommInput, ref) => {
     const [dropdownValue, setDropdownValue] = useState<string | string[]>(props.value || '');
 
     const { onChange } = props;
@@ -24,7 +24,7 @@ const InputDropdownHOC = <P extends object>(OriginalComponent: React.ComponentTy
     );
 
     return <OriginalComponent {...props} value={dropdownValue} onChange={onChangeFn} />;
-  };
+  });
 };
 
 InputDropdownHOC.displayName = 'InputDropdownHOC';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Header, Input } from 'semantic-ui-react';
+import { Header, Input, Dropdown } from 'semantic-ui-react';
 import { IInputLayout } from './InputTypes';
 
 const StyledInputLayout = styled.div<IInputLayout>`
@@ -17,4 +17,8 @@ const StyledBaseInput = styled(Input)`
   width: ${(props: any) => (props.stretch === 'true' ? '100%' : 'auto')};
 `;
 
-export { StyledInputLayout, StyledInputLabelHeader, StyledBaseInput };
+const StyledBaseDropdown = styled(Dropdown)`
+  width: ${(props: any) => (props.stretch === 'true' ? '100%' : 'auto')};
+`;
+
+export { StyledInputLayout, StyledInputLabelHeader, StyledBaseInput, StyledBaseDropdown };

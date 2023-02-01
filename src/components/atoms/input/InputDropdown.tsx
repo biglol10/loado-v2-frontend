@@ -10,7 +10,7 @@ import { forwardRef, Component, useRef, useImperativeHandle } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import { IInputDropdown } from './InputTypes';
 import InputDropdownHOC from './hoc/InputDropdownHOC';
-import { StyledBaseInput } from './InputStyleCollection';
+import { StyledBaseDropdown } from './InputStyleCollection';
 
 const InputDropdown = forwardRef<
   { inputElement: Component<DropdownProps, any, any> },
@@ -42,10 +42,10 @@ const InputDropdown = forwardRef<
     }));
 
     return (
-      <StyledBaseInput
+      <StyledBaseDropdown
         id={id}
         className={className}
-        ref={inputRef}
+        // ref={inputRef}
         placeholder={placeholder}
         value={value}
         options={options}
