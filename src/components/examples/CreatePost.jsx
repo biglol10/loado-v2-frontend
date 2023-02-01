@@ -3,13 +3,13 @@ import { useRef } from 'react';
 import Post from './Post';
 
 const createPostFunction = ({ title, id }) => {
-  return new Promise(rs => {
+  return new Promise((rs) => {
     const POSTS = JSON.parse(localStorage.getItem('POSTS'));
 
     POSTS.push({ id, title, userId: 'biglol@nate.com' });
     localStorage.setItem('POSTS', JSON.stringify(POSTS));
     rs(POSTS);
-  }).then(res => res);
+  }).then((res) => res);
 };
 
 // export function createPost({ title, body }) {
@@ -30,7 +30,7 @@ const CreatePost = ({ setCurrentPage }) => {
   const queryClient = useQueryClient(); // create 후 백그라운드에서 새로운 데이터를 확인하고 list로 표시해주는데 이게 바로 list표시+반영하는게 아니라 즉각반영을 위해 사전작업
 
   const createPostMutation = useMutation({
-    mutationFn: variables => createPostFunction(variables),
+    mutationFn: (variables) => createPostFunction(variables),
     onSuccess: (data, variables, context) => {
       console.log('onSuccess in mutation');
       console.log(data, variables, context);
@@ -46,14 +46,14 @@ const CreatePost = ({ setCurrentPage }) => {
       console.log('onSettled in mutation');
       console.log(data, error, variables, context);
     },
-    onMutate: variables => {
+    onMutate: (variables) => {
       // context
       return { hi: 'Bye' };
     },
     // retry: 3  // ? 에러 발생 시 재시도 횟수
   });
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     createPostMutation.mutate({

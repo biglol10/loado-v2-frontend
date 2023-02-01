@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 const getPost = (id: string) => {
-  return new Promise(rs => {
+  return new Promise((rs) => {
     const POSTS = JSON.parse(localStorage.getItem('POSTS')!);
 
     const arr = POSTS.filter((el: any) => el.id === id);
@@ -12,7 +12,7 @@ const getPost = (id: string) => {
 };
 
 const getUser = (id: string) => {
-  return new Promise(rs => {
+  return new Promise((rs) => {
     const USERS = JSON.parse(localStorage.getItem('USERS')!);
 
     const arr = USERS.filter((el: any) => el.id === id);
