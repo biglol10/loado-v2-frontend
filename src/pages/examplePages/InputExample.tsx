@@ -6,7 +6,7 @@ import {
   InputSearch,
   InputWithIcon,
   Box,
-} from '@components/atoms';
+} from '@components/index';
 import { Divider, Icon } from 'semantic-ui-react';
 
 const options = [
@@ -148,7 +148,7 @@ const InputExample = () => {
         boxType="primary"
         textAlign="center"
         className=""
-        onClick={() => null}
+        onClick={() => alert('ASDF')}
       >
         <div>This is the Content for Box</div>
       </Box>
