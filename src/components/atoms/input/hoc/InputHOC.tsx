@@ -13,11 +13,13 @@ const InputHoc = <P extends object>(OriginalComponent: React.ComponentType<P>) =
     const { onChange } = props;
 
     const onChangeFn = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value);
+      (e: ChangeEvent<HTMLInputElement>, data: any = null) => {
+        const isDropdown = OriginalComponent.displayName === 'InputDropdown';
+
+        setInputValue(!isDropdown ? e.target.value : data.value);
         onChange &&
           onChange({
-            value: e.target.value,
+            value: !isDropdown ? e.target.value : data.value,
           });
       },
       [onChange],

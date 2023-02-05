@@ -9,7 +9,8 @@
 import { forwardRef, Component, useRef, useImperativeHandle } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
 import { IInputDropdown } from './InputTypes';
-import InputDropdownHOC from './hoc/InputDropdownHOC';
+// import InputDropdownHOC from './hoc/InputDropdownHOC';
+import InputHoc from './hoc/InputHOC';
 import { StyledBaseDropdown } from './InputStyleCollection';
 
 const InputDropdown = forwardRef<
@@ -66,4 +67,4 @@ const InputDropdown = forwardRef<
 
 InputDropdown.displayName = 'InputDropdown';
 
-export default InputDropdownHOC(InputDropdown);
+export default InputHoc(InputDropdown);

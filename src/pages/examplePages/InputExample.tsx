@@ -42,8 +42,9 @@ const InputExample = () => {
   const inputRef2 = useRef();
 
   // InputDropdown
+  const initialDropdownValue = 'angular';
   const [inputError3, setInputError3] = useState(false);
-  const [inputValue3, setInputValue3] = useState<string | string[]>(['angular']);
+  const [inputValue3, setInputValue3] = useState<string | string[]>(['angular']); // if multiple false -> string, else string[]
   const [inputLoading3, setInputLoading3] = useState(false);
   const inputRef3 = useRef();
 
@@ -135,7 +136,7 @@ const InputExample = () => {
             setInputValue3(obj.value);
           }}
           keyboardInput={false}
-          multiple={false}
+          multiple={true}
           loading={false}
         />
       </InputLayout>
