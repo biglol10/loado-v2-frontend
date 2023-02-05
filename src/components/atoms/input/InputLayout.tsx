@@ -13,7 +13,7 @@ import { Label, Header } from 'semantic-ui-react';
 // import classNames from 'classnames/bind';
 import styled from 'styled-components';
 
-import { IInputLayout } from './InputTypes';
+import { IInputLayout } from './Types';
 
 const StyledInputLayout = styled.div<IInputLayout>`
   margin-top: ${(props) => `${props.spacing || 0}px`};

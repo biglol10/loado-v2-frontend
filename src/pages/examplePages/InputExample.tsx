@@ -5,7 +5,8 @@ import {
   InputDropdown,
   InputSearch,
   InputWithIcon,
-} from '@components/atoms/input';
+  Box,
+} from '@components/atoms';
 import { Divider, Icon } from 'semantic-ui-react';
 
 const options = [
@@ -141,6 +142,16 @@ const InputExample = () => {
         />
       </InputLayout>
       <Divider />
+      <Box
+        id="sampleBoxId"
+        spacing={32}
+        boxType="primary"
+        textAlign="center"
+        className=""
+        onClick={() => null}
+      >
+        <div>This is the Content for Box</div>
+      </Box>
     </div>
   );
 };

@@ -9,8 +9,8 @@
 
 import React, { ChangeEvent, forwardRef } from 'react';
 import { Icon } from 'semantic-ui-react';
-import { IInputWithIcon } from './InputTypes';
-import { StyledBaseInput } from './InputStyleCollection';
+import { IInputWithIcon } from './Types';
+import { StyledBaseInput } from './Styled';
 import InputHoc from './hoc/InputHOC';
 
 const InputWithIcon = forwardRef<HTMLInputElement, IInputWithIcon>(

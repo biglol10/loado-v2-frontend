@@ -9,9 +9,9 @@
 
 import { forwardRef } from 'react';
 import { Input, Icon } from 'semantic-ui-react';
-import { IInputSearch } from './InputTypes';
+import { IInputSearch } from './Types';
 import InputHoc from './hoc/InputHOC';
-import { StyledBaseInput } from './InputStyleCollection';
+import { StyledBaseInput } from './Styled';
 
 const InputSearch = forwardRef<Input, IInputSearch>(
   (

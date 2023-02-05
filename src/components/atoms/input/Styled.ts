@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Header, Input, Dropdown } from 'semantic-ui-react';
-import { IInputLayout } from './InputTypes';
+import { IInputLayout } from './Types';
 
 const StyledInputLayout = styled.div<IInputLayout>`
   margin-top: ${(props) => props.spacing};
