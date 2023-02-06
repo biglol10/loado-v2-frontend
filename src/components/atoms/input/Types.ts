@@ -18,6 +18,7 @@ export interface IInputDefault {
   stretch?: boolean;
   error?: boolean;
   onEnter?: Function;
+  clearInputValue?: Function;
 }
 
 // ? Types in InputDropdown component

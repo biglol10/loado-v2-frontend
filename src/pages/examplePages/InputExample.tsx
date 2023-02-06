@@ -7,7 +7,7 @@ import {
   InputWithIcon,
   Box,
 } from '@components/index';
-import { Divider, Icon } from 'semantic-ui-react';
+import { Divider, Icon, Input } from 'semantic-ui-react';
 
 const options = [
   { key: 'angular', text: 'Angular', value: 'angular' },
@@ -34,20 +34,20 @@ const InputExample = () => {
   // InputDefault
   const [inputError1, setInputError1] = useState(false);
   const [inputValue1, setInputValue1] = useState('');
-  const inputRef1 = useRef();
+  const inputRef1 = useRef<{ inputElement: Input | undefined; clear: () => void }>();
 
   // InputWithIcon
   const [inputError2, setInputError2] = useState(false);
   const [inputValue2, setInputValue2] = useState('');
   const [inputLoading2, setInputLoading2] = useState(false);
-  const inputRef2 = useRef();
+  const inputRef2 = useRef<any>();
 
   // InputDropdown
   const initialDropdownValue = 'angular';
   const [inputError3, setInputError3] = useState(false);
   const [inputValue3, setInputValue3] = useState<string | string[]>(['angular']); // if multiple false -> string, else string[]
   const [inputLoading3, setInputLoading3] = useState(false);
-  const inputRef3 = useRef();
+  const inputRef3 = useRef<any>();
 
   // InputWithIcon
   const [inputError4, setInputError4] = useState(false);
@@ -82,6 +82,14 @@ const InputExample = () => {
           value={inputValue1}
         />
       </InputLayout>
+      <button
+        onClick={() => {
+          console.log(inputRef3.current);
+          inputRef3?.current?.clear();
+        }}
+      >
+        clear input1 using ref
+      </button>
       <Divider />
       <InputLayout
         error={inputError2}

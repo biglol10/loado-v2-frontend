@@ -1,5 +1,15 @@
+// ! not used (InputHoc로 통합)
+
 /* eslint-disable react/display-name */
-import React, { useState, useCallback, SyntheticEvent, forwardRef } from 'react';
+import React, {
+  useState,
+  useCallback,
+  SyntheticEvent,
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+} from 'react';
+import { Dropdown } from 'semantic-ui-react';
 
 interface ICommInput {
   value?: string;
@@ -9,6 +19,7 @@ interface ICommInput {
 const InputDropdownHOC = <P extends object>(OriginalComponent: React.ComponentType<P>) => {
   return forwardRef((props: P & ICommInput, ref) => {
     const [dropdownValue, setDropdownValue] = useState<string | string[]>(props.value || '');
+    const dropdownRef = useRef<typeof Dropdown>();
 
     const { onChange } = props;
 
@@ -23,7 +34,16 @@ const InputDropdownHOC = <P extends object>(OriginalComponent: React.ComponentTy
       [onChange],
     );
 
-    return <OriginalComponent {...props} value={dropdownValue} onChange={onChangeFn} />;
+    useImperativeHandle(ref, () => ({
+      dropdownElement: dropdownRef.current,
+      clear: () => {
+        console.log(props);
+      },
+    }));
+
+    return (
+      <OriginalComponent {...props} ref={dropdownRef} value={dropdownValue} onChange={onChangeFn} />
+    );
   });
 };
 

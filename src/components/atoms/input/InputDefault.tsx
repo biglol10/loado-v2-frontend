@@ -6,7 +6,7 @@
  * 1      변지욱     2023-01-31   feature/JW/input            최초작성
  ********************************************************************************************/
 
-import { forwardRef, useRef, useImperativeHandle } from 'react';
+import { forwardRef } from 'react';
 import { Input } from 'semantic-ui-react';
 import { IInputDefault } from './Types';
 import { StyledBaseInput } from './Styled';
@@ -32,13 +32,6 @@ const InputDefault = forwardRef<{ inputElement: Input | undefined }, IInputDefau
     },
     ref,
   ) => {
-    const inputRef = useRef<Input>();
-
-    // 필요에 따라 추가
-    useImperativeHandle(ref, () => ({
-      inputElement: inputRef.current,
-    }));
-
     // ! Styled에 props로 넘길 것은 string으로 하는게 에러가 발생 안 하는듯? stretch={boolean값} 했을 때 Warning: Received `true` for a non-boolean attribute `stretch`. 발생
     return (
       <StyledBaseInput
@@ -46,7 +39,7 @@ const InputDefault = forwardRef<{ inputElement: Input | undefined }, IInputDefau
         className={className}
         loading={loading}
         placeholder={placeholder}
-        ref={inputRef}
+        ref={ref}
         value={value}
         onChange={onChange}
         size={size}

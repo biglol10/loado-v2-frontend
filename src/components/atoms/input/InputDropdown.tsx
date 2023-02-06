@@ -35,15 +35,16 @@ const InputDropdown = forwardRef<
     },
     ref,
   ) => {
-    const inputRef = useRef<any>();
+    // const inputRef = useRef<any>();
 
-    // 필요에 따라 추가
-    useImperativeHandle(ref, () => ({
-      inputElement: inputRef.current,
-    }));
+    // // 필요에 따라 추가
+    // useImperativeHandle(ref, () => ({
+    //   inputElement: inputRef.current,
+    // }));
 
     return (
       <StyledBaseDropdown
+        ref={ref}
         id={id}
         className={className}
         // ref={inputRef}
