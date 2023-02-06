@@ -1,8 +1,11 @@
 import React from 'react';
 import { List as SemanticList } from 'semantic-ui-react';
+import styled from 'styled-components';
 import { IList } from './Types';
-import { StyledListItem } from './Styled';
-// import Style from './List.module.scss';
+
+const StyledListItem = styled(SemanticList.Item)`
+  margin: 8px 0px;
+`;
 
 const List = ({
   id = '',
