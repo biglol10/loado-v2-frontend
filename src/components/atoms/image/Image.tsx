@@ -13,6 +13,7 @@ interface IImage {
   bordered?: boolean;
   centered?: boolean;
   floated?: 'left' | 'right' | '';
+  circular?: boolean;
 }
 
 const Image = ({
@@ -28,6 +29,20 @@ const Image = ({
   bordered = false,
   centered = false,
   floated = '',
+  circular = false,
 }: IImage) => {
-  return <SemanticImage id={id} className={className} src={src} alt={alt} />;
+  return (
+    <SemanticImage
+      id={id}
+      className={className}
+      src={src}
+      alt={alt}
+      type={type}
+      size={imageSize}
+      href={href}
+      target={target}
+    />
+  );
 };
+
+export default Image;

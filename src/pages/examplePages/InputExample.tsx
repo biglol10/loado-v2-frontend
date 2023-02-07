@@ -8,6 +8,7 @@ import {
   Box,
 } from '@components/index';
 import { Divider, Icon, Input } from 'semantic-ui-react';
+import axios from 'axios';
 
 const options = [
   { key: 'angular', text: 'Angular', value: 'angular' },
@@ -83,8 +84,13 @@ const InputExample = () => {
         />
       </InputLayout>
       <button
-        onClick={() => {
+        onClick={async () => {
           console.log(inputRef3.current);
+          const response = await axios.get(
+            'https://api.unsplash.com/photos/?client_id=nPi0KjYC9WlzsVd4nVdQ5v5OZqJnpUr6nQvj1_pj2Lg',
+          );
+
+          console.log(response);
           inputRef3?.current?.clear();
         }}
       >
