@@ -1,9 +1,10 @@
-import { Image as SemanticImage } from 'semantic-ui-react';
+import { Image as SemanticImage, SemanticFLOATS } from 'semantic-ui-react';
+import loaImages from '@consts/imgSrc';
 
 interface IImage {
   id?: string;
   className?: string;
-  src: string;
+  src?: keyof typeof loaImages | string | null;
   alt?: string;
   type: 'image' | 'a';
   imageSize: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
@@ -12,14 +13,14 @@ interface IImage {
   hidden?: boolean;
   bordered?: boolean;
   centered?: boolean;
-  floated?: 'left' | 'right' | '';
+  floated?: SemanticFLOATS | undefined;
   circular?: boolean;
 }
 
 const Image = ({
   id,
   className,
-  src,
+  src = '',
   type,
   imageSize,
   href,
@@ -28,19 +29,29 @@ const Image = ({
   hidden = false,
   bordered = false,
   centered = false,
-  floated = '',
+  floated = undefined,
   circular = false,
 }: IImage) => {
+  const imgSrc =
+    src && Object.prototype.hasOwnProperty.call(loaImages, src)
+      ? loaImages[src as keyof typeof loaImages]
+      : src;
+
   return (
     <SemanticImage
       id={id}
       className={className}
-      src={src}
+      src={imgSrc}
       alt={alt}
       type={type}
       size={imageSize}
       href={href}
       target={target}
+      hidden={hidden}
+      bordered={bordered}
+      centered={!floated && centered}
+      floated={floated}
+      circular={circular}
     />
   );
 };

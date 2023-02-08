@@ -11,6 +11,7 @@ import React from 'react';
 import { Image as SemanticUIImage } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { Label } from '@components/index';
+import loaImages from '@consts/imgSrc';
 import { IAvatar } from './Types';
 
 const StyledAvatar = styled.div<{ spacing: number }>`
@@ -31,13 +32,15 @@ const Avatar = ({
   imageSize = 'mini',
   labelSize = 'big',
 }: IAvatar) => {
-  const imageSrc: string =
-    src || `${process.env.NODE_ENV === 'production' ? '/dtech' : ''}/images/no_profile.png`;
+  const imgSrc =
+    src && Object.prototype.hasOwnProperty.call(loaImages, src)
+      ? loaImages[src as keyof typeof loaImages]
+      : src;
 
   return (
     <>
       <StyledAvatar id={id} className={''} spacing={spacing}>
-        <SemanticUIImage src={imageSrc} avatar={avatar} size={imageSize} />
+        <SemanticUIImage src={imgSrc} avatar={avatar} size={imageSize} />
         {content && <Label content={content} color={fontColor} size={labelSize} paddingNone />}
       </StyledAvatar>
     </>

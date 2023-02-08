@@ -9,6 +9,7 @@ import {
 } from '@components/index';
 import { Divider, Icon, Input } from 'semantic-ui-react';
 import axios from 'axios';
+import loaImages from '@consts/imgSrc';
 
 const options = [
   { key: 'angular', text: 'Angular', value: 'angular' },
@@ -166,6 +167,8 @@ const InputExample = () => {
       >
         <div>This is the Content for Box</div>
       </Box>
+      <Divider />
+      <img src={loaImages['10레벨멸화']} />
     </div>
   );
 };
