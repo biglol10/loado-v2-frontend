@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputDefault from '@components/atoms/input/InputDefault';
 import styled from 'styled-components';
+import MainLayout from './layout/MainLayout';
 
 const StyledButton = styled.button`
   padding: 6px 12px;
@@ -52,5 +53,7 @@ const Home = () => {
     </div>
   );
 };
+
+Home.Layout = MainLayout;
 
 export default Home;

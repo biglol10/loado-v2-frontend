@@ -1,5 +1,5 @@
 import { JSXElementConstructor as JSX } from 'react';
-import loaImages from '@consts/imgSrc';
+import { loaImages } from '@consts/imgSrc';
 
 export interface IAvatar {
   id?: string;

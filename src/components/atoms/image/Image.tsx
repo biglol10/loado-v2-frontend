@@ -1,5 +1,5 @@
 import { Image as SemanticImage, SemanticFLOATS } from 'semantic-ui-react';
-import loaImages from '@consts/imgSrc';
+import { loaImages } from '@consts/imgSrc';
 
 interface IImage {
   id?: string;

@@ -2,14 +2,14 @@ const itemBaseFolder = './assets/images/items';
 const commBaseFolder = './assets/images/common';
 
 const imgSrc = Object.freeze({
-  '10레벨멸화': `${itemBaseFolder}/10LevelDamage.webp`,
-  '10레벨홍염': `${itemBaseFolder}/10LevelCoolDown.webp`,
-  '9레벨멸화': `${itemBaseFolder}/9LevelDamage.webp`,
-  '9레벨홍염': `${itemBaseFolder}/9LevelCoolDown.webp`,
-  '8레벨멸화': `${itemBaseFolder}/8LevelDamage.webp`,
-  '8레벨홍염': `${itemBaseFolder}/8LevelCoolDown.webp`,
-  '7레벨멸화': `${itemBaseFolder}/7LevelDamage.webp`,
-  '7레벨홍염': `${itemBaseFolder}/7LevelCoolDown.webp`,
+  멸화10: `${itemBaseFolder}/10LevelDamage.webp`,
+  홍염10: `${itemBaseFolder}/10LevelCoolDown.webp`,
+  멸화9: `${itemBaseFolder}/9LevelDamage.webp`,
+  홍염9: `${itemBaseFolder}/9LevelCoolDown.webp`,
+  멸화8: `${itemBaseFolder}/8LevelDamage.webp`,
+  홍염8: `${itemBaseFolder}/8LevelCoolDown.webp`,
+  멸화7: `${itemBaseFolder}/7LevelDamage.webp`,
+  홍염7: `${itemBaseFolder}/7LevelCoolDown.webp`,
   경명돌: `${itemBaseFolder}/경명돌.webp`,
   명돌: `${itemBaseFolder}/명돌.webp`,
   명예의파편: `${itemBaseFolder}/명예의파편.webp`,
@@ -48,6 +48,7 @@ const imgSrc = Object.freeze({
 
 const commImg = Object.freeze({
   graphIcon: `${commBaseFolder}/graphIcon.png`,
+  loadoIcon: `${commBaseFolder}/loado_logo.png`,
 });
 
 const loaImages = {
@@ -55,4 +56,6 @@ const loaImages = {
   ...commImg,
 };
 
-export default loaImages;
+const loaImageNames = Object.keys(loaImages) as unknown as keyof typeof loaImages;
+
+export { loaImageNames, loaImages };
