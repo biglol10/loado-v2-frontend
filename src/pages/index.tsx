@@ -16,17 +16,17 @@ const routeElementMatch = Object.freeze([
   {
     path: '/reactQueryExampleTest',
     elementPath: './pages/examplePages/reactQueryExampleTest',
-    layout: null,
+    layout: MainLayout,
   },
   {
     path: '/reactQueryExample',
     elementPath: './pages/examplePages/reactQueryExample',
-    layout: null,
+    layout: MainLayout,
   },
   {
     path: '/inputExample',
     elementPath: './pages/examplePages/InputExample',
-    layout: null,
+    layout: MainLayout,
   },
 ]);
 

@@ -33,6 +33,10 @@ const options = [
 ];
 
 const InputExample = () => {
+  console.log(`process.env value is ${process.env}`);
+  console.log(process.env);
+  // console.log(`process.env value is ${process.env.isDevelopment}`);
+
   // InputDefault
   const [inputError1, setInputError1] = useState(false);
   const [inputValue1, setInputValue1] = useState('');
