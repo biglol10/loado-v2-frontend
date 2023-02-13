@@ -10,6 +10,9 @@ import {
 import { Divider, Icon, Input } from 'semantic-ui-react';
 import axios from 'axios';
 import { loaImages } from '@consts/imgSrc';
+import { RootState } from 'src/state/store';
+import { increment, decrement } from '@state/counterSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const options = [
   { key: 'angular', text: 'Angular', value: 'angular' },
@@ -60,6 +63,9 @@ const InputExample = () => {
   const [inputValue4, setInputValue4] = useState('');
   const [inputLoading4, setInputLoading4] = useState(false);
   const inputRef4 = useRef();
+
+  const counter = useSelector((state: RootState) => state.counter);
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -173,6 +179,11 @@ const InputExample = () => {
       </Box>
       <Divider />
       <img src={loaImages['멸화10']} />
+      <div>
+        <h1>Counter: {counter}</h1>
+        <button onClick={() => dispatch(increment(1))}>Increment</button>
+        <button onClick={() => dispatch(decrement(1))}>Decrement</button>
+      </div>
     </div>
   );
 };

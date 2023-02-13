@@ -3,6 +3,7 @@ const _ = require('lodash');
 const webpack = require('webpack');
 
 const isEnvDevelopment = process.env.REACT_APP_MODE === 'development';
+const isEnvProduction = process.env.REACT_APP_MODE === 'production';
 
 const getConfigDevelopment = (webpackConfig) => {
   const external = {
@@ -13,31 +14,47 @@ const getConfigDevelopment = (webpackConfig) => {
   webpackConfig.externals = _.merge(webpackConfig.externals, external);
   const optimization = {
     chunkIds: false,
-
     moduleIds: false,
-
     concatenateModules: true,
-
     flagIncludedChunks: true,
-
     mergeDuplicateChunks: true,
-
-    nodeEnv: false, // string | boolean
-
+    nodeEnv: false,
     portableRecords: false,
-
     providedExports: true,
-
     usedExports: true,
-
     removeAvailableModules: false,
-
     removeEmptyChunks: true,
-
-    runtimeChunk: 'single', // object | string | boolean
-
+    runtimeChunk: 'single',
     sideEffects: true,
+    minimize: true,
+  };
 
+  webpackConfig.optimization = _.merge(webpackConfig.optimization, optimization);
+
+  return webpackConfig;
+};
+
+const getConfigProduction = (webpackConfig) => {
+  const external = {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  };
+
+  webpackConfig.externals = _.merge(webpackConfig.externals, external);
+  const optimization = {
+    chunkIds: false,
+    moduleIds: false,
+    concatenateModules: true,
+    flagIncludedChunks: true,
+    mergeDuplicateChunks: true,
+    nodeEnv: 'production',
+    portableRecords: false,
+    providedExports: true,
+    usedExports: true,
+    removeAvailableModules: false,
+    removeEmptyChunks: true,
+    runtimeChunk: 'single',
+    sideEffects: true,
     minimize: true,
   };
 
@@ -49,6 +66,8 @@ const getConfigDevelopment = (webpackConfig) => {
 const getConfig = (webpackConfig, paths) => {
   if (isEnvDevelopment) {
     return getConfigDevelopment(webpackConfig);
+  } else if (isEnvProduction) {
+    return getConfigProduction(webpackConfig);
   }
   return webpackConfig;
 };
@@ -58,11 +77,22 @@ module.exports = {
   //   plugins: [
   //     new webpack.DefinePlugin({
   //       'process.env': {
-  //         CUSTOM_ENV_VAR: JSON.stringify(API_URL), // JSON.stringify로, 다만 얘를 쓰면 기존거가 다 사라져서 그냥 세팅되어 있는거 씀
+  //         CUSTOM_ENV_VAR: JSON.stringify(API_URL), // 꼭 JSON.stringify로, 다만 얘를 쓰면 기존거가 다 사라져서 그냥 세팅되어 있는거 씀
   //       },
   //     }),
   //   ],
   // },
+  devServer: {
+    port: 8080,
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:3066/',
+        secure: false,
+        changeOrigin: true,
+      },
+    ],
+  },
   plugins: [
     {
       plugin: CracoAlias,
@@ -103,5 +133,5 @@ module.exports = {
     return getConfig(webpackConfig, paths);
   },
   target: 'web',
-  devtool: isEnvDevelopment ? 'source-map' : false, // enum, 위 링크 참조
+  devtool: isEnvDevelopment ? 'source-map' : false,
 };
