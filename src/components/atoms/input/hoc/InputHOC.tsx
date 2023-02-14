@@ -1,4 +1,5 @@
 /* eslint-disable react/display-name */
+import { debounce } from 'lodash';
 import React, {
   useState,
   useCallback,
@@ -27,10 +28,13 @@ const InputHoc = <P extends object>(OriginalComponent: React.ComponentType<P>) =
         const isDropdown = OriginalComponent.displayName === 'InputDropdown';
 
         setInputValue(!isDropdown ? e.target.value : data.value);
-        onChange &&
-          onChange({
-            value: !isDropdown ? e.target.value : data.value,
-          });
+
+        debounce(() => {
+          onChange &&
+            onChange({
+              value: !isDropdown ? e.target.value : data.value,
+            });
+        }, 50)();
       },
       [onChange],
     );

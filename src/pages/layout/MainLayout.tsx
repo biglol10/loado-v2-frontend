@@ -64,11 +64,10 @@ const MainLayout = ({ children }: LayoutChildren) => {
 
   const changeRoute = (nextRoute: string) => {
     setActivePage(nextRoute);
-    // navigate(`/${nextRoute === 'pricePage' ? 'reactQueryExample' : 'inputExample'}`);
   };
 
   useEffect(() => {
-    navigate(`/${activePage === 'pricePage' ? 'reactQueryExample' : 'inputExample'}`);
+    navigate(`/${activePage === 'pricePage' ? 'itemPrice' : 'inputExample'}`);
   }, [activePage, navigate]);
 
   return (
@@ -91,7 +90,7 @@ const MainLayout = ({ children }: LayoutChildren) => {
           </li>
         </ul>
       </Navigation>
-      {children}
+      <div className="appContent">{children}</div>
     </LayoutDiv>
   );
 };

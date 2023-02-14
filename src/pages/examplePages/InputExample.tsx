@@ -91,6 +91,7 @@ const InputExample = () => {
             setInputError1(obj.value.includes('z'));
             console.log('inputRef1 ref is');
             console.log(inputRef1.current);
+            console.log(`inputValue1 is ${obj.value}`);
           }}
           value={inputValue1}
         />
