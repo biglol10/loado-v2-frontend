@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const TopTab = styled.div`
   .tab-list {
     display: flex;
-    width: 500px;
+    width: ${localStorage.getItem('deviceType') === 'mobile' ? '100%' : '500px'};
     list-style: none;
     margin: 0;
     padding: 0;
@@ -35,6 +35,7 @@ const ItemPricePage = () => {
 
   return (
     <>
+      {/* <div>asdf</div> */}
       <TopTab>
         <ul className="tab-list">
           <li

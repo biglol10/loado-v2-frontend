@@ -36,8 +36,8 @@ const Navigation = styled.header`
     list-style-type: none;
     display: flex;
     align-items: center;
-    margin-left: 50px;
-    height: 100%;
+    margin-left: ${localStorage.getItem('deviceType') === 'mobile' ? '20px' : '50px'};
+    height: ${localStorage.getItem('deviceType') === 'mobile' ? 'auto' : '100%'};
 
     li {
       padding: 0px 20px;
@@ -62,6 +62,8 @@ const MainLayout = ({ children }: LayoutChildren) => {
   const [activePage, setActivePage] = useState('pricePage');
   const navigate = useNavigate();
 
+  const deviceType = localStorage.getItem('deviceType');
+
   const changeRoute = (nextRoute: string) => {
     setActivePage(nextRoute);
   };
@@ -73,20 +75,23 @@ const MainLayout = ({ children }: LayoutChildren) => {
   return (
     <LayoutDiv>
       <Navigation>
-        <h1>Loado V2</h1>
-        <Image src={loaImages['멸화10']} imageSize="mini" type="image" circular={true} />
+        {deviceType === 'mobile' ? <h1>Loado</h1> : <h1>Loado V2</h1>}
+        {deviceType !== 'mobile' && (
+          <Image src={loaImages['멸화10']} imageSize="mini" type="image" circular={true} />
+        )}
+
         <ul>
           <li
             className={activePage === 'pricePage' ? 'active' : ''}
             onClick={() => changeRoute('pricePage')}
           >
-            <h3>아이템 시세</h3>
+            <h3>{deviceType === 'mobile' ? '시세' : '아이템 시세'}</h3>
           </li>
           <li
             className={activePage === 'simulationPage' ? 'active' : ''}
             onClick={() => changeRoute('simulationPage')}
           >
-            <h3>제련 시뮬레이션</h3>
+            <h3>{deviceType === 'mobile' ? '시뮬' : '제련 시뮬레이션'}</h3>
           </li>
         </ul>
       </Navigation>
