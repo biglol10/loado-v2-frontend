@@ -1,6 +1,6 @@
 const CracoAlias = require('craco-alias');
 const _ = require('lodash');
-const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const isEnvDevelopment = process.env.REACT_APP_MODE === 'development';
 const isEnvProduction = process.env.REACT_APP_MODE === 'production';
@@ -27,6 +27,19 @@ const getConfigDevelopment = (webpackConfig) => {
     runtimeChunk: 'single',
     sideEffects: true,
     minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        minify: TerserPlugin.uglifyJsMinify,
+        test: /\.(ts|tsx)$/,
+        exclude: /\/excludes/,
+        parallel: true,
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+        },
+      }),
+    ],
   };
 
   webpackConfig.optimization = _.merge(webpackConfig.optimization, optimization);
@@ -56,6 +69,19 @@ const getConfigProduction = (webpackConfig) => {
     runtimeChunk: 'single',
     sideEffects: true,
     minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        minify: TerserPlugin.uglifyJsMinify,
+        test: /\.(ts|tsx)$/,
+        exclude: /\/excludes/,
+        parallel: true,
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+        },
+      }),
+    ],
   };
 
   webpackConfig.optimization = _.merge(webpackConfig.optimization, optimization);
@@ -73,15 +99,15 @@ const getConfig = (webpackConfig, paths) => {
 };
 
 module.exports = {
-  // webpack: {
-  //   plugins: [
-  //     new webpack.DefinePlugin({
-  //       'process.env': {
-  //         CUSTOM_ENV_VAR: JSON.stringify(API_URL), // 꼭 JSON.stringify로, 다만 얘를 쓰면 기존거가 다 사라져서 그냥 세팅되어 있는거 씀
-  //       },
-  //     }),
-  //   ],
-  // },
+  plugins: [
+    {
+      plugin: CracoAlias,
+      options: {
+        source: 'tsconfig',
+        tsConfigPath: 'tsconfig.paths.json',
+      },
+    },
+  ],
   devServer: {
     port: 8080,
     proxy: [
@@ -93,18 +119,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    {
-      plugin: CracoAlias,
-      options: {
-        source: 'tsconfig',
-        tsConfigPath: 'tsconfig.paths.json',
-      },
-    },
-  ],
-  entry: {
-    main: './src/index.tsx',
-  },
   module: {
     rules: [
       {
@@ -114,7 +128,6 @@ module.exports = {
           name: 'static/media/[name].[hash:8].[ext]',
         },
       },
-      // 일치하는 하나의 규칙만 사용
       {
         oneOf: [
           {

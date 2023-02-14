@@ -9,6 +9,7 @@ export interface IModalState {
   modalFitContentWidth?: boolean;
   modalShowCloseIcon?: 'Y' | 'N';
   modalContentId?: string;
+  modalContentBackground?: string;
 }
 
 export const modalUISize: {

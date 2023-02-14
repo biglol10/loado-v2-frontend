@@ -12,7 +12,7 @@ import { Label } from './atoms/label';
 import { SharpDivider } from './atoms/sharpDivider';
 import { Tabs, TabHeader, Tab, TabPanels, TabPanel } from './atoms/tab';
 import { Toggle } from './atoms/toggle';
-import { ModalPopup } from './modal';
+import ModalPopup from './modal';
 import { CheckboxDefault } from './atoms/checkbox';
 import { Avatar, Image } from './atoms/image';
 

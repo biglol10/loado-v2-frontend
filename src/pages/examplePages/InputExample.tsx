@@ -12,6 +12,7 @@ import axios from 'axios';
 import { loaImages } from '@consts/imgSrc';
 import { RootState } from 'src/state/store';
 import { increment, decrement } from '@state/counterSlice';
+import { showModal } from '@state/modalSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 const options = [
@@ -183,6 +184,11 @@ const InputExample = () => {
         <h1>Counter: {counter}</h1>
         <button onClick={() => dispatch(increment(1))}>Increment</button>
         <button onClick={() => dispatch(decrement(1))}>Decrement</button>
+        <button
+          onClick={() => dispatch(showModal({ modalContent: <div>asdf</div>, modalSize: 'large' }))}
+        >
+          open modal
+        </button>
       </div>
     </div>
   );

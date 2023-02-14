@@ -5,14 +5,16 @@ import { Loader } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
+const publicUrl = process.env.PUBLIC_URL;
+
 const App = () => {
   return (
-    <Router>
+    <Router basename={publicUrl}>
       <Suspense fallback={<Loader active inline="centered" />}>
         <Routes>
           {RouteElementMatch.map((el, idx) => {
             const DynamicElement = lazy(() => import(`${el.elementPath}`)); // 백틱으로 넣어야 작동
-
+            const DynamicModal = lazy(() => import('@components/modal'));
             const LayoutComponent = el.layout;
 
             return (
@@ -24,9 +26,13 @@ const App = () => {
                     {LayoutComponent ? (
                       <LayoutComponent>
                         <DynamicElement />
+                        <DynamicModal />
                       </LayoutComponent>
                     ) : (
-                      <DynamicElement />
+                      <>
+                        <DynamicElement />
+                        <DynamicModal />
+                      </>
                     )}
                   </>
                 }

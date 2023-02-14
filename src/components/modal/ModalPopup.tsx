@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'semantic-ui-react';
+import { closeModal } from '@state/modalSlice';
 import { IModalState, modalUISize } from './Types';
 
 const ModalPopup = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((state: { modal: IModalState }) => state.modal);
   const open = modalState.modalOpen;
+  // const open = true;
   const content = modalState.modalContent;
   const modalSize = modalState.modalSize || modalUISize.SMALL;
   const title = modalState.modalTitle || '';
@@ -14,9 +16,10 @@ const ModalPopup = () => {
   const fitContentWidth = modalState.modalFitContentWidth || false;
   const showCloseIcon = modalState.modalShowCloseIcon;
   const elementId = modalState.modalContentId;
+  const modalContentBackground = modalState.modalContentBackground || '#30343F';
 
   const handleClose = () => {
-    dispatch({ type: 'MODALCONTROL', modalOpen: false });
+    dispatch(closeModal());
   };
 
   const [modalContentWidth, setModalContentWidth] = useState<number>(0);
@@ -48,9 +51,12 @@ const ModalPopup = () => {
           basic={isBasic}
           closeIcon={showCloseIcon === 'Y'}
           style={{ width: `${modalContentWidth}px` }}
+          id="loado_modal"
         >
           {title && <Modal.Header>{title}</Modal.Header>}
-          <Modal.Content>{content}</Modal.Content>
+          <Modal.Content style={{ backgroundColor: modalContentBackground, color: 'black' }}>
+            {content}
+          </Modal.Content>
         </Modal>
       ) : (
         <Modal
@@ -59,9 +65,12 @@ const ModalPopup = () => {
           size={modalSize}
           basic={isBasic}
           closeIcon={showCloseIcon === 'Y'}
+          id="loado_modal"
         >
           {title && <Modal.Header>{title}</Modal.Header>}
-          <Modal.Content>{content}</Modal.Content>
+          <Modal.Content style={{ backgroundColor: modalContentBackground, color: 'black' }}>
+            {content}
+          </Modal.Content>
         </Modal>
       )}
     </div>

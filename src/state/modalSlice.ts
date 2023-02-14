@@ -20,6 +20,7 @@ interface IModalState {
   modalFitContentWidth?: boolean;
   modalShowCloseIcon?: 'Y' | 'N';
   modalContentId?: string;
+  modalContentBackground?: string;
 }
 
 interface IActionPayload extends IModalState {}
@@ -33,6 +34,7 @@ const initialState = {
   modalFitContentWidth: false,
   modalShowCloseIcon: 'Y',
   modalContentId: '',
+  modalContentBackground: '#30343F',
 } as IModalState;
 
 const modalSlice = createSlice({
@@ -48,6 +50,7 @@ const modalSlice = createSlice({
       state.modalFitContentWidth = action.payload.modalFitContentWidth || false;
       state.modalShowCloseIcon = action.payload.modalShowCloseIcon || 'Y';
       state.modalContentId = action.payload.modalContentId;
+      state.modalContentBackground = action.payload.modalContentBackground;
     },
     closeModal(state) {
       state.modalOpen = false;
@@ -58,6 +61,7 @@ const modalSlice = createSlice({
       state.modalFitContentWidth = false;
       state.modalShowCloseIcon = 'Y';
       state.modalContentId = '';
+      state.modalContentBackground = '#30343F';
     },
   },
 });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image } from '@components/index';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -64,8 +64,12 @@ const MainLayout = ({ children }: LayoutChildren) => {
 
   const changeRoute = (nextRoute: string) => {
     setActivePage(nextRoute);
-    navigate(`/${nextRoute === 'pricePage' ? 'reactQueryExample' : 'inputExample'}`);
+    // navigate(`/${nextRoute === 'pricePage' ? 'reactQueryExample' : 'inputExample'}`);
   };
+
+  useEffect(() => {
+    navigate(`/${activePage === 'pricePage' ? 'reactQueryExample' : 'inputExample'}`);
+  }, [activePage, navigate]);
 
   return (
     <LayoutDiv>
