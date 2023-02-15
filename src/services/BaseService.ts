@@ -1,5 +1,8 @@
 import axiosInstance from './AxiosInstance';
 
+const RPS = 60 * 1000;
+const MAX_RETCNT = 2;
+
 class BaseService {
   static AUTH: {
     accessToken: string;
@@ -45,22 +48,36 @@ class BaseService {
     method = 'get',
     url,
     data,
+    retryCnt = 0,
   }: {
     method: 'get' | 'post';
     url: string;
     data: any;
+    retryCnt?: number;
   }) {
     try {
       const res = await this.requestMethod[method](url, data);
 
-      console.log(`url in request is ${url}`);
-      console.log(`request body : ${JSON.stringify(data)}`);
-      console.log(res);
       return res;
-    } catch (err) {
-      console.log(`error occured when calling ${url}`);
-      console.log(err);
-      return err;
+    } catch (error: any) {
+      const errMsg = error.message;
+
+      // // eslint-disable-next-line no-debugger
+      // debugger;
+
+      if (errMsg === 'Request Limit' && MAX_RETCNT >= retryCnt) {
+        console.log('came to request limit');
+        await new Promise((res) => setTimeout(res, RPS));
+        const res = await this.request({ method, url, data, retryCnt: retryCnt + 1 });
+
+        console.log(`res in Request limit and retryCnt is ${retryCnt}`);
+        console.log(res);
+        return;
+      } else if (errMsg === 'Request Limit' && MAX_RETCNT <= retryCnt) {
+        console.log('came to request limit Exceeded');
+        throw new Error('Rate Limit Exceeded');
+      }
+      return error;
     }
   }
 }

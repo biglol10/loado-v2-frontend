@@ -1,7 +1,9 @@
+/* eslint-disable no-await-in-loop */
 import { useState, useEffect } from 'react';
 import BaseService from '@services/BaseService';
 import axios from 'axios';
 import styled from 'styled-components';
+import LOSTARK_API from '@consts/api';
 
 const TopTab = styled.div`
   .tab-list {
@@ -37,9 +39,31 @@ const ItemPricePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      // for (let index = 0; index < 140; index++) {
+      //   const res = await BaseService.request({
+      //     method: 'post',
+      //     url: LOSTARK_API.auction,
+      //     data: {
+      //       ItemLevelMin: 0,
+      //       ItemLevelMax: 1700,
+      //       ItemGradeQuality: 0,
+      //       Sort: 'CURRENT_MIN_PRICE',
+      //       CategoryCode: 210000,
+      //       ItemTier: 3,
+      //       ItemGrade: '유물',
+      //       ItemName: '10레벨 멸화의 보석',
+      //       PageNo: 1,
+      //       SortCondition: 'ASC',
+      //     },
+      //   });
+
+      //   console.log('res in useEffect is');
+      //   console.log(res);
+      // }
+
       const res = await BaseService.request({
         method: 'post',
-        url: '/lostark/auctions/items',
+        url: LOSTARK_API.auction,
         data: {
           ItemLevelMin: 0,
           ItemLevelMax: 1700,
