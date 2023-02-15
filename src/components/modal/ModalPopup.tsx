@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Modal } from 'semantic-ui-react';
-import { closeModal } from '@state/modalSlice';
+import useModal from '@hooks/ModalHooks';
 import { IModalState, modalUISize } from './Types';
 
 const ModalPopup = () => {
-  const dispatch = useDispatch();
   const modalState = useSelector((state: { modal: IModalState }) => state.modal);
   const open = modalState.modalOpen;
   // const open = true;
@@ -18,9 +17,7 @@ const ModalPopup = () => {
   const elementId = modalState.modalContentId;
   const modalContentBackground = modalState.modalContentBackground || '#30343F';
 
-  const handleClose = () => {
-    dispatch(closeModal());
-  };
+  const { hideModal } = useModal();
 
   const [modalContentWidth, setModalContentWidth] = useState<number>(0);
 
@@ -47,7 +44,7 @@ const ModalPopup = () => {
       {fitContentWidth && modalContentWidth ? (
         <Modal
           open={open}
-          onClose={handleClose}
+          onClose={() => hideModal()}
           basic={isBasic}
           closeIcon={showCloseIcon === 'Y'}
           style={{ width: `${modalContentWidth}px` }}
@@ -61,7 +58,7 @@ const ModalPopup = () => {
       ) : (
         <Modal
           open={open}
-          onClose={handleClose}
+          onClose={() => hideModal()}
           size={modalSize}
           basic={isBasic}
           closeIcon={showCloseIcon === 'Y'}

@@ -6,7 +6,8 @@
       "@pages/*": ["src/pages/*"],
       "@consts/*": ["src/consts/*"],
       "@state/*": ["src/state/*"],
-      "@services/*": ["src/services/*"]
+      "@services/*": ["src/services/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   }
 }
