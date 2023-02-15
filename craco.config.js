@@ -98,6 +98,8 @@ const getConfig = (webpackConfig, paths) => {
   return webpackConfig;
 };
 
+const apiProxyTarget = 'https://developer-lostark.game.onstove.com';
+
 module.exports = {
   plugins: [
     {
@@ -110,12 +112,26 @@ module.exports = {
   ],
   devServer: {
     port: 8080,
+    // proxy: [
+    //   {
+    //     context: ['/api'],
+    //     target: 'http://localhost:3066/',
+    //     secure: false,
+    //     changeOrigin: true,
+    //   },
+    // ],
     proxy: [
       {
-        context: ['/api'],
-        target: 'http://localhost:3066/',
-        secure: false,
+        context: ['/lostark/markets'],
+        target: apiProxyTarget,
         changeOrigin: true,
+        pathRewrite: { '^/lostark/markets': '/markets' },
+      },
+      {
+        context: ['/lostark/auctions'],
+        target: apiProxyTarget,
+        changeOrigin: true,
+        pathRewrite: { '^/lostark/auctions': '/auctions' },
       },
     ],
   },

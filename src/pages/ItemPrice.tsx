@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import BaseService from '@services/BaseService';
+import axios from 'axios';
 import styled from 'styled-components';
 
 const TopTab = styled.div`
@@ -32,6 +34,54 @@ const TopTab = styled.div`
 
 const ItemPricePage = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'book' | 'material' | 'mylist'>('all');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await BaseService.request({
+        method: 'post',
+        url: '/lostark/auctions/items',
+        data: {
+          ItemLevelMin: 0,
+          ItemLevelMax: 1700,
+          ItemGradeQuality: 0,
+          Sort: 'CURRENT_MIN_PRICE',
+          CategoryCode: 210000,
+          ItemTier: 3,
+          ItemGrade: '유물',
+          ItemName: '10레벨 멸화의 보석',
+          PageNo: 1,
+          SortCondition: 'ASC',
+        },
+      });
+
+      console.log('res in useEffect is');
+      console.log(res);
+    };
+
+    const fetchData2 = async () => {
+      const axiosResult = await axios({
+        url: 'https://developer-lostark.game.onstove.com/markets/items',
+        method: 'post',
+        data: {
+          Sort: 'CURRENT_MIN_PRICE',
+          CategoryCode: 50000,
+          CharacterClass: '창술사',
+          ItemTier: 0,
+          ItemName: '강석',
+          PageNo: 1,
+          SortCondition: 'DESC',
+        },
+        headers: {
+          Authorization: `bearer ${process.env.REACT_APP_SMILEGATE_TOKEN}`,
+        },
+      });
+
+      console.log('axiosResult is');
+      console.log(axiosResult);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
