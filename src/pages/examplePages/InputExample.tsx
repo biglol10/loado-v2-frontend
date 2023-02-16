@@ -84,7 +84,7 @@ const InputExample = () => {
         <InputDefault
           key="key"
           id="InputDefault1"
-          stretch={true}
+          stretch={false}
           placeholder="제목"
           ref={inputRef1}
           onChange={(obj: { value: string }) => {

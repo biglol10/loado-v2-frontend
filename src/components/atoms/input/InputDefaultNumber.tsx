@@ -8,11 +8,11 @@
 
 import { forwardRef } from 'react';
 import { Input } from 'semantic-ui-react';
-import { IInputDefault } from './Types';
+import { IInputDefaultNumber } from './Types';
 import { StyledBaseInput } from './Styled';
 import InputHoc from './hoc/InputHOC';
 
-const InputDefault = forwardRef<{ inputElement: Input | undefined }, IInputDefault>(
+const InputDefaultNumber = forwardRef<{ inputElement: Input | undefined }, IInputDefaultNumber>(
   (
     {
       id = '',
@@ -22,7 +22,7 @@ const InputDefault = forwardRef<{ inputElement: Input | undefined }, IInputDefau
       onChange = null,
       size = 'small',
       loading = false,
-      type = 'default',
+      type = 'number',
       readOnly = false,
       disabled = false,
       maxLength = undefined,
@@ -45,7 +45,7 @@ const InputDefault = forwardRef<{ inputElement: Input | undefined }, IInputDefau
         onChange={onChange}
         size={size}
         error={error}
-        type={`${type === 'default' ? '' : type}`}
+        type={type}
         readOnly={readOnly}
         disabled={disabled}
         maxLength={maxLength}
@@ -58,6 +58,6 @@ const InputDefault = forwardRef<{ inputElement: Input | undefined }, IInputDefau
   },
 );
 
-InputDefault.displayName = 'InputDefault';
+InputDefaultNumber.displayName = 'InputDefaultNumber';
 
-export default InputHoc(InputDefault);
+export default InputHoc(InputDefaultNumber);

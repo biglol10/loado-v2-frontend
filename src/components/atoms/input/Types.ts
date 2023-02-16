@@ -10,7 +10,7 @@ export interface IInputDefault {
   onChange?: Function;
   size?: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
   loading?: boolean;
-  type?: 'default' | 'password';
+  type?: 'default' | 'password' | 'number';
   readOnly?: boolean;
   disabled?: boolean;
   maxLength?: undefined | number;
@@ -19,6 +19,27 @@ export interface IInputDefault {
   error?: boolean;
   onEnter?: Function;
   clearInputValue?: Function;
+  transparent?: boolean;
+}
+
+export interface IInputDefaultNumber {
+  id: string;
+  placeholder?: string;
+  value?: string;
+  className?: string;
+  onChange?: Function;
+  size?: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
+  loading?: boolean;
+  type?: 'number';
+  readOnly?: boolean;
+  disabled?: boolean;
+  maxLength?: undefined | number;
+  ref?: any;
+  stretch?: boolean;
+  error?: boolean;
+  onEnter?: Function;
+  clearInputValue?: Function;
+  transparent?: boolean;
 }
 
 // ? Types in InputDropdown component
@@ -43,7 +64,7 @@ export interface IInputLayout {
   id?: string;
   className?: string;
   children: React.ReactElement;
-  inputLabel?: string;
+  inputLabel?: string | any;
   inputLabelSize?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   showInputLabel?: boolean;
   spacing?: number;

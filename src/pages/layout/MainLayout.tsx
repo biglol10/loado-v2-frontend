@@ -59,7 +59,7 @@ const Navigation = styled.header`
 `;
 
 const MainLayout = ({ children }: LayoutChildren) => {
-  const [activePage, setActivePage] = useState('pricePage');
+  const [activePage, setActivePage] = useState('itemPrice');
   const navigate = useNavigate();
 
   const deviceType = localStorage.getItem('deviceType');
@@ -68,8 +68,9 @@ const MainLayout = ({ children }: LayoutChildren) => {
     setActivePage(nextRoute);
   };
 
+  // inputExample
   useEffect(() => {
-    navigate(`/${activePage === 'pricePage' ? 'itemPrice' : 'inputExample'}`);
+    navigate(`/${activePage}`);
   }, [activePage, navigate]);
 
   return (
@@ -82,17 +83,25 @@ const MainLayout = ({ children }: LayoutChildren) => {
 
         <ul>
           <li
-            className={activePage === 'pricePage' ? 'active' : ''}
-            onClick={() => changeRoute('pricePage')}
+            className={activePage === 'itemPrice' ? 'active' : ''}
+            onClick={() => changeRoute('itemPrice')}
           >
             <h3>{deviceType === 'mobile' ? '시세' : '아이템 시세'}</h3>
           </li>
           <li
-            className={activePage === 'simulationPage' ? 'active' : ''}
-            onClick={() => changeRoute('simulationPage')}
+            className={activePage === 'simulation' ? 'active' : ''}
+            onClick={() => changeRoute('simulation')}
           >
             <h3>{deviceType === 'mobile' ? '시뮬' : '제련 시뮬레이션'}</h3>
           </li>
+          {deviceType !== 'mobile' && (
+            <li
+              className={activePage === 'inputExample' ? 'active' : ''}
+              onClick={() => changeRoute('inputExample')}
+            >
+              <h3>예시 페이지</h3>
+            </li>
+          )}
         </ul>
       </Navigation>
       <div className="appContent">{children}</div>

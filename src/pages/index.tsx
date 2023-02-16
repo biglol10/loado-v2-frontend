@@ -31,6 +31,11 @@ const routeElementMatch = Object.freeze([
     elementPath: './pages/ItemPrice',
     layout: MainLayout,
   },
+  {
+    path: '/simulation',
+    elementPath: './pages/Simulation',
+    layout: MainLayout,
+  },
 ]);
 
 export default routeElementMatch;

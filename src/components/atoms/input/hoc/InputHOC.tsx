@@ -26,6 +26,32 @@ const InputHoc = <P extends object>(OriginalComponent: React.ComponentType<P>) =
     const onChangeFn = useCallback(
       (e: ChangeEvent<HTMLInputElement>, data: any = null) => {
         const isDropdown = OriginalComponent.displayName === 'InputDropdown';
+        const isInputNumber = OriginalComponent.displayName === 'InputDefaultNumber';
+
+        if (isInputNumber) {
+          const regex = /^[0-9]+$/;
+          const isMatch = regex.test(e.target.value);
+
+          if (!isMatch) {
+            setInputValue('');
+            debounce(() => {
+              onChange &&
+                onChange({
+                  value: '',
+                });
+            }, 50)();
+          } else {
+            setInputValue(e.target.value);
+
+            debounce(() => {
+              onChange &&
+                onChange({
+                  value: e.target.value,
+                });
+            }, 50)();
+          }
+          return;
+        }
 
         setInputValue(!isDropdown ? e.target.value : data.value);
 

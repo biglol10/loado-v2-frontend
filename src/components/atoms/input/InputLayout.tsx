@@ -21,9 +21,17 @@ const StyledInputLayout = styled.div<IInputLayout>`
 `;
 
 const StyledInputLabelHeader = styled(Header)`
-  margin-bottom: 15px !important;
+  margin-bottom: 5px !important;
   position: relative;
   left: 0%;
+`;
+
+const StyledInputLabelHeader2 = styled(Header)`
+  margin-bottom: 5px !important;
+  position: relative;
+  left: 0%;
+  display: flex;
+  align-items: center;
 `;
 
 const InputLayout = ({
@@ -48,9 +56,15 @@ const InputLayout = ({
       <React.Fragment>
         {showInputLabel && (
           <label htmlFor={id}>
-            <StyledInputLabelHeader className="inputLabelHeader" as={inputLabelSize}>
-              {inputLabel}
-            </StyledInputLabelHeader>
+            {typeof inputLabel === 'string' ? (
+              <StyledInputLabelHeader className="inputLabelHeader" as={inputLabelSize}>
+                {inputLabel}
+              </StyledInputLabelHeader>
+            ) : (
+              <StyledInputLabelHeader2 className="inputLabelHeader" as={inputLabelSize}>
+                {inputLabel}
+              </StyledInputLabelHeader2>
+            )}
           </label>
         )}
         {React.cloneElement(children, { stretch: stretch ? 'true' : 'false', error })}
