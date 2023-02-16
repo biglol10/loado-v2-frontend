@@ -47,26 +47,28 @@ const HeaderSpan = styled.span`
 
 const Simulation = () => {
   const [categoryObj1, setCategoryObj1] = useState<any>({
-    item1: {
-      value: '',
-      isError: false,
-    },
-    item2: {
-      value: '',
-      isError: false,
-    },
-    item3: {
-      value: '',
-      isError: false,
-    },
-    item4: {
-      value: '',
-      isError: false,
-    },
-    item5: {
-      value: '',
-      isError: false,
-    },
+    명예의파편: '',
+    야금술특화: '',
+    재봉술특화: '',
+    야금술숙련: '',
+    재봉술숙련: '',
+  });
+
+  const [categoryObj2, setCategoryObj2] = useState<any>({
+    파괴강석: '',
+    수호강석: '',
+    경명돌: '',
+    정제된파괴강석: '',
+    정제된수호강석: '',
+    찬명돌: '',
+  });
+
+  const [categoryObj3, setCategoryObj3] = useState<any>({
+    태양의은총: '',
+    태양의축복: '',
+    태양의가호: '',
+    상급오레하: '',
+    최상급오레하: '',
   });
 
   return (
@@ -75,185 +77,81 @@ const Simulation = () => {
       <InheritedMaterials>
         <ColumnDiv>
           <h3 className="columnDiv_Title">🛑 명파 + 야금술 (귀속)</h3>
-          <InputLayout
-            inputLabel={
-              <>
-                <Image
-                  src={loaImages['명예의파편']}
-                  imageSize="mini"
-                  type="image"
-                  circular={true}
-                />
-                <HeaderSpan>명예의 파편</HeaderSpan>
-              </>
-            }
-            inputLabelSize={'h5'}
-            showInputLabel={true}
-            stretch={false}
-            error={categoryObj1.item1.isError}
-          >
-            <InputDefaultNumber
-              key="key"
-              id="InputDefault2"
-              // type="number"
-              placeholder="명예의 파편"
-              onChange={(obj: { value: string }) => {
-                setCategoryObj1((prev: any) => ({
-                  ...prev,
-                  item1: {
-                    value: obj.value,
-                  },
-                }));
-              }}
-              value={categoryObj1.item1}
-              type="number"
-            />
-          </InputLayout>
-          <InputLayout
-            errorMsg="올바르지 않은 글자가 포함되어 있습니다11"
-            inputLabel={
-              <>
-                <Image
-                  src={loaImages['야금술특화']}
-                  imageSize="mini"
-                  type="image"
-                  circular={true}
-                />
-                <HeaderSpan>야금술 특화</HeaderSpan>
-              </>
-            }
-            inputLabelSize={'h5'}
-            showInputLabel={true}
-            stretch={false}
-            error={categoryObj1.item2.isError}
-          >
-            <InputDefaultNumber
-              key="key"
-              id="InputDefault2"
-              // type="number"
-              placeholder="야금술 특화"
-              onChange={(obj: { value: string }) => {
-                setCategoryObj1((prev: any) => ({
-                  ...prev,
-                  item2: {
-                    value: obj.value,
-                  },
-                }));
-              }}
-              value={categoryObj1.item2}
-              type="number"
-            />
-          </InputLayout>
-          <InputLayout
-            errorMsg="올바르지 않은 글자가 포함되어 있습니다11"
-            inputLabel={
-              <>
-                <Image
-                  src={loaImages['재봉술특화']}
-                  imageSize="mini"
-                  type="image"
-                  circular={true}
-                />
-                <HeaderSpan>재봉술 특화</HeaderSpan>
-              </>
-            }
-            inputLabelSize={'h5'}
-            showInputLabel={true}
-            stretch={false}
-            error={categoryObj1.item3.isError}
-          >
-            <InputDefaultNumber
-              key="key"
-              id="InputDefault3"
-              // type="number"
-              placeholder="재봉술 특화"
-              onChange={(obj: { value: string }) => {
-                setCategoryObj1((prev: any) => ({
-                  ...prev,
-                  item3: {
-                    value: obj.value,
-                  },
-                }));
-              }}
-              value={categoryObj1.item3}
-              type="number"
-            />
-          </InputLayout>
-          <InputLayout
-            errorMsg="올바르지 않은 글자가 포함되어 있습니다11"
-            inputLabel={
-              <>
-                <Image
-                  src={loaImages['야금술숙련']}
-                  imageSize="mini"
-                  type="image"
-                  circular={true}
-                />
-                <HeaderSpan>야금술 숙련</HeaderSpan>
-              </>
-            }
-            inputLabelSize={'h5'}
-            showInputLabel={true}
-            stretch={false}
-            error={categoryObj1.item4.isError}
-          >
-            <InputDefaultNumber
-              key="key"
-              id="InputDefault2"
-              // type="number"
-              placeholder="야금술 숙련"
-              onChange={(obj: { value: string }) => {
-                setCategoryObj1((prev: any) => ({
-                  ...prev,
-                  item4: {
-                    value: obj.value,
-                  },
-                }));
-              }}
-              value={categoryObj1.item4}
-              type="number"
-            />
-          </InputLayout>
-          <InputLayout
-            errorMsg="올바르지 않은 글자가 포함되어 있습니다11"
-            inputLabel={
-              <>
-                <Image
-                  src={loaImages['재봉술숙련']}
-                  imageSize="mini"
-                  type="image"
-                  circular={true}
-                />
-                <HeaderSpan>재봉술 숙련</HeaderSpan>
-              </>
-            }
-            inputLabelSize={'h5'}
-            showInputLabel={true}
-            stretch={false}
-            error={categoryObj1.item5.isError}
-          >
-            <InputDefaultNumber
-              key="key"
-              id="InputDefault2"
-              // type="number"
-              placeholder="재봉술 숙련"
-              onChange={(obj: { value: string }) => {
-                setCategoryObj1((prev: any) => ({
-                  ...prev,
-                  item5: {
-                    value: obj.value,
-                  },
-                }));
-              }}
-              value={categoryObj1.item5}
-              type="number"
-            />
-          </InputLayout>
+          {Object.keys(categoryObj1).map((objKey: string, idx) => (
+            <InputLayout
+              key={`Input_${objKey}`}
+              inputLabel={
+                <>
+                  <Image
+                    src={loaImages[objKey as keyof typeof loaImages]}
+                    imageSize="mini"
+                    type="image"
+                    circular={true}
+                  />
+                  <HeaderSpan>{objKey}</HeaderSpan>
+                </>
+              }
+              inputLabelSize={'h5'}
+              showInputLabel={true}
+              stretch={false}
+            >
+              <InputDefaultNumber
+                key="key"
+                id={`ID_${objKey}`}
+                placeholder={objKey}
+                onChange={(obj: { value: string }) => {
+                  setCategoryObj1((prev: any) => {
+                    const prevObj = structuredClone(prev);
+
+                    prevObj[objKey] = obj.value;
+                    return prevObj;
+                  });
+                }}
+                value={categoryObj1[objKey]}
+                type="number"
+              />
+            </InputLayout>
+          ))}
         </ColumnDiv>
         <ColumnDiv>
           <h3 className="columnDiv_Title">🛑 강화석 + 융화제 (귀속)</h3>
+          {Object.keys(categoryObj2).map((objKey: string, idx) => (
+            <InputLayout
+              key={`Input_${objKey}`}
+              inputLabel={
+                <>
+                  <Image
+                    src={loaImages[objKey as keyof typeof loaImages]}
+                    imageSize="mini"
+                    type="image"
+                    circular={true}
+                  />
+                  <HeaderSpan>{objKey}</HeaderSpan>
+                </>
+              }
+              inputLabelSize={'h5'}
+              showInputLabel={true}
+              stretch={false}
+            >
+              <InputDefaultNumber
+                key="key"
+                id={`ID_${objKey}`}
+                placeholder={objKey}
+                onChange={(obj: { value: string }) => {
+                  setCategoryObj2((prev: any) => {
+                    const prevObj = structuredClone(prev);
+
+                    prevObj[objKey] = obj.value;
+                    return prevObj;
+                  });
+                }}
+                value={categoryObj2[objKey]}
+                type="number"
+              />
+            </InputLayout>
+          ))}
         </ColumnDiv>
-        <div>asdf3</div>
+        <h3 className="columnDiv_Title">🛑 특수/융화 재료 (귀속)</h3>
       </InheritedMaterials>
     </div>
   );

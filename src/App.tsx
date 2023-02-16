@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, JSXElementConstructor as JSX } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RouteElementMatch from '@pages/index';
 import { Loader } from 'semantic-ui-react';
@@ -7,6 +7,8 @@ import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
 const publicUrl = process.env.PUBLIC_URL;
+
+const DynamicModal = lazy(() => import('@components/modal'));
 
 const App = () => {
   localStorage.setItem('deviceType', isMobile ? 'mobile' : 'desktop');
@@ -17,7 +19,7 @@ const App = () => {
         <Routes>
           {RouteElementMatch.map((el, idx) => {
             const DynamicElement = lazy(() => import(`${el.elementPath}`)); // 백틱으로 넣어야 작동
-            const DynamicModal = lazy(() => import('@components/modal'));
+            // const DynamicModal = lazy(() => import('@components/modal'));
             const LayoutComponent = el.layout;
 
             return (
