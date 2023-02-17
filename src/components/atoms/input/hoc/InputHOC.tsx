@@ -10,11 +10,6 @@ import React, {
 } from 'react';
 import { Input } from 'semantic-ui-react';
 
-interface ICommInput {
-  value?: string;
-  onChange?: Function;
-}
-
 // props: P & ICommInput
 const InputHoc = <P extends object>(OriginalComponent: React.ComponentType<P>) => {
   return forwardRef((props: any, ref: any) => {
@@ -29,7 +24,7 @@ const InputHoc = <P extends object>(OriginalComponent: React.ComponentType<P>) =
         const isInputNumber = OriginalComponent.displayName === 'InputDefaultNumber';
 
         if (isInputNumber) {
-          const regex = /^[0-9]+$/;
+          const regex = /^[\d,]*$/;
           const isMatch = regex.test(e.target.value);
 
           if (!isMatch) {
@@ -41,12 +36,12 @@ const InputHoc = <P extends object>(OriginalComponent: React.ComponentType<P>) =
                 });
             }, 50)();
           } else {
-            setInputValue(e.target.value);
+            setInputValue(Number(e.target.value.replaceAll(',', '')).toLocaleString());
 
             debounce(() => {
               onChange &&
                 onChange({
-                  value: e.target.value,
+                  value: e.target.value, // at this time of point, the input value which is e.target.value is formatted with comma
                 });
             }, 50)();
           }
