@@ -15,7 +15,7 @@ import { Toggle } from './atoms/toggle';
 import ModalPopup from './modal';
 import { CheckboxDefault } from './atoms/checkbox';
 import { Avatar, Image } from './atoms/image';
-import InheritedMaterialsCountDesktop from './custom/simulation/InheritedMaterialsCountDesktop';
+import InheritedMaterialsCountPriceDesktop from './custom/simulation/InheritedMaterialsCountPriceDesktop';
 
 export {
   InputDefault,
@@ -38,5 +38,5 @@ export {
   CheckboxDefault,
   Avatar,
   Image,
-  InheritedMaterialsCountDesktop,
+  InheritedMaterialsCountPriceDesktop,
 };

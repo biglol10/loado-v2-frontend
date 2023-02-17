@@ -31,7 +31,7 @@ const HeaderSpan = styled.span`
   margin-left: 5px;
 `;
 
-const InheritedMaterialsCountDesktop = ({ countObjDashboard, setCountObjDashboard }: any) => {
+const InheritedMaterialsCountPriceDesktop = ({ countObjDashboard, setCountObjDashboard }: any) => {
   const categoryTextMapping = {
     categoryObj1: '🛑 명파 + 야금술 (귀속)',
     categoryObj2: '🛑 강화석 + 융화제 (귀속)',
@@ -86,4 +86,4 @@ const InheritedMaterialsCountDesktop = ({ countObjDashboard, setCountObjDashboar
   );
 };
 
-export default InheritedMaterialsCountDesktop;
+export default InheritedMaterialsCountPriceDesktop;

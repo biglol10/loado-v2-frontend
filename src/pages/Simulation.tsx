@@ -4,7 +4,7 @@ import {
   InputDefault,
   InputLayout,
   Image,
-  InheritedMaterialsCountDesktop,
+  InheritedMaterialsCountPriceDesktop,
 } from '@components/index';
 import { loaImages } from '@consts/imgSrc';
 import { useState, useEffect } from 'react';
@@ -23,33 +23,6 @@ const InheritedMaterials = styled.div`
 
 // height: 250px;
 // overflow-y: auto;
-const ColumnDiv = styled.div`
-  padding: 2px 20px;
-  display: grid;
-  grid-template-columns: repeat(
-    ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '3'},
-    1fr
-  );
-  grid-row-gap: 15px;
-
-  .columnDiv_Title {
-    grid-column: span ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '3'};
-    padding: 2px 20px;
-    margin: 0px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: red;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: red;
-  }
-`;
-
-const HeaderSpan = styled.span`
-  margin-left: 5px;
-`;
 
 const Simulation = () => {
   const [countObjDashboard, setCountObjDashboard] = useState<any>({
@@ -131,9 +104,14 @@ const Simulation = () => {
 
   return (
     <div>
+      <div style={{ display: 'flex' }}>
+        <h3>※ 제련 시뮬레이션</h3>
+      </div>
+
       <h3>※ 제련 시뮬레이션</h3>
+
       <InheritedMaterials>
-        <InheritedMaterialsCountDesktop
+        <InheritedMaterialsCountPriceDesktop
           countObjDashboard={countObjDashboard}
           setCountObjDashboard={setCountObjDashboard}
         />
