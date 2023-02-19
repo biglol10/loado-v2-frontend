@@ -1,9 +1,12 @@
 /* eslint-disable no-await-in-loop */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import BaseService from '@services/BaseService';
 import axios from 'axios';
 import styled from 'styled-components';
 import LOSTARK_API from '@consts/api';
+import { Table } from '@components/atoms/table/index';
+import { ITableData } from '@components/atoms/table/Types';
+import { Column } from 'react-table';
 
 const TopTab = styled.div`
   .tab-list {
@@ -107,6 +110,66 @@ const ItemPricePage = () => {
     fetchData();
   }, []);
 
+  const data: ITableData[] = useMemo(
+    () => [
+      {
+        name: '각인서명',
+        averagePrice: 500,
+        recentPrice: 500,
+        lowestPrice: 500,
+        getMarketPrice: 'icon',
+        bookmark: 'icon',
+      },
+      {
+        name: '각인서명',
+        averagePrice: 500,
+        recentPrice: 500,
+        lowestPrice: 500,
+        getMarketPrice: 'icon',
+        bookmark: 'icon',
+      },
+      {
+        name: '각인서명',
+        averagePrice: 500,
+        recentPrice: 500,
+        lowestPrice: 500,
+        getMarketPrice: 'icon',
+        bookmark: 'icon',
+      },
+    ],
+    [],
+  );
+
+  const columns: Column[] = useMemo(
+    () => [
+      {
+        Header: '각인서명',
+        accessor: 'name', // accessor is the "key" in the data
+      },
+      {
+        Header: '전일 평균 거래가',
+        accessor: 'averagePrice',
+      },
+      {
+        Header: '최근 거래가',
+        accessor: 'recentPrice',
+      },
+      {
+        Header: '최저가',
+        accessor: 'lowestPrice',
+      },
+      {
+        Header: '시세조회',
+        accessor: 'getMarketPrice',
+      },
+      {
+        Header: '관심등록',
+        accessor: 'bookmark',
+      },
+    ],
+    [],
+  );
+
   return (
     <>
       {/* <div>asdf</div> */}
@@ -138,6 +201,7 @@ const ItemPricePage = () => {
           </li>
         </ul>
       </TopTab>
+      <Table data={data} columns={columns} />
     </>
   );
 };
