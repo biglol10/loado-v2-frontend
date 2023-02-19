@@ -2,3 +2,12 @@
   margin: 20px 40px;
   /* border: 1px solid red; */
 }
+
+.ui.disabled.input,
+.ui.input:not(.disabled) input[disabled] {
+  opacity: 0.9;
+}
+
+input::placeholder {
+  color: red;
+}

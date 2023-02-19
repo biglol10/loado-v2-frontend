@@ -17,4 +17,6 @@ const itemNameMatch = {
   최상급오레하: '최상급 오레하 융화 재료',
 };
 
-export default itemNameMatch;
+const itemNameArr = Object.values(itemNameMatch);
+
+export { itemNameMatch, itemNameArr };

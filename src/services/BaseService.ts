@@ -1,6 +1,8 @@
+import store from '@state/store';
+import { showLoader, hideLoader } from '@state/loaderSlice';
 import axiosInstance from './AxiosInstance';
 
-const RPS = 60 * 1000;
+const RPS = 60 * 1020;
 const MAX_RETCNT = 2;
 
 class BaseService {
@@ -56,8 +58,10 @@ class BaseService {
     retryCnt?: number;
   }) {
     try {
+      store.dispatch(showLoader());
       const res = await this.requestMethod[method](url, data);
 
+      store.dispatch(hideLoader());
       return res;
     } catch (error: any) {
       const errMsg = error.message;
@@ -73,10 +77,12 @@ class BaseService {
         console.log(`res in Request limit and retryCnt is ${retryCnt}`);
         console.log(res);
         return;
-      } else if (errMsg === 'Request Limit' && MAX_RETCNT <= retryCnt) {
+      } else if (errMsg === 'Request Limit' && MAX_RETCNT < retryCnt) {
         console.log('came to request limit Exceeded');
         throw new Error('Rate Limit Exceeded');
       }
+
+      store.dispatch(hideLoader());
       return error;
     }
   }

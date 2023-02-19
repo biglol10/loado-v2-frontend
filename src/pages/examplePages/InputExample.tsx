@@ -6,6 +6,7 @@ import {
   InputSearch,
   InputWithIcon,
   Box,
+  RadioButtonGroup,
 } from '@components/index';
 import { Divider, Icon, Input } from 'semantic-ui-react';
 import axios from 'axios';
@@ -68,6 +69,8 @@ const InputExample = () => {
   const { showModal } = useModal();
   const counter = useSelector((state: RootState) => state.counter);
   const dispatch = useDispatch();
+
+  const [selectedValue, setSelectedValue] = useState('option1');
 
   return (
     <div>
@@ -190,6 +193,15 @@ const InputExample = () => {
           open modal
         </button>
       </div>
+      <RadioButtonGroup
+        options={[
+          { label: 'Option 1', value: 'option1' },
+          { label: 'Option 2', value: 'option2' },
+          { label: 'Option 3', value: 'option3' },
+        ]}
+        selectedValue={selectedValue}
+        onChange={(value: any) => setSelectedValue(value)}
+      />
     </div>
   );
 };

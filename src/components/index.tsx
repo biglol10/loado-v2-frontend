@@ -16,6 +16,7 @@ import ModalPopup from './modal';
 import { CheckboxDefault } from './atoms/checkbox';
 import { Avatar, Image } from './atoms/image';
 import InheritedMaterialsCountPriceDesktop from './custom/simulation/InheritedMaterialsCountPriceDesktop';
+import RadioButtonGroup from './atoms/radioButton/RadioButtonGroup';
 
 export {
   InputDefault,
@@ -39,4 +40,5 @@ export {
   Avatar,
   Image,
   InheritedMaterialsCountPriceDesktop,
+  RadioButtonGroup,
 };
