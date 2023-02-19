@@ -1,40 +1,63 @@
 import { Column, useTable } from 'react-table';
-import { ITableData } from './Types';
+import styled from 'styled-components';
 
-const Table = ({ columns, data }: { columns: Column[]; data: ITableData[] }) => {
+const StyledTable = styled.table`
+  border-collapse: collapse;
+  border: 1px solid white;
+  margin: 10px;
+  width: 45%;
+  float: left;
+`;
+
+const StyledHead = styled.thead`
+  border-bottom: 1px solid white;
+  height: 40px;
+`;
+const StyledBody = styled.tbody`
+  text-align: center;
+`;
+const StyledRow = styled.tr`
+  border-bottom: 1px solid white;
+  height: 40px;
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const Table = ({ columns, data }: { columns: Column[]; data: any }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
     data,
   });
 
   return (
-    <table {...getTableProps()}>
-      <thead>
+    <StyledTable {...getTableProps()}>
+      <StyledHead>
         {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+          <StyledRow {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
             {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()} key={column.id}>
                 {column.render('Header')}
               </th>
             ))}
-          </tr>
+          </StyledRow>
         ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
+      </StyledHead>
+      <StyledBody {...getTableBodyProps()}>
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()} key={row.id}>
+            <StyledRow {...row.getRowProps()} key={row.id}>
               {row.cells.map((cell, index) => (
                 <td {...cell.getCellProps()} key={index}>
                   {cell.render('Cell')}
                 </td>
               ))}
-            </tr>
+            </StyledRow>
           );
         })}
-      </tbody>
-    </table>
+      </StyledBody>
+    </StyledTable>
   );
 };
 
