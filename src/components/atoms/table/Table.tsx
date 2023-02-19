@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import { Column, useTable } from 'react-table';
 import { ITableData } from './Types';
 
@@ -12,9 +11,11 @@ const Table = ({ columns, data }: { columns: Column[]; data: ITableData[] }) => 
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              <th {...column.getHeaderProps()} key={column.id}>
+                {column.render('Header')}
+              </th>
             ))}
           </tr>
         ))}
@@ -23,9 +24,11 @@ const Table = ({ columns, data }: { columns: Column[]; data: ITableData[] }) => 
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+            <tr {...row.getRowProps()} key={row.id}>
+              {row.cells.map((cell, index) => (
+                <td {...cell.getCellProps()} key={index}>
+                  {cell.render('Cell')}
+                </td>
               ))}
             </tr>
           );
