@@ -11,3 +11,7 @@
 input::placeholder {
   color: red;
 }
+
+.noMarginBottom {
+  margin-bottom: 0px;
+}

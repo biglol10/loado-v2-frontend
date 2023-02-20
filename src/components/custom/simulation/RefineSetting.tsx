@@ -1,8 +1,18 @@
 import React, { useMemo } from 'react';
 import { RefineSettingDiv } from '@pageStyled/SimulationStyled';
 import { Label } from '@components/atoms/label';
-import { Icon as SemanticIcon, Dropdown } from 'semantic-ui-react';
-import { loaImages } from '@consts/imgSrc';
+import { Icon as SemanticIcon, Dropdown, Button } from 'semantic-ui-react';
+import { loaImages, loaImagesType } from '@consts/imgSrc';
+import { Image } from '@components/atoms/image';
+import styled from 'styled-components';
+
+const refineTargetOption = Array.from({ length: 14 }, (v, i) => {
+  return {
+    key: `refineTargetKey_${i}`,
+    value: 12 + i,
+    text: `${12 + i} 단계`,
+  };
+});
 
 const RefineSetting = ({
   selectOptionParam,
@@ -19,12 +29,14 @@ const RefineSetting = ({
     }>
   >;
 }) => {
-  const dropdownOptions = useMemo(() => {
-    const imgSrc = {
-      weapon: `${selectOptionParam.option1}무기2` as any,
-      armour: `${selectOptionParam.option1}방어구2` as any,
-    };
+  const imgSrc = {
+    weapon: `${selectOptionParam.option1}무기`,
+    armour: `${selectOptionParam.option1}방어구`,
+    weapon2: `${selectOptionParam.option1}무기2`,
+    armour2: `${selectOptionParam.option1}방어구2`,
+  };
 
+  const dropdownOptions = useMemo(() => {
     const objValue = {
       option1: [
         {
@@ -50,8 +62,7 @@ const RefineSetting = ({
           value: '무기',
           image: {
             avatar: true,
-            // src: `${loaImages[`${selectOptionParam.option1}`]}`,
-            src: `${loaImages[imgSrc.weapon as keyof typeof loaImages]}`,
+            src: `${loaImages[imgSrc.weapon2 as loaImagesType]}`,
           },
         },
         {
@@ -60,14 +71,14 @@ const RefineSetting = ({
           value: '방어구',
           image: {
             avatar: true,
-            src: `${loaImages[imgSrc.armour as keyof typeof loaImages]}`,
+            src: `${loaImages[imgSrc.armour2 as loaImagesType]}`,
           },
         },
       ],
     };
 
     return objValue;
-  }, [selectOptionParam.option1]);
+  }, [imgSrc.armour2, imgSrc.weapon2]);
 
   return (
     <RefineSettingDiv>
@@ -77,7 +88,7 @@ const RefineSetting = ({
             basic={false}
             content="장비단계"
             iconOrImage="icon"
-            icon={<SemanticIcon name="tasks" />}
+            icon={<SemanticIcon name="dot circle outline" />}
             color="black"
             borderNone
             size="medium"
@@ -103,7 +114,7 @@ const RefineSetting = ({
             basic={false}
             content="무기/방어구"
             iconOrImage="icon"
-            icon={<SemanticIcon name="tasks" />}
+            icon={<SemanticIcon name="dot circle outline" />}
             color="black"
             borderNone
             size="medium"
@@ -123,6 +134,36 @@ const RefineSetting = ({
               });
             }}
           />
+        </div>
+      </div>
+      <br />
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px' }}>
+        <Image
+          src={
+            loaImages[
+              imgSrc[selectOptionParam.option2 === '무기' ? 'weapon' : 'armour'] as loaImagesType
+            ]
+          }
+          imageSize="small"
+          type="image"
+        />
+
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <h3 className="noMarginBottom" style={{ marginRight: '15px' }}>
+              현재 제련 단계:{' '}
+            </h3>
+            <Button.Group color="black">
+              <Button>Save</Button>
+              <Dropdown
+                className="button icon"
+                floating
+                options={refineTargetOption}
+                trigger={<></>}
+                scrolling
+              />
+            </Button.Group>
+          </div>
         </div>
       </div>
     </RefineSettingDiv>
