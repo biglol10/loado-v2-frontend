@@ -63,11 +63,13 @@ const commImg = Object.freeze({
   loadoIcon: `${commBaseFolder}/loado_logo.png`,
 });
 
-const loaImages = {
+const loaImages = Object.freeze({
   ...imgSrc,
   ...commImg,
-};
+});
 
 const loaImageNames = Object.keys(loaImages) as unknown as keyof typeof loaImages;
+
+export type loaImagesType = keyof typeof loaImages;
 
 export { loaImageNames, loaImages };
