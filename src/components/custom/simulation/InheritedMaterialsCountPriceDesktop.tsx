@@ -43,8 +43,6 @@ const InheritedMaterialsCountPriceDesktop = ({
     categoryObj3: '🛑 특수/융화 재료 (귀속)',
   };
 
-  console.log(`countOrPrice is ${countOrPrice}`);
-
   return (
     <>
       {Object.keys(countObjDashboard).map((countObj: string) => (
@@ -52,55 +50,7 @@ const InheritedMaterialsCountPriceDesktop = ({
           <h3 className="columnDiv_Title">
             {categoryTextMapping[countObj as keyof typeof categoryTextMapping]}
           </h3>
-          {Object.keys(countObjDashboard[countObj]).map((subObjKey: string) => {
-            return (
-              <InputLayout
-                key={`Input_${subObjKey}`}
-                inputLabel={
-                  <>
-                    <Image
-                      src={loaImages[subObjKey as keyof typeof loaImages]}
-                      imageSize="mini"
-                      type="image"
-                      circular={true}
-                    />
-                    <HeaderSpan>{subObjKey}</HeaderSpan>
-                  </>
-                }
-                inputLabelSize={'h5'}
-                showInputLabel={true}
-                stretch={false}
-              >
-                <InputDefaultNumber
-                  key="key"
-                  id={`ID_${subObjKey}`}
-                  placeholder={countOrPrice === 'count' ? subObjKey : ''}
-                  onChange={(obj: { value: string }) => {
-                    setCountObjDashboard((prev: any) => {
-                      const prevObj = structuredClone(prev);
-
-                      prevObj[countObj][subObjKey].count = obj.value;
-                      return prevObj;
-                    });
-                  }}
-                  value={
-                    countOrPrice === 'count'
-                      ? countObjDashboard[countObj][subObjKey].count
-                      : itemPriceInfoMapping[countObjDashboard[countObj][subObjKey].id]
-                    // countObjDashboard[countObj][subObjKey][
-                    //   countOrPrice === 'count'
-                    //     ? 'count'
-                    //     : itemPriceInfoMapping[countObjDashboard[countObj][subObjKey].id]
-                    // ]
-                  }
-                  type="number"
-                  disabled={countOrPrice === 'price'}
-                />
-              </InputLayout>
-            );
-          })}
-
-          {/* {Object.keys(countObjDashboard[countObj]).map((subObjKey: string) => (
+          {Object.keys(countObjDashboard[countObj]).map((subObjKey: string) => (
             <InputLayout
               key={`Input_${subObjKey}`}
               inputLabel={
@@ -121,7 +71,7 @@ const InheritedMaterialsCountPriceDesktop = ({
               <InputDefaultNumber
                 key="key"
                 id={`ID_${subObjKey}`}
-                placeholder={countOrPrice === 'count' ? subObjKey : '0'}
+                placeholder={countOrPrice === 'count' ? subObjKey : ''}
                 onChange={(obj: { value: string }) => {
                   setCountObjDashboard((prev: any) => {
                     const prevObj = structuredClone(prev);
@@ -133,18 +83,15 @@ const InheritedMaterialsCountPriceDesktop = ({
                 value={
                   countOrPrice === 'count'
                     ? countObjDashboard[countObj][subObjKey].count
-                    : itemPriceInfoMapping[countObjDashboard[countObj][subObjKey].id]
-                  // countObjDashboard[countObj][subObjKey][
-                  //   countOrPrice === 'count'
-                  //     ? 'count'
-                  //     : itemPriceInfoMapping[countObjDashboard[countObj][subObjKey].id]
-                  // ]
+                    : itemPriceInfoMapping[
+                        countObjDashboard[countObj][subObjKey].id
+                      ].toLocaleString()
                 }
                 type="number"
                 disabled={countOrPrice === 'price'}
               />
             </InputLayout>
-          ))} */}
+          ))}
         </ColumnDiv>
       ))}
     </>

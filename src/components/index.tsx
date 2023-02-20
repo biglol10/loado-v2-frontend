@@ -4,6 +4,7 @@ import {
   InputLayout,
   InputSearch,
   InputWithIcon,
+  InputDefaultNumber,
 } from './atoms/input';
 import { Box } from './atoms/box';
 import { Button } from './atoms/button';
@@ -24,6 +25,7 @@ export {
   InputLayout,
   InputSearch,
   InputWithIcon,
+  InputDefaultNumber,
   Button,
   Box,
   List,

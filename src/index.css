@@ -5,3 +5,8 @@
   line-height: 1.5;
   color: white;
 }
+
+/* Semantic UI dropdown options */
+.ui.dropdown .menu > .item > span {
+  color: black !important;
+}

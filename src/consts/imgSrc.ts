@@ -44,6 +44,18 @@ const imgSrc = Object.freeze({
   골드2: `${itemBaseFolder}/골드2.webp`,
   전설각인서: `${itemBaseFolder}/legendBook.webp`,
   전설각인서배경X: `${itemBaseFolder}/legendBook2.webp`,
+  아브노말무기: `${itemBaseFolder}/아브노말무기.png`,
+  아브노말무기2: `${itemBaseFolder}/아브노말무기2.png`,
+  아브노말방어구: `${itemBaseFolder}/아브노말방어구.png`,
+  아브노말방어구2: `${itemBaseFolder}/아브노말방어구2.png`,
+  아브하드무기: `${itemBaseFolder}/아브하드무기.png`,
+  아브하드무기2: `${itemBaseFolder}/아브하드무기2.png`,
+  아브하드방어구: `${itemBaseFolder}/아브하드방어구.png`,
+  아브하드방어구2: `${itemBaseFolder}/아브하드방어구2.png`,
+  일리아칸무기: `${itemBaseFolder}/일리아칸무기.png`,
+  일리아칸무기2: `${itemBaseFolder}/일리아칸무기2.png`,
+  일리아칸방어구: `${itemBaseFolder}/일리아칸방어구.png`,
+  일리아칸방어구2: `${itemBaseFolder}/일리아칸방어구2.png`,
 });
 
 const commImg = Object.freeze({

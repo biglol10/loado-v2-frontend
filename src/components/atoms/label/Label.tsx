@@ -1,5 +1,6 @@
 import { Icon, Label as SemanticLabel } from 'semantic-ui-react';
 import styled from 'styled-components';
+
 import { ILabel } from './Types';
 
 const StyledLabel = styled(SemanticLabel)`

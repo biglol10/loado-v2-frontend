@@ -57,6 +57,7 @@ export interface IInputDropdown {
   error?: boolean;
   onEnter?: Function;
   keyboardInput?: boolean;
+  compact?: boolean;
 }
 
 // ? Types in InputLayout component

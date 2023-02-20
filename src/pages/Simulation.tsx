@@ -1,35 +1,23 @@
-import { useState, useEffect, useMemo } from 'react';
-import { InputDefaultNumber } from '@components/atoms/input';
+import { useEffect, useMemo, useState } from 'react';
+// import { InputDefaultNumber } from '@components/atoms/input';
 import Tooltip from '@components/atoms/tooltip/Tooltip';
 import {
-  InputDefault,
-  InputLayout,
   Image,
   InheritedMaterialsCountPriceDesktop,
+  InputDefault,
+  InputDropdown,
+  InputLayout,
+  Label,
   RadioButtonGroup,
+  InputDefaultNumber,
 } from '@components/index';
 import { loaImages } from '@consts/imgSrc';
-import styled from 'styled-components';
-import { itemNameMatch, itemNameArr } from '@consts/itemNameMatch';
-import { useQuery, useQueries } from '@tanstack/react-query';
-import { getSingleItemPrice, getAllItemPrice } from '@services/ItemPriceService';
-
-const InheritedMaterials = styled.div`
-  border: 1px solid slategrey;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(
-    ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '3'},
-    1fr
-  );
-  padding: 10px 0;
-`;
-
-const H3NoMargin = styled.h3`
-  margin-bottom: 0px;
-  margin-right: 20px;
-`;
-
+import { itemNameArr, itemNameMatch } from '@consts/itemNameMatch';
+import { H3NoMargin, InheritedMaterials, RefineSettingDiv } from '@pageStyled/SimulationStyled';
+import { getAllItemPrice, getSingleItemPrice } from '@services/ItemPriceService';
+import { useQueries, useQuery } from '@tanstack/react-query';
+import { Icon as SemanticIcon, Dropdown } from 'semantic-ui-react';
+import RefineSetting from '@components/custom/simulation/RefineSetting';
 // height: 250px;
 // overflow-y: auto;
 
@@ -123,6 +111,42 @@ const Simulation = () => {
     },
   });
 
+  const dropdownOptions = useMemo(() => {
+    const objValue = {
+      option1: [
+        {
+          key: '아브노말',
+          text: '아브노말',
+          value: '아브노말',
+        },
+        {
+          key: '아브하드',
+          text: '아브하드',
+          value: '아브하드',
+        },
+        {
+          key: '일리아칸',
+          text: '일리아칸',
+          value: '일리아칸',
+        },
+      ],
+      option2: [
+        {
+          key: '무기',
+          text: '무기',
+          value: '무기',
+        },
+        {
+          key: '방어구',
+          text: '방어구',
+          value: '방어구',
+        },
+      ],
+    };
+
+    return objValue;
+  }, []);
+
   const itemsQuery = useQuery({
     queryKey: ['itemsPrice'],
     queryFn: getAllItemPrice,
@@ -132,8 +156,6 @@ const Simulation = () => {
     },
     staleTime: 1000 * 3600,
   });
-
-  console.log(itemsQuery);
 
   const itemPriceInfoMapping = useMemo(() => {
     if (itemsQuery.status === 'success') {
@@ -151,6 +173,10 @@ const Simulation = () => {
   }, [itemsQuery]);
 
   const [selectedValue, setSelectedValue] = useState('count');
+  const [selectOptionParam, setSelectOptionParam] = useState({
+    option1: '아브노말',
+    option2: '무기',
+  });
 
   return (
     <div>
@@ -175,6 +201,12 @@ const Simulation = () => {
           itemPriceInfoMapping={itemPriceInfoMapping}
         />
       </InheritedMaterials>
+
+      <br />
+      <RefineSetting
+        selectOptionParam={selectOptionParam}
+        setSelectOptionParam={setSelectOptionParam}
+      />
     </div>
   );
 };
