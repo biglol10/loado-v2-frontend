@@ -8,7 +8,8 @@ const InheritedMaterials = styled.div`
     ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '3'},
     1fr
   );
-  padding: 10px 0;
+  gap: 10px;
+  padding: 10px 20px;
 `;
 
 const RefineSettingDiv = styled.div`

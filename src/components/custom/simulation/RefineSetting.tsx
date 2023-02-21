@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { RefineSettingDiv } from '@pageStyled/SimulationStyled';
 import { Label } from '@components/atoms/label';
 import { Icon as SemanticIcon, Dropdown, Button } from 'semantic-ui-react';
@@ -80,6 +80,8 @@ const RefineSetting = ({
     return objValue;
   }, [imgSrc.armour2, imgSrc.weapon2]);
 
+  const [refineCurrent, setRefineCurrent] = useState('12');
+
   return (
     <RefineSettingDiv>
       <div style={{ display: 'flex' }}>
@@ -151,16 +153,19 @@ const RefineSetting = ({
         <div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <h3 className="noMarginBottom" style={{ marginRight: '15px' }}>
-              현재 제련 단계:{' '}
+              제련 단계:{' '}
             </h3>
             <Button.Group color="black">
-              <Button>Save</Button>
+              <Button>{refineCurrent} 단계</Button>
               <Dropdown
                 className="button icon"
                 floating
                 options={refineTargetOption}
                 trigger={<></>}
                 scrolling
+                onChange={(e, data) => {
+                  setRefineCurrent(`${data.value}`);
+                }}
               />
             </Button.Group>
           </div>

@@ -4,7 +4,6 @@ import { loaImages } from '@consts/imgSrc';
 import styled from 'styled-components';
 
 const ColumnDiv = styled.div`
-  padding: 2px 20px;
   display: grid;
   grid-template-columns: repeat(
     ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '3'},
