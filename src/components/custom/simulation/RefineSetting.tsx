@@ -1,15 +1,21 @@
 import React, { useMemo, useState } from 'react';
 import { RefineSettingDiv } from '@pageStyled/SimulationStyled';
-import { Label } from '@components/atoms/label';
-import { Icon as SemanticIcon, Dropdown, Button } from 'semantic-ui-react';
+import { Image } from '@components/index';
+import {
+  Icon as SemanticIcon,
+  Dropdown,
+  Button,
+  Icon,
+  Label,
+  Image as SemanticImage,
+} from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
-import { Image } from '@components/atoms/image';
 import styled from 'styled-components';
 
 const refineTargetOption = Array.from({ length: 14 }, (v, i) => {
   return {
     key: `refineTargetKey_${i}`,
-    value: 12 + i,
+    value: `${12 + i}`,
     text: `${12 + i} 단계`,
   };
 });
@@ -137,6 +143,28 @@ const RefineSetting = ({
             }}
           />
         </div>
+        <div style={{ marginLeft: '30px' }}>
+          <Label
+            basic={false}
+            content="제련단계"
+            iconOrImage="icon"
+            icon={<SemanticIcon name="dot circle outline" />}
+            color="black"
+            borderNone
+            size="medium"
+          />
+          <br />
+          <Dropdown
+            value={`${refineCurrent}`}
+            compact
+            options={refineTargetOption}
+            style={{ marginTop: '15px' }}
+            onChange={(e, data) => {
+              setRefineCurrent(`${data.value}`);
+            }}
+            scrolling
+          />
+        </div>
       </div>
       <br />
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px' }}>
@@ -151,7 +179,7 @@ const RefineSetting = ({
         />
 
         <div>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          {/* <div style={{ display: 'flex', alignItems: 'center' }}>
             <h3 className="noMarginBottom" style={{ marginRight: '15px' }}>
               제련 단계:{' '}
             </h3>
@@ -168,7 +196,35 @@ const RefineSetting = ({
                 }}
               />
             </Button.Group>
+          </div> */}
+          <div style={{ display: 'flex' }}>
+            <Label color="black" style={{ fontSize: '1rem' }}>
+              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
+              Elliot
+            </Label>
+            <Label color="black" style={{ fontSize: '1rem' }}>
+              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
+              Elliot
+            </Label>
+            <Label color="black" style={{ fontSize: '1rem' }}>
+              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
+              Elliot
+            </Label>
           </div>
+          {/* <div style={{ display: 'flex' }}>
+            <Label color="black" style={{ fontSize: '1rem' }}>
+              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
+              Elliot
+            </Label>
+            <Label color="black" style={{ fontSize: '1rem' }}>
+              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
+              Elliot
+            </Label>
+            <Label color="black" style={{ fontSize: '1rem' }}>
+              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
+              Elliot
+            </Label>
+          </div> */}
         </div>
       </div>
     </RefineSettingDiv>

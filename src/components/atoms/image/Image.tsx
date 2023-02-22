@@ -7,7 +7,7 @@ interface IImage {
   src?: keyof typeof loaImages | string | null;
   alt?: string;
   type: 'image' | 'a';
-  imageSize: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
+  imageSize: 'mini' | 'tiny' | 'small' | 'medium' | 'large' | 'big' | 'huge' | 'massive';
   href?: string;
   target?: '_blank';
   hidden?: boolean;

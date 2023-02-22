@@ -13,4 +13,5 @@ export interface ILabel {
   spacing?: number;
   paddingNone?: boolean;
   className?: string;
+  backgroundNone?: string;
 }

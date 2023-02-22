@@ -188,7 +188,7 @@ const Simulation = () => {
             { label: '재료가격', value: 'price' },
           ]}
           selectedValue={selectedValue}
-          onChange={(value: any) => setSelectedValue(value)}
+          onChange={(value: string) => setSelectedValue(value)}
         />
       </div>
       <br />

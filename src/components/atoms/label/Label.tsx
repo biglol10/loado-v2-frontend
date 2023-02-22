@@ -7,7 +7,7 @@ const StyledLabel = styled(SemanticLabel)`
   border: ${({ borderNone }) => (borderNone ? 'none' : '')};
   margin-top: ${({ spacing }) => `${spacing}px`};
   color: ${({ color }) => color};
-  background: none;
+  background: ${({ backgroundNone }) => (backgroundNone === 'Y' ? 'none !important' : 'none')}
   padding: ${({ paddingNone }) => (paddingNone ? '0px' : 'auto')};
 `;
 
@@ -23,6 +23,7 @@ const Label = ({
   size = 'small',
   spacing = 0,
   paddingNone = false,
+  backgroundNone = 'N',
 }: ILabel) => {
   return (
     <StyledLabel
@@ -34,10 +35,11 @@ const Label = ({
       borderNone={borderNone}
       spacing={spacing}
       paddingNone={paddingNone}
+      backgroundNone={backgroundNone}
     >
+      {content}
       {iconOrImage === 'icon' && icon}
       {iconOrImage === 'image' && nextImage}
-      {content}
     </StyledLabel>
   );
 };
