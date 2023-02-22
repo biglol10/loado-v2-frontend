@@ -1,5 +1,5 @@
-const requiredRefineMaterials = {
-  abrelNormal: {
+const requiredRefineMaterials: any = {
+  AbrelNormal: {
     weapon: {
       weapon12: {
         weaponStone1: 650,
@@ -149,7 +149,7 @@ const requiredRefineMaterials = {
       },
     },
   },
-  abrelHard: {
+  AbrelHard: {
     weapon: {
       weapon12: {
         weaponStone1: 650,

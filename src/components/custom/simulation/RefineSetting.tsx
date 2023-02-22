@@ -10,6 +10,7 @@ import {
   Image as SemanticImage,
 } from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
+import requiredRefineMaterials from '@consts/requiredRefineMaterials';
 import styled from 'styled-components';
 
 // const refineTargetOption = Array.from({ length: 14 }, (v, i) => {
@@ -19,6 +20,28 @@ import styled from 'styled-components';
 //     text: `${12 + i} 단계`,
 //   };
 // });
+
+const option1KeyMatch = {
+  아브노말: 'AbrelNormal',
+  아브하드: 'AbrelHard',
+  일리아칸: 'Illiakan',
+};
+
+const option2KeyMatch = {
+  무기: 'weapon',
+  방어구: 'armour',
+};
+
+const refineItemKeyMatch = {
+  weaponStone1: '파괴강석',
+  leapstone1: '경명돌',
+  fusionMaterial1: '상급오레하',
+  weaponStone2: '정제된파괴강석',
+  leapstone2: '찬명돌',
+  fusionMaterial2: '최상급오레하',
+  honorShard: '명예의파편',
+  gold: '골드2',
+};
 
 const RefineSetting = ({
   selectOptionParam,
@@ -35,6 +58,8 @@ const RefineSetting = ({
     }>
   >;
 }) => {
+  const [refineCurrent, setRefineCurrent] = useState('12');
+
   const imgSrc = {
     weapon: `${selectOptionParam.option1}무기`,
     armour: `${selectOptionParam.option1}방어구`,
@@ -89,7 +114,7 @@ const RefineSetting = ({
   const refineTargetOption = useMemo(() => {
     const arr = Array.from(
       { length: 14 - (selectOptionParam.option1 === '아브노말' ? 5 : 0) },
-      (v, i) => {
+      (_, i) => {
         return {
           key: `refineTargetKey_${i}`,
           value: `${12 + i}`,
@@ -101,7 +126,14 @@ const RefineSetting = ({
     return arr;
   }, [selectOptionParam.option1]);
 
-  const [refineCurrent, setRefineCurrent] = useState('12');
+  const refineMaterialsMatch = useMemo(() => {
+    const itemRank = option1KeyMatch[selectOptionParam.option1 as keyof typeof option1KeyMatch];
+    const weaponOrArmour =
+      option2KeyMatch[selectOptionParam.option2 as keyof typeof option2KeyMatch];
+    const refineNumber = refineCurrent;
+
+    return requiredRefineMaterials[itemRank][weaponOrArmour][`${weaponOrArmour}${refineNumber}`];
+  }, [refineCurrent, selectOptionParam.option1, selectOptionParam.option2]);
 
   return (
     <RefineSettingDiv>
