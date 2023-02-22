@@ -71,5 +71,9 @@ const App = () => {
 
 export default App;
 
+// The code you've provided will dynamically load and render pages/components when the corresponding route is requested, similar to how Next.js works.
+// When a user navigates to a certain route, the code will dynamically load the required page/component with the lazy function and render it on the page. This helps to improve the initial load time of the application by only loading the necessary code and resources on demand.
+// However, Next.js offers some additional optimizations, such as server-side rendering and automatic code-splitting, which can further improve the performance of your application. But the approach you've taken is a step towards improving the performance of your application.
+
 // Move the lazy and Suspense components outside the Route component loop. Since lazy is only evaluated once at runtime, there's no need to create it multiple times for each route.
 // Instead of using a ternary operator to conditionally render the LayoutComponent, you can use a variable to store the JSX elements for the dynamic import and then wrap them with the LayoutComponent if it exists. This will make the code more readable and easier to follow.
