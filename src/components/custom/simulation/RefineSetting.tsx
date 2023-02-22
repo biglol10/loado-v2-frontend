@@ -12,13 +12,13 @@ import {
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import styled from 'styled-components';
 
-const refineTargetOption = Array.from({ length: 14 }, (v, i) => {
-  return {
-    key: `refineTargetKey_${i}`,
-    value: `${12 + i}`,
-    text: `${12 + i} 단계`,
-  };
-});
+// const refineTargetOption = Array.from({ length: 14 }, (v, i) => {
+//   return {
+//     key: `refineTargetKey_${i}`,
+//     value: `${12 + i}`,
+//     text: `${12 + i} 단계`,
+//   };
+// });
 
 const RefineSetting = ({
   selectOptionParam,
@@ -85,6 +85,21 @@ const RefineSetting = ({
 
     return objValue;
   }, [imgSrc.armour2, imgSrc.weapon2]);
+
+  const refineTargetOption = useMemo(() => {
+    const arr = Array.from(
+      { length: 14 - (selectOptionParam.option1 === '아브노말' ? 5 : 0) },
+      (v, i) => {
+        return {
+          key: `refineTargetKey_${i}`,
+          value: `${12 + i}`,
+          text: `${12 + i} 단계`,
+        };
+      },
+    );
+
+    return arr;
+  }, [selectOptionParam.option1]);
 
   const [refineCurrent, setRefineCurrent] = useState('12');
 

@@ -40,43 +40,36 @@ const App = () => {
 
   const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
 
+  const RouteElements = RouteElementMatch.map((el, idx) => {
+    const DynamicElement = lazy(() => import(`${el.elementPath}`));
+    const routeElement = <DynamicElement />;
+    const element = el.layout ? (
+      <el.layout>
+        {routeElement}
+        <DynamicModal />
+        {isShowLoading && <CenteredLoader useDimmer={true} />}
+      </el.layout>
+    ) : (
+      <>
+        {routeElement}
+        <DynamicModal />
+        {isShowLoading && <CenteredLoader useDimmer={true} />}
+      </>
+    );
+
+    return <Route key={`pageElement_${idx}`} path={el.path} element={element} />;
+  });
+
   return (
     <Router basename={publicUrl}>
       <Suspense fallback={<CenteredLoader />}>
-        <Routes>
-          {RouteElementMatch.map((el, idx) => {
-            const DynamicElement = lazy(() => import(`${el.elementPath}`)); // 백틱으로 넣어야 작동
-            // const DynamicModal = lazy(() => import('@components/modal'));
-            const LayoutComponent = el.layout;
-
-            return (
-              <Route
-                key={`pageElement_${idx}`}
-                path={el.path}
-                element={
-                  <>
-                    {LayoutComponent ? (
-                      <LayoutComponent>
-                        <DynamicElement />
-                        <DynamicModal />
-                        {isShowLoading && <CenteredLoader useDimmer={true} />}
-                      </LayoutComponent>
-                    ) : (
-                      <>
-                        <DynamicElement />
-                        <DynamicModal />
-                        {isShowLoading && <CenteredLoader useDimmer={true} />}
-                      </>
-                    )}
-                  </>
-                }
-              />
-            );
-          })}
-        </Routes>
+        <Routes>{RouteElements}</Routes>
       </Suspense>
     </Router>
   );
 };
 
 export default App;
+
+// Move the lazy and Suspense components outside the Route component loop. Since lazy is only evaluated once at runtime, there's no need to create it multiple times for each route.
+// Instead of using a ternary operator to conditionally render the LayoutComponent, you can use a variable to store the JSX elements for the dynamic import and then wrap them with the LayoutComponent if it exists. This will make the code more readable and easier to follow.
