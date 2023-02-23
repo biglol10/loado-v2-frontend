@@ -30,6 +30,7 @@ const InputDefaultNumber = forwardRef<{ inputElement: Input | undefined }, IInpu
       error = false,
       onEnter = null,
       transparent = false,
+      fluid = false,
     },
     ref,
   ) => {
@@ -54,6 +55,7 @@ const InputDefaultNumber = forwardRef<{ inputElement: Input | undefined }, IInpu
         onKeyUp={(evt: KeyboardEvent) => evt.key === 'Enter' && onEnter && onEnter()}
         transparent={transparent}
         defaultValue={value}
+        fluid={fluid}
       />
     );
   },

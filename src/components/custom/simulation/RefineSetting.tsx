@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { RefineSettingDiv } from '@pageStyled/SimulationStyled';
-import { Image } from '@components/index';
+import { Image, CheckboxListDefault } from '@components/index';
 import {
   Icon as SemanticIcon,
   Dropdown,
@@ -13,14 +13,6 @@ import {
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import requiredRefineMaterials from '@consts/requiredRefineMaterials';
 import styled from 'styled-components';
-
-// const refineTargetOption = Array.from({ length: 14 }, (v, i) => {
-//   return {
-//     key: `refineTargetKey_${i}`,
-//     value: `${12 + i}`,
-//     text: `${12 + i} 단계`,
-//   };
-// });
 
 const option1KeyMatch = {
   아브노말: 'AbrelNormal',
@@ -168,142 +160,167 @@ const RefineSetting = ({
 
   return (
     <RefineSettingDiv>
-      <div style={{ display: 'flex' }}>
-        <div>
-          <Label
-            basic={false}
-            content="장비단계"
-            iconOrImage="icon"
-            icon={<SemanticIcon name="dot circle outline" />}
-            color="black"
-            borderNone
-            size="medium"
-          />
-          <br />
-          <Dropdown
-            value={selectOptionParam.option1}
-            compact
-            options={dropdownOptions.option1}
-            style={{ marginTop: '15px' }}
-            onChange={(_, data) => {
-              setSelectOptionParam((prev) => {
-                return {
-                  ...prev,
-                  option1: data.value as string,
-                };
-              });
-            }}
-          />
+      <div style={{ minWidth: '600px' }}>
+        <div style={{ display: 'flex' }}>
+          <div>
+            <Label
+              basic={false}
+              content="장비단계"
+              iconOrImage="icon"
+              icon={<SemanticIcon name="dot circle outline" />}
+              color="black"
+              borderNone
+              size="medium"
+            />
+            <br />
+            <Dropdown
+              value={selectOptionParam.option1}
+              compact
+              options={dropdownOptions.option1}
+              style={{ marginTop: '15px' }}
+              onChange={(_, data) => {
+                setSelectOptionParam((prev) => {
+                  return {
+                    ...prev,
+                    option1: data.value as string,
+                  };
+                });
+              }}
+            />
+          </div>
+          <div style={{ marginLeft: '30px' }}>
+            <Label
+              basic={false}
+              content="무기/방어구"
+              iconOrImage="icon"
+              icon={<SemanticIcon name="dot circle outline" />}
+              color="black"
+              borderNone
+              size="medium"
+            />
+            <br />
+            <Dropdown
+              value={selectOptionParam.option2}
+              compact
+              options={dropdownOptions.option2}
+              style={{ marginTop: '15px' }}
+              onChange={(_, data) => {
+                setSelectOptionParam((prev) => {
+                  return {
+                    ...prev,
+                    option2: data.value as string,
+                  };
+                });
+              }}
+            />
+          </div>
+          <div style={{ marginLeft: '30px' }}>
+            <Label
+              basic={false}
+              content="제련단계"
+              iconOrImage="icon"
+              icon={<SemanticIcon name="dot circle outline" />}
+              color="black"
+              borderNone
+              size="medium"
+            />
+            <br />
+            <Dropdown
+              value={`${refineCurrent}`}
+              compact
+              options={refineTargetOption}
+              style={{ marginTop: '15px' }}
+              onChange={(_, data) => {
+                setRefineCurrent(`${data.value}`);
+              }}
+              scrolling
+            />
+          </div>
+          <div style={{ marginLeft: '30px' }}>
+            <Label
+              basic={false}
+              content="제련단계"
+              iconOrImage="icon"
+              icon={<SemanticIcon name="dot circle outline" />}
+              color="black"
+              borderNone
+              size="medium"
+            />
+            <br />
+            <div
+              style={{
+                marginTop: '15px',
+                fontSize: '1.1rem',
+                fontWeight: 'bold',
+                color: 'yellow',
+              }}
+            >
+              {refineMaterialsMatch.probability}%
+            </div>
+          </div>
         </div>
-        <div style={{ marginLeft: '30px' }}>
-          <Label
-            basic={false}
-            content="무기/방어구"
-            iconOrImage="icon"
-            icon={<SemanticIcon name="dot circle outline" />}
-            color="black"
-            borderNone
-            size="medium"
+        <br />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px' }}>
+          <Image
+            src={
+              loaImages[
+                imgSrc[selectOptionParam.option2 === '무기' ? 'weapon' : 'armour'] as loaImagesType
+              ]
+            }
+            imageSize="small"
+            type="image"
           />
-          <br />
-          <Dropdown
-            value={selectOptionParam.option2}
-            compact
-            options={dropdownOptions.option2}
-            style={{ marginTop: '15px' }}
-            onChange={(e, data) => {
-              setSelectOptionParam((prev) => {
-                return {
-                  ...prev,
-                  option2: data.value as string,
-                };
-              });
-            }}
-          />
-        </div>
-        <div style={{ marginLeft: '30px' }}>
-          <Label
-            basic={false}
-            content="제련단계"
-            iconOrImage="icon"
-            icon={<SemanticIcon name="dot circle outline" />}
-            color="black"
-            borderNone
-            size="medium"
-          />
-          <br />
-          <Dropdown
-            value={`${refineCurrent}`}
-            compact
-            options={refineTargetOption}
-            style={{ marginTop: '15px' }}
-            onChange={(_, data) => {
-              setRefineCurrent(`${data.value}`);
-            }}
-            scrolling
-          />
-        </div>
-        <div style={{ marginLeft: '30px' }}>
-          <Label
-            basic={false}
-            content="제련단계"
-            iconOrImage="icon"
-            icon={<SemanticIcon name="dot circle outline" />}
-            color="black"
-            borderNone
-            size="medium"
-          />
-          <br />
-          <div
-            style={{
-              marginTop: '15px',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              color: 'yellow',
-            }}
-          >
-            {refineMaterialsMatch.probability}%
+
+          <div>
+            <div style={{ display: 'flex' }}>
+              <Label color="black" style={{ fontSize: '1rem' }}>
+                <SemanticImage
+                  avatar
+                  spaced="right"
+                  src={refineMaterialsMatch.mat1Img}
+                  size="big"
+                />
+                {refineMaterialsMatch.mat1.toLocaleString()}
+              </Label>
+              <Label color="black" style={{ fontSize: '1rem' }}>
+                <SemanticImage
+                  avatar
+                  spaced="right"
+                  src={refineMaterialsMatch.mat2Img}
+                  size="big"
+                />
+                {refineMaterialsMatch.mat2}
+              </Label>
+              <Label color="black" style={{ fontSize: '1rem' }}>
+                <SemanticImage
+                  avatar
+                  spaced="right"
+                  src={refineMaterialsMatch.mat3Img}
+                  size="big"
+                />
+                {refineMaterialsMatch.mat3}
+              </Label>
+            </div>
+            <div style={{ display: 'flex', marginTop: '5px' }}>
+              <Label color="black" style={{ fontSize: '1rem' }}>
+                <SemanticImage avatar spaced="right" src={loaImages['명예의파편']} size="big" />
+                {refineMaterialsMatch.honorShard.toLocaleString()}
+              </Label>
+              <Label color="black" style={{ fontSize: '1rem' }}>
+                <SemanticImage
+                  avatar
+                  spaced="right"
+                  src={refineMaterialsMatch.mat2Img}
+                  size="big"
+                />
+                {refineMaterialsMatch.mat2}
+              </Label>
+            </div>
           </div>
         </div>
       </div>
-      <br />
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px' }}>
-        <Image
-          src={
-            loaImages[
-              imgSrc[selectOptionParam.option2 === '무기' ? 'weapon' : 'armour'] as loaImagesType
-            ]
-          }
-          imageSize="small"
-          type="image"
-        />
-
-        <div>
-          <div style={{ display: 'flex' }}>
-            <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat1Img} size="big" />
-              {refineMaterialsMatch.mat1.toLocaleString()}
-            </Label>
-            <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat2Img} size="big" />
-              {refineMaterialsMatch.mat2}
-            </Label>
-            <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat3Img} size="big" />
-              {refineMaterialsMatch.mat3}
-            </Label>
-          </div>
-          <div style={{ display: 'flex', marginTop: '5px' }}>
-            <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={loaImages['명예의파편']} size="big" />
-              {refineMaterialsMatch.honorShard.toLocaleString()}
-            </Label>
-            <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat2Img} size="big" />
-              {refineMaterialsMatch.mat2}
-            </Label>
-          </div>
-        </div>
+      <div style={{ width: '500px' }}>
+        <CheckboxListDefault />
       </div>
     </RefineSettingDiv>
   );

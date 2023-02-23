@@ -14,9 +14,8 @@ import {
 import { loaImages } from '@consts/imgSrc';
 import { itemNameArr, itemNameMatch } from '@consts/itemNameMatch';
 import { H3NoMargin, InheritedMaterials, RefineSettingDiv } from '@pageStyled/SimulationStyled';
-import { getAllItemPrice, getSingleItemPrice } from '@services/ItemPriceService';
-import { useQueries, useQuery } from '@tanstack/react-query';
-import { Icon as SemanticIcon, Dropdown } from 'semantic-ui-react';
+import { getAllItemPrice } from '@services/ItemPriceService';
+import { useQuery } from '@tanstack/react-query';
 import RefineSetting from '@components/custom/simulation/RefineSetting';
 // height: 250px;
 // overflow-y: auto;

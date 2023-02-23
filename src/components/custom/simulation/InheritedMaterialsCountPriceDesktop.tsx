@@ -11,10 +11,21 @@ const ColumnDiv = styled.div`
   );
   grid-row-gap: 15px;
 
+  @media (max-width: 750px) {
+    grid-template-columns: repeat(
+      ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '2'},
+      1fr
+    );
+  }
+
   .columnDiv_Title {
     grid-column: span ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '3'};
     padding: 2px 20px;
     margin: 0px;
+
+    @media (max-width: 750px) {
+      grid-column: span ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '2'};
+    }
   }
 
   ::-webkit-scrollbar-thumb {
@@ -88,6 +99,7 @@ const InheritedMaterialsCountPriceDesktop = ({
                 }
                 type="number"
                 disabled={countOrPrice === 'price'}
+                fluid={true}
               />
             </InputLayout>
           ))}

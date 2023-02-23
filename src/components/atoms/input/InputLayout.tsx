@@ -18,6 +18,7 @@ import { IInputLayout } from './Types';
 const StyledInputLayout = styled.div<IInputLayout>`
   margin-top: ${(props) => `${props.spacing || 0}px`};
   width: ${(props) => (props.stretch ? '100%' : 'auto')};
+  padding-right: 10px;
 `;
 
 const StyledInputLabelHeader = styled(Header)`

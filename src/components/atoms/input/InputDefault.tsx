@@ -30,6 +30,7 @@ const InputDefault = forwardRef<{ inputElement: Input | undefined }, IInputDefau
       error = false,
       onEnter = null,
       transparent = false,
+      fluid = false,
     },
     ref,
   ) => {
@@ -53,6 +54,7 @@ const InputDefault = forwardRef<{ inputElement: Input | undefined }, IInputDefau
         stretch={stretch}
         onKeyUp={(evt: KeyboardEvent) => evt.key === 'Enter' && onEnter && onEnter()}
         transparent={transparent}
+        fluid={fluid}
       />
     );
   },

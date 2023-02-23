@@ -10,12 +10,19 @@ const InheritedMaterials = styled.div`
   );
   gap: 10px;
   padding: 10px 20px;
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    grid-template-columns: 2fr;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const RefineSettingDiv = styled.div`
   border: 1px solid slategrey;
   display: flex;
-  flex-direction: column;
   padding: 10px 20px;
 `;
 

@@ -14,7 +14,7 @@ import { SharpDivider } from './atoms/sharpDivider';
 import { Tabs, TabHeader, Tab, TabPanels, TabPanel } from './atoms/tab';
 import { Toggle } from './atoms/toggle';
 import ModalPopup from './modal';
-import { CheckboxDefault } from './atoms/checkbox';
+import { CheckboxDefault, CheckboxListDefault } from './atoms/checkbox';
 import { Avatar, Image } from './atoms/image';
 import InheritedMaterialsCountPriceDesktop from './custom/simulation/InheritedMaterialsCountPriceDesktop';
 import RadioButtonGroup from './atoms/radioButton/RadioButtonGroup';
@@ -39,6 +39,7 @@ export {
   Toggle,
   ModalPopup,
   CheckboxDefault,
+  CheckboxListDefault,
   Avatar,
   Image,
   InheritedMaterialsCountPriceDesktop,

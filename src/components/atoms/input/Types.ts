@@ -20,6 +20,7 @@ export interface IInputDefault {
   onEnter?: Function;
   clearInputValue?: Function;
   transparent?: boolean;
+  fluid?: boolean;
 }
 
 export interface IInputDefaultNumber {
@@ -40,6 +41,7 @@ export interface IInputDefaultNumber {
   onEnter?: Function;
   clearInputValue?: Function;
   transparent?: boolean;
+  fluid?: boolean;
 }
 
 // ? Types in InputDropdown component
