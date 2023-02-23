@@ -111,42 +111,6 @@ const Simulation = () => {
     },
   });
 
-  const dropdownOptions = useMemo(() => {
-    const objValue = {
-      option1: [
-        {
-          key: '아브노말',
-          text: '아브노말',
-          value: '아브노말',
-        },
-        {
-          key: '아브하드',
-          text: '아브하드',
-          value: '아브하드',
-        },
-        {
-          key: '일리아칸',
-          text: '일리아칸',
-          value: '일리아칸',
-        },
-      ],
-      option2: [
-        {
-          key: '무기',
-          text: '무기',
-          value: '무기',
-        },
-        {
-          key: '방어구',
-          text: '방어구',
-          value: '방어구',
-        },
-      ],
-    };
-
-    return objValue;
-  }, []);
-
   const itemsQuery = useQuery({
     queryKey: ['itemsPrice'],
     queryFn: getAllItemPrice,

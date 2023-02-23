@@ -8,6 +8,7 @@ import {
   Icon,
   Label,
   Image as SemanticImage,
+  Input,
 } from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import requiredRefineMaterials from '@consts/requiredRefineMaterials';
@@ -34,9 +35,11 @@ const option2KeyMatch = {
 
 const refineItemKeyMatch = {
   weaponStone1: '파괴강석',
+  armourStone1: '수호강석',
   leapstone1: '경명돌',
   fusionMaterial1: '상급오레하',
   weaponStone2: '정제된파괴강석',
+  armourStone2: '정제된수호강석',
   leapstone2: '찬명돌',
   fusionMaterial2: '최상급오레하',
   honorShard: '명예의파편',
@@ -130,10 +133,38 @@ const RefineSetting = ({
     const itemRank = option1KeyMatch[selectOptionParam.option1 as keyof typeof option1KeyMatch];
     const weaponOrArmour =
       option2KeyMatch[selectOptionParam.option2 as keyof typeof option2KeyMatch];
-    const refineNumber = refineCurrent;
+    const materialRank = itemRank.includes('Abrel') ? '1' : '2';
 
-    return requiredRefineMaterials[itemRank][weaponOrArmour][`${weaponOrArmour}${refineNumber}`];
-  }, [refineCurrent, selectOptionParam.option1, selectOptionParam.option2]);
+    const refineNumber =
+      itemRank.includes('AbrelNormal') && refineCurrent > '20' ? '20' : refineCurrent;
+    const extracted =
+      requiredRefineMaterials[itemRank][weaponOrArmour][`${weaponOrArmour}${refineNumber}`];
+
+    const returnedObj = {
+      mat1: extracted[`${weaponOrArmour}Stone${materialRank}`],
+      mat1Img:
+        loaImages[
+          refineItemKeyMatch[
+            `${weaponOrArmour}Stone${materialRank}` as keyof typeof refineItemKeyMatch
+          ] as keyof typeof loaImages
+        ],
+      mat2: extracted[`leapstone${materialRank}`],
+      mat2Img:
+        loaImages[
+          refineItemKeyMatch[
+            `leapstone${materialRank}` as keyof typeof refineItemKeyMatch
+          ] as keyof typeof loaImages
+        ],
+      mat3: extracted[`fusionMaterial${materialRank}`],
+      mat3Img:
+        loaImages[refineItemKeyMatch[`fusionMaterial${materialRank}`] as keyof typeof loaImages],
+      ...extracted,
+    };
+
+    if (itemRank.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
+
+    return returnedObj;
+  }, [refineCurrent, selectOptionParam]);
 
   return (
     <RefineSettingDiv>
@@ -154,7 +185,7 @@ const RefineSetting = ({
             compact
             options={dropdownOptions.option1}
             style={{ marginTop: '15px' }}
-            onChange={(e, data) => {
+            onChange={(_, data) => {
               setSelectOptionParam((prev) => {
                 return {
                   ...prev,
@@ -206,11 +237,33 @@ const RefineSetting = ({
             compact
             options={refineTargetOption}
             style={{ marginTop: '15px' }}
-            onChange={(e, data) => {
+            onChange={(_, data) => {
               setRefineCurrent(`${data.value}`);
             }}
             scrolling
           />
+        </div>
+        <div style={{ marginLeft: '30px' }}>
+          <Label
+            basic={false}
+            content="제련단계"
+            iconOrImage="icon"
+            icon={<SemanticIcon name="dot circle outline" />}
+            color="black"
+            borderNone
+            size="medium"
+          />
+          <br />
+          <div
+            style={{
+              marginTop: '15px',
+              fontSize: '1.1rem',
+              fontWeight: 'bold',
+              color: 'yellow',
+            }}
+          >
+            {refineMaterialsMatch.probability}%
+          </div>
         </div>
       </div>
       <br />
@@ -226,52 +279,30 @@ const RefineSetting = ({
         />
 
         <div>
-          {/* <div style={{ display: 'flex', alignItems: 'center' }}>
-            <h3 className="noMarginBottom" style={{ marginRight: '15px' }}>
-              제련 단계:{' '}
-            </h3>
-            <Button.Group color="black">
-              <Button>{refineCurrent} 단계</Button>
-              <Dropdown
-                className="button icon"
-                floating
-                options={refineTargetOption}
-                trigger={<></>}
-                scrolling
-                onChange={(e, data) => {
-                  setRefineCurrent(`${data.value}`);
-                }}
-              />
-            </Button.Group>
-          </div> */}
           <div style={{ display: 'flex' }}>
             <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
-              Elliot
+              <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat1Img} size="big" />
+              {refineMaterialsMatch.mat1.toLocaleString()}
             </Label>
             <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
-              Elliot
+              <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat2Img} size="big" />
+              {refineMaterialsMatch.mat2}
             </Label>
             <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
-              Elliot
+              <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat3Img} size="big" />
+              {refineMaterialsMatch.mat3}
             </Label>
           </div>
-          {/* <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', marginTop: '5px' }}>
             <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
-              Elliot
+              <SemanticImage avatar spaced="right" src={loaImages['명예의파편']} size="big" />
+              {refineMaterialsMatch.honorShard.toLocaleString()}
             </Label>
             <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
-              Elliot
+              <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat2Img} size="big" />
+              {refineMaterialsMatch.mat2}
             </Label>
-            <Label color="black" style={{ fontSize: '1rem' }}>
-              <SemanticImage avatar spaced="right" src={loaImages['파괴강석']} size="big" />
-              Elliot
-            </Label>
-          </div> */}
+          </div>
         </div>
       </div>
     </RefineSettingDiv>
