@@ -18,6 +18,7 @@ import { CheckboxDefault, CheckboxListDefault } from './atoms/checkbox';
 import { Avatar, Image } from './atoms/image';
 import InheritedMaterialsCountPriceDesktop from './custom/simulation/InheritedMaterialsCountPriceDesktop';
 import RadioButtonGroup from './atoms/radioButton/RadioButtonGroup';
+import FullSoomBookAvailable from './custom/simulation/RefineSettingCustom/FullSoomBookAvailable';
 
 export {
   InputDefault,
@@ -44,4 +45,5 @@ export {
   Image,
   InheritedMaterialsCountPriceDesktop,
   RadioButtonGroup,
+  FullSoomBookAvailable,
 };

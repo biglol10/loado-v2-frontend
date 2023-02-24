@@ -19,13 +19,6 @@ const requiredRefineMaterials: any = {
           bookType: '야금술숙련',
           probability: 10,
         } as bookProbType,
-        fullSoom: {
-          태양의은총: 24,
-          태양의축복: 12,
-          태양의가호: 4,
-        } as {
-          [_ in loaImagesType]: number;
-        },
       },
       weapon13: {
         weaponStone1: 650,
@@ -38,13 +31,6 @@ const requiredRefineMaterials: any = {
           bookType: '야금술숙련',
           probability: 10,
         } as bookProbType,
-        fullSoom: {
-          태양의은총: 24,
-          태양의축복: 12,
-          태양의가호: 4,
-        } as {
-          [_ in loaImagesType]: number;
-        },
       },
       weapon14: {
         weaponStone1: 700,
@@ -57,13 +43,6 @@ const requiredRefineMaterials: any = {
           bookType: '야금술숙련',
           probability: 5,
         } as bookProbType,
-        fullSoom: {
-          태양의은총: 24,
-          태양의축복: 12,
-          태양의가호: 4,
-        } as {
-          [_ in loaImagesType]: number;
-        },
       },
       weapon15: {
         weaponStone1: 750,

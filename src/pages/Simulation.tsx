@@ -144,7 +144,7 @@ const Simulation = () => {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <H3NoMargin>※ 제련 시뮬레이션</H3NoMargin>
+        <H3NoMargin>※ 재련 시뮬레이션</H3NoMargin>
         <RadioButtonGroup
           options={[
             { label: '귀속재료개수', value: 'count' },

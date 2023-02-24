@@ -5,6 +5,7 @@ import {
   CheckboxDefault,
   CheckboxListDefault,
   Label as CustomLabel,
+  FullSoomBookAvailable,
 } from '@components/index';
 import {
   Icon as SemanticIcon,
@@ -340,27 +341,23 @@ const RefineSetting = ({
             />
           </div>
           <div style={{ display: 'flex' }}>
-            <CheckboxDefault id="CheckboxDefault_ID" spacing={7} label={'풀숨적용'} />
+            <CheckboxDefault
+              id="CheckboxDefault_ID"
+              spacing={7}
+              label={'풀숨적용'}
+              onClick={(props) => console.log(props)}
+            />
             <CheckboxDefault
               id="CheckboxDefault_ID2"
               spacing={7}
               label={selectOptionParam.option2 === '무기' ? '야금술' : '재봉술적용'}
               onClick={(props) => console.log(props)}
             />
-            <div style={{ marginLeft: '20px' }}>
-              <Label color="black" style={{ fontSize: '1rem' }}>
-                <SemanticImage avatar spaced="right" src={loaImages['태양의은총']} size="small" />
-                {refineMaterialsMatch['태양의은총']}
-              </Label>
-              <Label color="black" style={{ fontSize: '1rem' }}>
-                <SemanticImage avatar spaced="right" src={loaImages['태양의축복']} size="small" />
-                {refineMaterialsMatch['태양의축복']}
-              </Label>
-              <Label color="black" style={{ fontSize: '1rem' }}>
-                <SemanticImage avatar spaced="right" src={loaImages['태양의가호']} size="small" />
-                {refineMaterialsMatch['태양의가호']}
-              </Label>
-            </div>
+            <FullSoomBookAvailable
+              sun1Count={refineMaterialsMatch['태양의은총']}
+              sun2Count={refineMaterialsMatch['태양의축복']}
+              sun3Count={refineMaterialsMatch['태양의가호']}
+            />
           </div>
           {/* <div>
             <CustomLabel
