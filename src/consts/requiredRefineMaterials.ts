@@ -1,3 +1,10 @@
+import { loaImagesType } from './imgSrc';
+
+type bookProbType = {
+  bookType: loaImagesType;
+  probability: number;
+};
+
 const requiredRefineMaterials: any = {
   AbrelNormal: {
     weapon: {
@@ -8,6 +15,17 @@ const requiredRefineMaterials: any = {
         honorShard: 1000,
         gold: 800,
         probability: 10,
+        bookProb: {
+          bookType: '야금술숙련',
+          probability: 10,
+        } as bookProbType,
+        fullSoom: {
+          태양의은총: 24,
+          태양의축복: 12,
+          태양의가호: 4,
+        } as {
+          [_ in loaImagesType]: number;
+        },
       },
       weapon13: {
         weaponStone1: 650,
@@ -16,6 +34,17 @@ const requiredRefineMaterials: any = {
         honorShard: 1000,
         gold: 800,
         probability: 10,
+        bookProb: {
+          bookType: '야금술숙련',
+          probability: 10,
+        } as bookProbType,
+        fullSoom: {
+          태양의은총: 24,
+          태양의축복: 12,
+          태양의가호: 4,
+        } as {
+          [_ in loaImagesType]: number;
+        },
       },
       weapon14: {
         weaponStone1: 700,
@@ -24,6 +53,17 @@ const requiredRefineMaterials: any = {
         honorShard: 1400,
         gold: 870,
         probability: 5,
+        bookProb: {
+          bookType: '야금술숙련',
+          probability: 5,
+        } as bookProbType,
+        fullSoom: {
+          태양의은총: 24,
+          태양의축복: 12,
+          태양의가호: 4,
+        } as {
+          [_ in loaImagesType]: number;
+        },
       },
       weapon15: {
         weaponStone1: 750,
@@ -32,6 +72,10 @@ const requiredRefineMaterials: any = {
         honorShard: 1400,
         gold: 940,
         probability: 5,
+        bookProb: {
+          bookType: '야금술숙련',
+          probability: 5,
+        } as bookProbType,
       },
       weapon16: {
         weaponStone1: 900,
@@ -40,6 +84,10 @@ const requiredRefineMaterials: any = {
         honorShard: 2400,
         gold: 1120,
         probability: 4,
+        bookProb: {
+          bookType: '야금술특화',
+          probability: 4,
+        } as bookProbType,
       },
       weapon17: {
         weaponStone1: 950,
@@ -48,6 +96,10 @@ const requiredRefineMaterials: any = {
         honorShard: 2400,
         gold: 1200,
         probability: 4,
+        bookProb: {
+          bookType: '야금술특화',
+          probability: 4,
+        } as bookProbType,
       },
       weapon18: {
         weaponStone1: 1100,
@@ -56,6 +108,10 @@ const requiredRefineMaterials: any = {
         honorShard: 3600,
         gold: 1350,
         probability: 3,
+        bookProb: {
+          bookType: '야금술특화',
+          probability: 3,
+        } as bookProbType,
       },
       weapon19: {
         weaponStone1: 1150,
@@ -64,6 +120,10 @@ const requiredRefineMaterials: any = {
         honorShard: 3600,
         gold: 1440,
         probability: 3,
+        bookProb: {
+          bookType: '야금술특화',
+          probability: 3,
+        } as bookProbType,
       },
       weapon20: {
         weaponStone1: 1300,
@@ -158,6 +218,10 @@ const requiredRefineMaterials: any = {
         honorShard: 1000,
         gold: 800,
         probability: 10,
+        bookProb: {
+          bookType: '야금술숙련',
+          probability: 10,
+        } as bookProbType,
       },
       weapon13: {
         weaponStone1: 650,
@@ -166,6 +230,10 @@ const requiredRefineMaterials: any = {
         honorShard: 1000,
         gold: 800,
         probability: 10,
+        bookProb: {
+          bookType: '야금술숙련',
+          probability: 10,
+        } as bookProbType,
       },
       weapon14: {
         weaponStone1: 700,
@@ -174,6 +242,10 @@ const requiredRefineMaterials: any = {
         honorShard: 1400,
         gold: 870,
         probability: 5,
+        bookProb: {
+          bookType: '야금술숙련',
+          probability: 5,
+        } as bookProbType,
       },
       weapon15: {
         weaponStone1: 750,
@@ -182,6 +254,10 @@ const requiredRefineMaterials: any = {
         honorShard: 1400,
         gold: 940,
         probability: 5,
+        bookProb: {
+          bookType: '야금술숙련',
+          probability: 5,
+        } as bookProbType,
       },
       weapon16: {
         weaponStone1: 900,
@@ -190,6 +266,10 @@ const requiredRefineMaterials: any = {
         honorShard: 2400,
         gold: 1120,
         probability: 4,
+        bookProb: {
+          bookType: '야금술특화',
+          probability: 4,
+        } as bookProbType,
       },
       weapon17: {
         weaponStone1: 950,
@@ -198,6 +278,10 @@ const requiredRefineMaterials: any = {
         honorShard: 2400,
         gold: 1200,
         probability: 4,
+        bookProb: {
+          bookType: '야금술특화',
+          probability: 4,
+        } as bookProbType,
       },
       weapon18: {
         weaponStone1: 1100,
@@ -206,6 +290,10 @@ const requiredRefineMaterials: any = {
         honorShard: 3600,
         gold: 1350,
         probability: 3,
+        bookProb: {
+          bookType: '야금술특화',
+          probability: 3,
+        } as bookProbType,
       },
       weapon19: {
         weaponStone1: 1150,
@@ -214,6 +302,10 @@ const requiredRefineMaterials: any = {
         honorShard: 3600,
         gold: 1440,
         probability: 3,
+        bookProb: {
+          bookType: '야금술특화',
+          probability: 3,
+        } as bookProbType,
       },
       weapon20: {
         weaponStone1: 1300,

@@ -1,10 +1,10 @@
 import { Image as SemanticImage, SemanticFLOATS } from 'semantic-ui-react';
-import { loaImages } from '@consts/imgSrc';
+import { loaImages, loaImagesType } from '@consts/imgSrc';
 
 interface IImage {
   id?: string;
   className?: string;
-  src?: keyof typeof loaImages | string | null;
+  src?: loaImagesType | string | null;
   alt?: string;
   type: 'image' | 'a';
   imageSize: 'mini' | 'tiny' | 'small' | 'medium' | 'large' | 'big' | 'huge' | 'massive';
@@ -34,7 +34,7 @@ const Image = ({
 }: IImage) => {
   const imgSrc =
     src && Object.prototype.hasOwnProperty.call(loaImages, src)
-      ? loaImages[src as keyof typeof loaImages]
+      ? loaImages[src as loaImagesType]
       : src;
 
   return (

@@ -8,7 +8,7 @@ export interface ICheckboxDefault {
   size?: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
   label?: string;
   labelPosition?: 'top' | 'right' | undefined;
-  onClick?: any;
+  onClick?: ({ id, isChecked }: { id: any; isChecked: any }) => void;
   fontColor?: StrictLabelProps['color'];
   spacing?: number;
 }

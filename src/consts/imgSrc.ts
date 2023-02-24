@@ -68,8 +68,8 @@ const loaImages = Object.freeze({
   ...commImg,
 });
 
-const loaImageNames = Object.keys(loaImages) as unknown as keyof typeof loaImages;
-
 export type loaImagesType = keyof typeof loaImages;
+
+const loaImageNames = Object.keys(loaImages) as unknown as loaImagesType;
 
 export { loaImageNames, loaImages };

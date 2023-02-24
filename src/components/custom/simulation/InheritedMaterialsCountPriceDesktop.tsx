@@ -1,6 +1,6 @@
 import { InputDefaultNumber } from '@components/atoms/input';
 import { InputLayout, Image } from '@components/index';
-import { loaImages } from '@consts/imgSrc';
+import { loaImages, loaImagesType } from '@consts/imgSrc';
 import styled from 'styled-components';
 
 const ColumnDiv = styled.div`
@@ -49,7 +49,7 @@ const InheritedMaterialsCountPriceDesktop = ({
 }: any) => {
   const categoryTextMapping = {
     categoryObj1: '🛑 명파 + 야금술 (귀속)',
-    categoryObj2: '🛑 강화석 + 융화제 (귀속)',
+    categoryObj2: '🛑 강화석 + 명돌 (귀속)',
     categoryObj3: '🛑 특수/융화 재료 (귀속)',
   };
 
@@ -66,7 +66,7 @@ const InheritedMaterialsCountPriceDesktop = ({
               inputLabel={
                 <>
                   <Image
-                    src={loaImages[subObjKey as keyof typeof loaImages]}
+                    src={loaImages[subObjKey as loaImagesType]}
                     imageSize="mini"
                     type="image"
                     circular={true}

@@ -1,6 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { RefineSettingDiv } from '@pageStyled/SimulationStyled';
-import { Image, CheckboxListDefault } from '@components/index';
+import {
+  Image,
+  CheckboxDefault,
+  CheckboxListDefault,
+  Label as CustomLabel,
+} from '@components/index';
 import {
   Icon as SemanticIcon,
   Dropdown,
@@ -13,6 +18,8 @@ import {
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import requiredRefineMaterials from '@consts/requiredRefineMaterials';
 import styled from 'styled-components';
+import CheckboxTest from '@components/atoms/checkbox/CheckboxTest';
+import { returnFullSoomValues } from '@services/LoaCommonUtils';
 
 const option1KeyMatch = {
   아브노말: 'AbrelNormal',
@@ -37,6 +44,8 @@ const refineItemKeyMatch = {
   honorShard: '명예의파편',
   gold: '골드2',
 };
+
+type TRefineItemKeyMatch = keyof typeof refineItemKeyMatch;
 
 const RefineSetting = ({
   selectOptionParam,
@@ -137,20 +146,18 @@ const RefineSetting = ({
       mat1Img:
         loaImages[
           refineItemKeyMatch[
-            `${weaponOrArmour}Stone${materialRank}` as keyof typeof refineItemKeyMatch
-          ] as keyof typeof loaImages
+            `${weaponOrArmour}Stone${materialRank}` as TRefineItemKeyMatch
+          ] as loaImagesType
         ],
       mat2: extracted[`leapstone${materialRank}`],
       mat2Img:
         loaImages[
-          refineItemKeyMatch[
-            `leapstone${materialRank}` as keyof typeof refineItemKeyMatch
-          ] as keyof typeof loaImages
+          refineItemKeyMatch[`leapstone${materialRank}` as TRefineItemKeyMatch] as loaImagesType
         ],
       mat3: extracted[`fusionMaterial${materialRank}`],
-      mat3Img:
-        loaImages[refineItemKeyMatch[`fusionMaterial${materialRank}`] as keyof typeof loaImages],
+      mat3Img: loaImages[refineItemKeyMatch[`fusionMaterial${materialRank}`] as loaImagesType],
       ...extracted,
+      ...returnFullSoomValues(Number(refineCurrent)),
     };
 
     if (itemRank.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
@@ -217,7 +224,7 @@ const RefineSetting = ({
           <div style={{ marginLeft: '30px' }}>
             <Label
               basic={false}
-              content="제련단계"
+              content="재련단계"
               iconOrImage="icon"
               icon={<SemanticIcon name="dot circle outline" />}
               color="black"
@@ -239,7 +246,7 @@ const RefineSetting = ({
           <div style={{ marginLeft: '30px' }}>
             <Label
               basic={false}
-              content="제련단계"
+              content="성공확률"
               iconOrImage="icon"
               icon={<SemanticIcon name="dot circle outline" />}
               color="black"
@@ -319,8 +326,56 @@ const RefineSetting = ({
           </div>
         </div>
       </div>
-      <div style={{ width: '500px' }}>
-        <CheckboxListDefault />
+      <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div>
+            <Label
+              basic={false}
+              content="재련설정"
+              iconOrImage="icon"
+              icon={<SemanticIcon name="dot circle outline" />}
+              color="black"
+              borderNone
+              size="medium"
+            />
+          </div>
+          <div style={{ display: 'flex' }}>
+            <CheckboxDefault id="CheckboxDefault_ID" spacing={7} label={'풀숨적용'} />
+            <CheckboxDefault
+              id="CheckboxDefault_ID2"
+              spacing={7}
+              label={selectOptionParam.option2 === '무기' ? '야금술' : '재봉술적용'}
+              onClick={(props) => console.log(props)}
+            />
+            <div style={{ marginLeft: '20px' }}>
+              <Label color="black" style={{ fontSize: '1rem' }}>
+                <SemanticImage avatar spaced="right" src={loaImages['태양의은총']} size="small" />
+                {refineMaterialsMatch['태양의은총']}
+              </Label>
+              <Label color="black" style={{ fontSize: '1rem' }}>
+                <SemanticImage avatar spaced="right" src={loaImages['태양의축복']} size="small" />
+                {refineMaterialsMatch['태양의축복']}
+              </Label>
+              <Label color="black" style={{ fontSize: '1rem' }}>
+                <SemanticImage avatar spaced="right" src={loaImages['태양의가호']} size="small" />
+                {refineMaterialsMatch['태양의가호']}
+              </Label>
+            </div>
+          </div>
+          {/* <div>
+            <CustomLabel
+              basic={false}
+              content="LabelContent"
+              iconOrImage="icon"
+              icon={
+                <SemanticImage avatar spaced="right" src={loaImages['태양의은총']} size="small" />
+              }
+              color="black"
+              borderNone
+              size="mini"
+            />
+          </div> */}
+        </div>
       </div>
     </RefineSettingDiv>
   );

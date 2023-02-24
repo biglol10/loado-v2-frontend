@@ -11,7 +11,7 @@ import React from 'react';
 import { Image as SemanticUIImage } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { Label } from '@components/index';
-import { loaImages } from '@consts/imgSrc';
+import { loaImages, loaImagesType } from '@consts/imgSrc';
 import { IAvatar } from './Types';
 
 const StyledAvatar = styled.div<{ spacing: number }>`
@@ -34,7 +34,7 @@ const Avatar = ({
 }: IAvatar) => {
   const imgSrc =
     src && Object.prototype.hasOwnProperty.call(loaImages, src)
-      ? loaImages[src as keyof typeof loaImages]
+      ? loaImages[src as loaImagesType]
       : src;
 
   return (

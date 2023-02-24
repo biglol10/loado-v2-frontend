@@ -24,8 +24,8 @@ const CheckboxListDefault = ({
   direction = 'horizontal',
   onChange = null,
   items = [
-    { id: '1', disabled: false, checked: false, label: 'test1' },
-    { id: '2', disabled: false, checked: false, label: 'test2' },
+    { id: '1', disabled: false, checked: false, label: '풀숨' },
+    { id: '2', disabled: false, checked: false, label: '재봉술/야금술' },
     { id: '3', disabled: false, checked: false, label: 'test3' },
     { id: '4', disabled: false, checked: false, label: 'test4' },
   ],

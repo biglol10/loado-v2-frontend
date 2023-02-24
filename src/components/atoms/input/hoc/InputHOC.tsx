@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/display-name */
-import { debounce } from 'lodash';
 import React, {
   useState,
   useCallback,
@@ -9,6 +9,7 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from 'react';
+import { debounce, isEqual } from 'lodash';
 import { Input } from 'semantic-ui-react';
 
 // props: P & ICommInput
@@ -20,7 +21,7 @@ const InputHoc = <P extends object>(OriginalComponent: React.ComponentType<P>) =
     const { onChange } = props;
 
     useEffect(() => {
-      setInputValue(props.value);
+      !isEqual(inputValue, props.value) && setInputValue(props.value);
     }, [props.value]);
 
     const onChangeFn = useCallback(

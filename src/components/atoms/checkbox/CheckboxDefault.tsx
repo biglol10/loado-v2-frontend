@@ -21,7 +21,7 @@ const StyledCheckboxLabelTop = styled.div<{ spacing: number }>`
 `;
 
 const StyledCheckboxLabelRight = styled.div<{ spacing: number }>`
-  background-color: white;
+  background-color: black;
   display: flex;
   align-items: center;
   width: max-content;
@@ -33,7 +33,7 @@ const StyledCheckboxLabelRight = styled.div<{ spacing: number }>`
     align-items: center;
   }
   & .checkBoxLabel {
-    background-color: white;
+    background-color: black;
     // height: 20px;
     display: flex;
     align-items: center;
@@ -48,7 +48,7 @@ const CheckboxDefault = ({
   size = 'small',
   label = 'test',
   labelPosition = 'right',
-  onClick = null,
+  onClick = () => null,
   spacing = 0,
   fontColor = 'black',
 }: ICheckboxDefault) => {
