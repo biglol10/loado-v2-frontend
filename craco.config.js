@@ -111,7 +111,7 @@ module.exports = {
     },
   ],
   devServer: {
-    port: 8080,
+    port: 8000,
     // proxy: [
     //   {
     //     context: ['/api'],
@@ -132,6 +132,10 @@ module.exports = {
         target: apiProxyTarget,
         changeOrigin: true,
         pathRewrite: { '^/lostark/*': '' },
+      },
+      {
+        context: ['/api'],
+        target: 'http://localhost:8080',
       },
     ],
   },
