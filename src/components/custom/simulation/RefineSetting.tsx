@@ -390,56 +390,6 @@ const RefineSetting = ({
               bookValue={refineMaterialsMatch.bookProb || null}
             />
           </div>
-          {/* <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
-            <InputLayout
-              inputLabel={'합계확률'}
-              inputLabelSize={'h6'}
-              stretch={false}
-              showInputLabel={true}
-              spacing={8}
-            >
-              <InputDefaultNumber
-                value={''}
-                type="number"
-                fluid={true}
-                size={'mini'}
-                stretch={true}
-                onChange={(val: any) => console.log(val)}
-              />
-            </InputLayout>
-            <InputLayout
-              inputLabel={'성공확률'}
-              inputLabelSize={'h6'}
-              stretch={false}
-              showInputLabel={true}
-              spacing={8}
-            >
-              <InputDefaultNumber
-                value={''}
-                type="number"
-                fluid={true}
-                size={'mini'}
-                stretch={true}
-                onChange={(val: any) => console.log(val)}
-              />
-            </InputLayout>
-            <InputLayout
-              inputLabel={'성공확률'}
-              inputLabelSize={'h6'}
-              stretch={false}
-              showInputLabel={true}
-              spacing={8}
-              inputWidth={'250px'}
-            >
-              <InputWithIcon
-                value={''}
-                fluid={true}
-                size={'mini'}
-                onChange={(val: any) => console.log(val)}
-                inputIcon={<Icon name="percent" color="black" />}
-              />
-            </InputLayout>
-          </div> */}
           <ProbabilityValues
             refineOverallSetting={refineOverallSetting}
             setRefineOverallSetting={setRefineOverallSetting}
