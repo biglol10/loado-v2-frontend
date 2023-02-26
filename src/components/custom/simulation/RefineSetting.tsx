@@ -376,7 +376,6 @@ const RefineSetting = ({
               label={'풀숨적용'}
               checked={refineOverallSetting.applyFullSoom}
               onClick={({ isChecked }) => {
-                console.log(isChecked);
                 setRefineOverallSetting((prev) => ({
                   ...prev,
                   applyFullSoom: isChecked,

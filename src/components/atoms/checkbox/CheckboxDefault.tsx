@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Checkbox } from 'semantic-ui-react';
 import styled from 'styled-components';
+import _ from 'lodash';
 import { ICheckboxDefault } from './Types';
 import { Label } from '../label';
 
@@ -54,18 +55,22 @@ const CheckboxDefault = ({
 }: ICheckboxDefault) => {
   const [isChecked, setIsChecked] = useState<boolean>(checked);
   const onChangeFn = () => {
-    setIsChecked((prevChecked) => !prevChecked);
+    setIsChecked((prevChecked) => {
+      onClick &&
+        _.debounce(() => {
+          onClick({
+            id,
+            isChecked: !prevChecked,
+          });
+        }, 50)();
 
-    onClick &&
-      onClick({
-        id,
-        isChecked,
-      });
+      return !prevChecked;
+    });
   };
 
-  useEffect(() => {
-    setIsChecked(checked);
-  }, [checked]);
+  // useEffect(() => {
+  //   setIsChecked(checked);
+  // }, [checked]);
 
   // useEffect(() => {
   //   onClick &&
