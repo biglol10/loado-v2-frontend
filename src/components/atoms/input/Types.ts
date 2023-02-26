@@ -15,7 +15,7 @@ export interface IInputDefault {
   disabled?: boolean;
   maxLength?: undefined | number;
   ref?: any;
-  stretch?: boolean;
+  // stretch?: boolean;
   error?: boolean;
   onEnter?: Function;
   clearInputValue?: Function;
@@ -36,7 +36,7 @@ export interface IInputDefaultNumber {
   disabled?: boolean;
   maxLength?: undefined | number;
   ref?: any;
-  stretch?: boolean;
+  // stretch?: boolean;
   error?: boolean;
   onEnter?: Function;
   clearInputValue?: Function;
@@ -76,6 +76,7 @@ export interface IInputLayout {
   errorMsg?: string;
   errorLabelPosition?: 'bottom' | 'right';
   autoFitErrorLabel?: boolean;
+  inputWidth?: 'auto' | string;
 }
 
 // ? Types in InputSearch component
@@ -89,4 +90,5 @@ export interface IInputWithIcon extends IInputDefault {
   iconPosition?: 'left' | undefined;
   iconClick?: Function;
   setInputValue?: Function;
+  stretch?: boolean;
 }

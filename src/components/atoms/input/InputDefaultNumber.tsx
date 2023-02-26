@@ -26,7 +26,7 @@ const InputDefaultNumber = forwardRef<{ inputElement: Input | undefined }, IInpu
       readOnly = false,
       disabled = false,
       maxLength = undefined,
-      stretch = false,
+      // stretch = false,
       error = false,
       onEnter = null,
       transparent = false,
@@ -51,7 +51,7 @@ const InputDefaultNumber = forwardRef<{ inputElement: Input | undefined }, IInpu
         disabled={disabled}
         maxLength={maxLength}
         // style={stretch ? { width: '100%' } : {}}
-        stretch={stretch}
+        // stretch={stretch}
         onKeyUp={(evt: KeyboardEvent) => evt.key === 'Enter' && onEnter && onEnter()}
         transparent={transparent}
         defaultValue={value}

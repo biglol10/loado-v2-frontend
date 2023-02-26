@@ -19,6 +19,7 @@ import { Avatar, Image } from './atoms/image';
 import InheritedMaterialsCountPriceDesktop from './custom/simulation/InheritedMaterialsCountPriceDesktop';
 import RadioButtonGroup from './atoms/radioButton/RadioButtonGroup';
 import FullSoomBookAvailable from './custom/simulation/RefineSettingCustom/FullSoomBookAvailable';
+import ProbabilityValues from './custom/simulation/RefineSettingCustom/ProbabilityValues';
 
 export {
   InputDefault,
@@ -46,4 +47,5 @@ export {
   InheritedMaterialsCountPriceDesktop,
   RadioButtonGroup,
   FullSoomBookAvailable,
+  ProbabilityValues,
 };

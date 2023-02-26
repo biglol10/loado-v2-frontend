@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { RefineSettingDiv } from '@pageStyled/SimulationStyled';
 import {
   Image,
@@ -6,6 +6,10 @@ import {
   CheckboxListDefault,
   Label as CustomLabel,
   FullSoomBookAvailable,
+  InputLayout,
+  InputDefaultNumber,
+  ProbabilityValues,
+  InputWithIcon,
 } from '@components/index';
 import {
   Icon as SemanticIcon,
@@ -64,6 +68,18 @@ const RefineSetting = ({
   >;
 }) => {
   const [refineCurrent, setRefineCurrent] = useState('12');
+
+  const [refineOverallSetting, setRefineOverallSetting] = useState<{
+    applyFullSoom: boolean;
+    applyBook: boolean;
+    honingSuccessRate: number | string;
+    artisanEnergy: number | string;
+  }>({
+    applyFullSoom: false,
+    applyBook: false,
+    honingSuccessRate: 0,
+    artisanEnergy: 0,
+  });
 
   const imgSrc = {
     weapon: `${selectOptionParam.option1}무기`,
@@ -161,10 +177,23 @@ const RefineSetting = ({
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
+    console.log(returnedObj);
+
     if (itemRank.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
   }, [refineCurrent, selectOptionParam]);
+
+  useEffect(() => {
+    setRefineOverallSetting((prev) => ({
+      ...prev,
+      honingSuccessRate: refineMaterialsMatch.probability,
+    }));
+  }, [refineMaterialsMatch]);
+
+  useEffect(() => {
+    console.log(refineOverallSetting);
+  }, [refineOverallSetting]);
 
   return (
     <RefineSettingDiv>
@@ -260,7 +289,7 @@ const RefineSetting = ({
                 marginTop: '15px',
                 fontSize: '1.1rem',
                 fontWeight: 'bold',
-                color: 'yellow',
+                color: 'tomato',
               }}
             >
               {refineMaterialsMatch.probability}%
@@ -352,26 +381,69 @@ const RefineSetting = ({
               spacing={7}
               label={selectOptionParam.option2 === '무기' ? '야금술' : '재봉술적용'}
               onClick={(props) => console.log(props)}
+              disabled={!refineMaterialsMatch.bookProb}
             />
             <FullSoomBookAvailable
               sun1Count={refineMaterialsMatch['태양의은총']}
               sun2Count={refineMaterialsMatch['태양의축복']}
               sun3Count={refineMaterialsMatch['태양의가호']}
+              bookValue={refineMaterialsMatch.bookProb || null}
             />
           </div>
-          {/* <div>
-            <CustomLabel
-              basic={false}
-              content="LabelContent"
-              iconOrImage="icon"
-              icon={
-                <SemanticImage avatar spaced="right" src={loaImages['태양의은총']} size="small" />
-              }
-              color="black"
-              borderNone
-              size="mini"
-            />
+          {/* <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
+            <InputLayout
+              inputLabel={'합계확률'}
+              inputLabelSize={'h6'}
+              stretch={false}
+              showInputLabel={true}
+              spacing={8}
+            >
+              <InputDefaultNumber
+                value={''}
+                type="number"
+                fluid={true}
+                size={'mini'}
+                stretch={true}
+                onChange={(val: any) => console.log(val)}
+              />
+            </InputLayout>
+            <InputLayout
+              inputLabel={'성공확률'}
+              inputLabelSize={'h6'}
+              stretch={false}
+              showInputLabel={true}
+              spacing={8}
+            >
+              <InputDefaultNumber
+                value={''}
+                type="number"
+                fluid={true}
+                size={'mini'}
+                stretch={true}
+                onChange={(val: any) => console.log(val)}
+              />
+            </InputLayout>
+            <InputLayout
+              inputLabel={'성공확률'}
+              inputLabelSize={'h6'}
+              stretch={false}
+              showInputLabel={true}
+              spacing={8}
+              inputWidth={'250px'}
+            >
+              <InputWithIcon
+                value={''}
+                fluid={true}
+                size={'mini'}
+                onChange={(val: any) => console.log(val)}
+                inputIcon={<Icon name="percent" color="black" />}
+              />
+            </InputLayout>
           </div> */}
+          <ProbabilityValues
+            refineOverallSetting={refineOverallSetting}
+            setRefineOverallSetting={setRefineOverallSetting}
+          />
         </div>
       </div>
     </RefineSettingDiv>

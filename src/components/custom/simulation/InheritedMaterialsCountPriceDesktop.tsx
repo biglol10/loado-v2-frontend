@@ -100,6 +100,7 @@ const InheritedMaterialsCountPriceDesktop = ({
                 type="number"
                 disabled={countOrPrice === 'price'}
                 fluid={true}
+                size={'mini'}
               />
             </InputLayout>
           ))}

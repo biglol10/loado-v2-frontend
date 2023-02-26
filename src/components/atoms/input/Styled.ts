@@ -14,7 +14,7 @@ const StyledInputLabelHeader = styled(Header)`
 `;
 
 const StyledBaseInput = styled(Input)`
-  width: ${(props: any) => (props.stretch === 'true' ? '100%' : 'auto')};
+  width: ${(props: any) => (props.stretch ? '100%' : 'auto')};
 `;
 
 const StyledBaseDropdown = styled(Dropdown)`

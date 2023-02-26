@@ -17,7 +17,7 @@ import { IInputLayout } from './Types';
 
 const StyledInputLayout = styled.div<IInputLayout>`
   margin-top: ${(props) => `${props.spacing || 0}px`};
-  width: ${(props) => (props.stretch ? '100%' : 'auto')};
+  width: ${(props) => (props.stretch ? '100%' : props.inputWidth)} !important;
   padding-right: 10px;
 `;
 
@@ -48,12 +48,19 @@ const InputLayout = ({
   errorMsg = '',
   errorLabelPosition = 'bottom',
   autoFitErrorLabel = false,
+  inputWidth = 'auto', // stretch false 일 경우 width 따로 지정
 }: IInputLayout) => {
   const labelSize = 'tiny';
 
   // ? By default, styled components are expected to have a single child... So Wrapped with React.Fragment
   return (
-    <StyledInputLayout id={id} className={className} spacing={spacing}>
+    <StyledInputLayout
+      id={id}
+      className={className}
+      spacing={spacing}
+      inputWidth={inputWidth}
+      stretch={stretch}
+    >
       <React.Fragment>
         {showInputLabel && (
           <label htmlFor={id}>
