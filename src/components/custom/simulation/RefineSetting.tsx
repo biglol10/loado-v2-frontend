@@ -374,13 +374,26 @@ const RefineSetting = ({
               id="CheckboxDefault_ID"
               spacing={7}
               label={'풀숨적용'}
-              onClick={(props) => console.log(props)}
+              checked={refineOverallSetting.applyFullSoom}
+              onClick={({ isChecked }) => {
+                console.log(isChecked);
+                setRefineOverallSetting((prev) => ({
+                  ...prev,
+                  applyFullSoom: isChecked,
+                }));
+              }}
             />
             <CheckboxDefault
               id="CheckboxDefault_ID2"
               spacing={7}
               label={selectOptionParam.option2 === '무기' ? '야금술' : '재봉술적용'}
-              onClick={(props) => console.log(props)}
+              checked={refineOverallSetting.applyBook}
+              onClick={({ isChecked }) => {
+                setRefineOverallSetting((prev) => ({
+                  ...prev,
+                  applyBook: isChecked,
+                }));
+              }}
               disabled={!refineMaterialsMatch.bookProb}
             />
             <FullSoomBookAvailable

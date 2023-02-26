@@ -7,11 +7,7 @@ const StyledGridDiv = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
 `;
 
-const ProbabilityValues = ({
-  defaultProb = 0,
-  refineOverallSetting,
-  setRefineOverallSetting,
-}: any) => {
+const ProbabilityValues = ({ refineOverallSetting, setRefineOverallSetting }: any) => {
   return (
     <StyledGridDiv>
       <InputLayout

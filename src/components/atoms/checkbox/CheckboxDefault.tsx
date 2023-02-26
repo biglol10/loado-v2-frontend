@@ -55,19 +55,25 @@ const CheckboxDefault = ({
   const [isChecked, setIsChecked] = useState<boolean>(checked);
   const onChangeFn = () => {
     setIsChecked((prevChecked) => !prevChecked);
+
+    onClick &&
+      onClick({
+        id,
+        isChecked,
+      });
   };
 
   useEffect(() => {
     setIsChecked(checked);
   }, [checked]);
 
-  useEffect(() => {
-    onClick &&
-      onClick({
-        id,
-        isChecked,
-      });
-  }, [id, isChecked, onClick]);
+  // useEffect(() => {
+  //   onClick &&
+  //     onClick({
+  //       id,
+  //       isChecked,
+  //     });
+  // }, [id, isChecked, onClick]);
 
   return (
     <>
