@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RouteElementMatch from '@pages/index';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { isMobile } from 'react-device-detect';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'src/state/store';
+import { ToastContainer } from 'react-toastify';
 import 'semantic-ui-css/semantic.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 const publicUrl = process.env.PUBLIC_URL;
@@ -47,12 +49,14 @@ const App = () => {
       <el.layout>
         {routeElement}
         <DynamicModal />
+        <ToastContainer />
         {isShowLoading && <CenteredLoader useDimmer={true} />}
       </el.layout>
     ) : (
       <>
         {routeElement}
         <DynamicModal />
+        <ToastContainer className={'custom-toast'} bodyClassName={'custom-toast-body'} />
         {isShowLoading && <CenteredLoader useDimmer={true} />}
       </>
     );

@@ -10,3 +10,19 @@
 .ui.dropdown .menu > .item > span {
   color: black !important;
 }
+
+.custom-toast {
+  color: black !important;
+}
+
+.custom-toast div {
+  color: black !important;
+}
+
+.custom-toast-body {
+  color: black !important;
+}
+
+.custom-toast-body div {
+  color: black !important;
+}

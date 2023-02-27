@@ -29,6 +29,7 @@ const ProbabilityValues = ({ refineOverallSetting, setRefineOverallSetting }: an
             }));
           }}
           inputIcon={<Icon name="percent" color="black" />}
+          type="number"
         />
       </InputLayout>
       <InputLayout
@@ -50,6 +51,7 @@ const ProbabilityValues = ({ refineOverallSetting, setRefineOverallSetting }: an
             }));
           }}
           inputIcon={<Icon name="percent" color="black" />}
+          type="number"
         />
       </InputLayout>
     </StyledGridDiv>

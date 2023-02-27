@@ -10,8 +10,14 @@ import {
 import { Icon as SemanticIcon, Dropdown, Label, Image as SemanticImage } from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import requiredRefineMaterials from '@consts/requiredRefineMaterials';
-import { returnFullSoomValues } from '@services/LoaCommonUtils';
+import {
+  isRefineSuccessFunction,
+  refineSimulation,
+  returnFullSoomValues,
+} from '@services/LoaCommonUtils';
+import useModal from '@hooks/ModalHooks';
 import { StyledDiv } from '@consts/appStyled';
+import { toast } from 'react-toastify';
 
 const option1KeyMatch = {
   아브노말: 'AbrelNormal',
@@ -178,9 +184,56 @@ const RefineSetting = ({
     }));
   }, [refineMaterialsMatch]);
 
-  useEffect(() => {
+  const { showModal } = useModal();
+
+  const refineSimulationStart = () => {
     console.log(refineOverallSetting);
-  }, [refineOverallSetting]);
+    const { applyBook, applyFullSoom, artisanEnergy, honingSuccessRate } = refineOverallSetting;
+
+    const errMsg: string[] = [];
+
+    if (honingSuccessRate === '' || honingSuccessRate >= 100 || honingSuccessRate <= 0)
+      errMsg.push('최종확률에 올바른 값을 입력해주세요');
+    if (artisanEnergy === '' || artisanEnergy >= 100 || artisanEnergy < 0)
+      errMsg.push('장인의 기운 수치에 올바른 값을 입력해주세요');
+
+    if (errMsg.length > 0) {
+      const MspComponent = () => (
+        <>
+          {errMsg.map((line, index) => (
+            <p key={index} style={{ color: 'tomato' }}>
+              {line}
+            </p>
+          ))}
+        </>
+      );
+
+      toast.error(<MspComponent />, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+      });
+
+      return null;
+    }
+
+    const result = refineSimulation({
+      defaultProb: honingSuccessRate as number,
+      count: 1,
+      startProb: honingSuccessRate as number,
+      artisanEnergy: 0,
+      isFullSoom: true,
+      isIncreaseProb: true,
+      refineTarget: 21,
+      bookProb: refineMaterialsMatch?.bookProb?.probability,
+      memoryArr: [],
+    });
+
+    console.log(result);
+  };
 
   return (
     <RefineSettingDiv>
@@ -349,7 +402,7 @@ const RefineSetting = ({
               size="medium"
             />
           </div>
-          <div style={{ display: 'flex' }}>
+          <StyledDiv display="flex">
             <CheckboxDefault
               id="CheckboxDefault_ID"
               spacing={7}
@@ -381,7 +434,7 @@ const RefineSetting = ({
               sun3Count={refineMaterialsMatch['태양의가호']}
               bookValue={refineMaterialsMatch.bookProb || null}
             />
-          </div>
+          </StyledDiv>
           <ProbabilityValues
             refineOverallSetting={refineOverallSetting}
             setRefineOverallSetting={setRefineOverallSetting}
@@ -389,7 +442,13 @@ const RefineSetting = ({
           <br />
           <StyledDiv display="grid" gridTemplateColumns="repeat(4, 1fr)">
             <StyledDiv paddingRight="10px">
-              <Button color="red" content="시뮬레이션 시작" loading={false} />
+              <Button
+                buttonType="none"
+                color="google plus"
+                content="시뮬레이션 시작"
+                loading={false}
+                onClick={refineSimulationStart}
+              />
             </StyledDiv>
             <StyledDiv paddingRight="10px">
               <Button color="red" content="시뮬레이션 시작" loading={false} />
