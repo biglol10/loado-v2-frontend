@@ -1,6 +1,7 @@
 import { Label, Image as SemanticImage } from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import styled from 'styled-components';
+import { StyledDiv } from '@consts/appStyled';
 
 const StyledLabed = styled(Label)`
   font-size: 1rem !important;
@@ -21,7 +22,7 @@ const FullSoomBookAvailable = ({
   } | null;
 }) => {
   return (
-    <div style={{ marginLeft: '20px' }}>
+    <StyledDiv marginLeft="20px">
       <StyledLabed color="black">
         <SemanticImage avatar spaced="right" src={loaImages['태양의은총']} size="small" />
         {sun1Count}
@@ -37,10 +38,10 @@ const FullSoomBookAvailable = ({
       {bookValue && (
         <StyledLabed color="black">
           <SemanticImage avatar spaced="right" src={loaImages[bookValue.bookType]} size="small" />
-          <span style={{ color: 'tomato' }}>{bookValue.probability}%</span>
+          <span style={{ color: '#f8cd02' }}>{bookValue.probability}%</span>
         </StyledLabed>
       )}
-    </div>
+    </StyledDiv>
   );
 };
 

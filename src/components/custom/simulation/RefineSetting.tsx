@@ -3,28 +3,15 @@ import { RefineSettingDiv } from '@pageStyled/SimulationStyled';
 import {
   Image,
   CheckboxDefault,
-  CheckboxListDefault,
-  Label as CustomLabel,
   FullSoomBookAvailable,
-  InputLayout,
-  InputDefaultNumber,
   ProbabilityValues,
-  InputWithIcon,
-} from '@components/index';
-import {
-  Icon as SemanticIcon,
-  Dropdown,
   Button,
-  Icon,
-  Label,
-  Image as SemanticImage,
-  Input,
-} from 'semantic-ui-react';
+} from '@components/index';
+import { Icon as SemanticIcon, Dropdown, Label, Image as SemanticImage } from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import requiredRefineMaterials from '@consts/requiredRefineMaterials';
-import styled from 'styled-components';
-import CheckboxTest from '@components/atoms/checkbox/CheckboxTest';
 import { returnFullSoomValues } from '@services/LoaCommonUtils';
+import { StyledDiv } from '@consts/appStyled';
 
 const option1KeyMatch = {
   아브노말: 'AbrelNormal',
@@ -198,8 +185,8 @@ const RefineSetting = ({
   return (
     <RefineSettingDiv>
       <div style={{ minWidth: '600px' }}>
-        <div style={{ display: 'flex' }}>
-          <div>
+        <StyledDiv display="flex">
+          <StyledDiv>
             <Label
               basic={false}
               content="장비단계"
@@ -224,8 +211,8 @@ const RefineSetting = ({
                 });
               }}
             />
-          </div>
-          <div style={{ marginLeft: '30px' }}>
+          </StyledDiv>
+          <StyledDiv marginLeft="30px">
             <Label
               basic={false}
               content="무기/방어구"
@@ -250,8 +237,8 @@ const RefineSetting = ({
                 });
               }}
             />
-          </div>
-          <div style={{ marginLeft: '30px' }}>
+          </StyledDiv>
+          <StyledDiv marginLeft="30px">
             <Label
               basic={false}
               content="재련단계"
@@ -272,8 +259,8 @@ const RefineSetting = ({
               }}
               scrolling
             />
-          </div>
-          <div style={{ marginLeft: '30px' }}>
+          </StyledDiv>
+          <StyledDiv marginLeft="30px">
             <Label
               basic={false}
               content="성공확률"
@@ -284,18 +271,11 @@ const RefineSetting = ({
               size="medium"
             />
             <br />
-            <div
-              style={{
-                marginTop: '15px',
-                fontSize: '1.1rem',
-                fontWeight: 'bold',
-                color: 'tomato',
-              }}
-            >
+            <StyledDiv marginTop="15px" fontSize="1.1rem" fontWeight={'bold'} color="#f8cd02">
               {refineMaterialsMatch.probability}%
-            </div>
-          </div>
-        </div>
+            </StyledDiv>
+          </StyledDiv>
+        </StyledDiv>
         <br />
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px' }}>
           <Image
@@ -309,7 +289,7 @@ const RefineSetting = ({
           />
 
           <div>
-            <div style={{ display: 'flex' }}>
+            <StyledDiv display="flex">
               <Label color="black" style={{ fontSize: '1rem' }}>
                 <SemanticImage
                   avatar
@@ -337,8 +317,8 @@ const RefineSetting = ({
                 />
                 {refineMaterialsMatch.mat3}
               </Label>
-            </div>
-            <div style={{ display: 'flex', marginTop: '5px' }}>
+            </StyledDiv>
+            <StyledDiv display="flex" marginTop="5px">
               <Label color="black" style={{ fontSize: '1rem' }}>
                 <SemanticImage avatar spaced="right" src={loaImages['명예의파편']} size="big" />
                 {refineMaterialsMatch.honorShard.toLocaleString()}
@@ -352,12 +332,12 @@ const RefineSetting = ({
                 />
                 {refineMaterialsMatch.mat2}
               </Label>
-            </div>
+            </StyledDiv>
           </div>
         </div>
       </div>
       <div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <StyledDiv display="flex" flexDirection="column">
           <div>
             <Label
               basic={false}
@@ -406,7 +386,16 @@ const RefineSetting = ({
             refineOverallSetting={refineOverallSetting}
             setRefineOverallSetting={setRefineOverallSetting}
           />
-        </div>
+          <br />
+          <StyledDiv display="grid" gridTemplateColumns="repeat(4, 1fr)">
+            <StyledDiv paddingRight="10px">
+              <Button color="red" content="시뮬레이션 시작" loading={false} />
+            </StyledDiv>
+            <StyledDiv paddingRight="10px">
+              <Button color="red" content="시뮬레이션 시작" loading={false} />
+            </StyledDiv>
+          </StyledDiv>
+        </StyledDiv>
       </div>
     </RefineSettingDiv>
   );

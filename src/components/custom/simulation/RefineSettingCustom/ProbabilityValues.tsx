@@ -1,10 +1,10 @@
-import { InputLayout, InputDefaultNumber, InputWithIcon } from '@components/atoms/input';
+import { InputLayout, InputWithIcon } from '@components/atoms/input';
 import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
 
 const StyledGridDiv = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
 `;
 
 const ProbabilityValues = ({ refineOverallSetting, setRefineOverallSetting }: any) => {

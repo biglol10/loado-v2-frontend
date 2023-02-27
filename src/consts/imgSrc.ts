@@ -56,6 +56,7 @@ const imgSrc = Object.freeze({
   파괴강석: `${itemBaseFolder}/파괴강석.webp`,
   파괴결정석: `${itemBaseFolder}/파괴결정석.webp`,
   하급오레하: `${itemBaseFolder}/하급오레하.webp`,
+  확률이미지: `${itemBaseFolder}/확률이미지.png`,
 });
 
 const commImg = Object.freeze({

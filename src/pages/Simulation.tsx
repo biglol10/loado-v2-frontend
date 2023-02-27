@@ -1,24 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
-// import { InputDefaultNumber } from '@components/atoms/input';
-import Tooltip from '@components/atoms/tooltip/Tooltip';
-import {
-  Image,
-  InheritedMaterialsCountPriceDesktop,
-  InputDefault,
-  InputDropdown,
-  InputLayout,
-  Label,
-  RadioButtonGroup,
-  InputDefaultNumber,
-} from '@components/index';
-import { loaImages } from '@consts/imgSrc';
-import { itemNameArr, itemNameMatch } from '@consts/itemNameMatch';
-import { H3NoMargin, InheritedMaterials, RefineSettingDiv } from '@pageStyled/SimulationStyled';
+import { useMemo, useState } from 'react';
+import { InheritedMaterialsCountPriceDesktop, RadioButtonGroup } from '@components/index';
+import { H3NoMargin, InheritedMaterials } from '@pageStyled/SimulationStyled';
 import { getAllItemPrice } from '@services/ItemPriceService';
 import { useQuery } from '@tanstack/react-query';
 import RefineSetting from '@components/custom/simulation/RefineSetting';
-// height: 250px;
-// overflow-y: auto;
+import { StyledDiv } from '@consts/appStyled';
 
 const Simulation = () => {
   const [countObjDashboard, setCountObjDashboard] = useState({
@@ -123,7 +109,7 @@ const Simulation = () => {
   const itemPriceInfoMapping = useMemo(() => {
     if (itemsQuery.status === 'success') {
       const itemPriceMapping: {
-        [x in string]: number;
+        [_ in string]: number;
       } = {};
 
       itemsQuery.data.map(({ Id, Name, CurrentMinPrice, Icon }: any) => {
@@ -143,7 +129,7 @@ const Simulation = () => {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <StyledDiv display="flex" alignItems="center">
         <H3NoMargin>※ 재련 시뮬레이션</H3NoMargin>
         <RadioButtonGroup
           options={[
@@ -153,7 +139,7 @@ const Simulation = () => {
           selectedValue={selectedValue}
           onChange={(value: string) => setSelectedValue(value)}
         />
-      </div>
+      </StyledDiv>
       <br />
 
       <InheritedMaterials>
