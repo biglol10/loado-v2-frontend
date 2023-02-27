@@ -64,7 +64,6 @@ const refineSimulation: any = ({
   isIncreaseProb,
   memoryArr = [],
 }: refineSimulationType) => {
-  // if (count >= 15) return;
   const successProb =
     defaultProb +
     (count - 1 > 10 ? defaultProb : ((count - 1) * defaultProb) / 10) +
@@ -72,17 +71,12 @@ const refineSimulation: any = ({
     (isFullSoom ? defaultProb : 0);
 
   const isSuccess = isRefineSuccessFunction(successProb);
-
-  const aa = Math.floor((successProb / 2.15) * 100) / 100;
-  const bb = (successProb / 2.15).toFixed(2);
-
   const newArtisanEnergyNotFullSoom = Number((successProb - defaultProb) / 2.15);
   const newArtisanEnergyFullSoom = Number(successProb / 2.15);
 
   // debugger;
 
   memoryArr.push({
-    defaultProb,
     startProb,
     count,
     artisanEnergy,
@@ -91,6 +85,14 @@ const refineSimulation: any = ({
     refineTarget,
     isIncreaseProb,
   });
+
+  if (isSuccess) {
+    return {
+      count,
+      lastRefineFullSoom: true,
+      memoryArr,
+    };
+  }
 
   if (artisanEnergy + newArtisanEnergyNotFullSoom >= 100) {
     return {
@@ -108,12 +110,12 @@ const refineSimulation: any = ({
     };
   }
 
-  if (Number(newArtisanEnergyFullSoom.toFixed(2)) >= 100) return count;
+  // if (Number(newArtisanEnergyFullSoom.toFixed(2)) >= 100) return count;
 
   return refineSimulation({
     defaultProb,
     count: count + 1,
-    startProb,
+    startProb: successProb,
     // artisanEnergy: artisanEnergy + Math.floor((successProb / 2.15) * 100) / 100,
     artisanEnergy: artisanEnergy + newArtisanEnergyFullSoom,
     isFullSoom,
@@ -122,23 +124,6 @@ const refineSimulation: any = ({
     bookProb,
     memoryArr,
   });
-
-  // if (isSuccess) {
-  //   return {
-  //     count,
-  //     lastRefineFullSoom: false,
-  //   };
-  // } else {
-  //   refineSimulation({
-  //     defaultProb,
-  //     count: count + 1,
-  //     startProb,
-  //     artisanEnergy,
-  //     isFullSoom,
-  //     refineTarget,
-  //     isIncreaseProb,
-  //   });
-  // }
 };
 
 export { returnFullSoomValues, isRefineSuccessFunction, refineSimulation };
