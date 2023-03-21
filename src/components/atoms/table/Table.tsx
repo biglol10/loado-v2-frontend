@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { loaImages } from '@consts/imgSrc';
+import { TextWithGold } from '../textWithGold';
 
 const StyledTable = styled(Table)`
   && {
@@ -32,15 +32,6 @@ const StyledCell = styled(TableCell)`
   display: inline;
 `;
 
-const StyledSpan = styled.span`
-  color: black;
-`;
-
-const StyledImage = styled.img`
-  vertical-align: inherit;
-  width: 40px;
-`;
-
 const MainTable = ({ columns, data }: { columns: any; data: any }) => {
   return (
     <StyledTable>
@@ -53,19 +44,20 @@ const MainTable = ({ columns, data }: { columns: any; data: any }) => {
       </StyledHead>
       <StyledBody>
         {data.map((d: any, i: number) => (
-          <StyledRow key={d.name}>
+          <StyledRow key={d.id}>
             <StyledCell>{d.name}</StyledCell>
+            {d.averagePrice && (
+              <StyledCell>
+                <TextWithGold text={d.averagePrice} width="30px" />
+              </StyledCell>
+            )}
+            {d.recentPrice && (
+              <StyledCell>
+                <TextWithGold text={d.recentPrice} width="30px" />
+              </StyledCell>
+            )}
             <StyledCell>
-              <StyledSpan>{d.averagePrice}</StyledSpan>
-              <StyledImage src={loaImages['골드배경X']} />
-            </StyledCell>
-            <StyledCell>
-              <StyledSpan>{d.recentPrice}</StyledSpan>
-              <StyledImage src={loaImages['골드배경X']} />
-            </StyledCell>
-            <StyledCell>
-              <StyledSpan>{d.lowestPrice}</StyledSpan>
-              <StyledImage src={loaImages['골드배경X']} />
+              <TextWithGold text={d.lowestPrice} width="30px" />
             </StyledCell>
             <StyledCell>{d.getMarketPrice}</StyledCell>
             <StyledCell>{d.bookmark}</StyledCell>

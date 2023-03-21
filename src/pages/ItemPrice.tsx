@@ -113,6 +113,7 @@ const ItemPricePage = () => {
   const data: ITableData[] = useMemo(
     () => [
       {
+        id: 1,
         name: '각인서명',
         averagePrice: 500,
         recentPrice: 500,
@@ -121,6 +122,7 @@ const ItemPricePage = () => {
         bookmark: 'icon',
       },
       {
+        id: 2,
         name: '각인서명',
         averagePrice: 500,
         recentPrice: 500,
@@ -129,6 +131,7 @@ const ItemPricePage = () => {
         bookmark: 'icon',
       },
       {
+        id: 3,
         name: '각인서명',
         averagePrice: 500,
         recentPrice: 500,
@@ -140,44 +143,39 @@ const ItemPricePage = () => {
     [],
   );
 
-  const columns: Column[] = useMemo(
+  const data2: ITableData[] = useMemo(
     () => [
       {
-        Header: '각인서명',
-        accessor: 'name',
+        id: 1,
+        name: '아바타',
+        lowestPrice: 500,
+        getMarketPrice: 'icon',
+        bookmark: 'icon',
       },
       {
-        Header: '전일 평균 거래가',
-        accessor: 'averagePrice',
-        // Cell: (tableProps) => (
-        //   <>
-        //     <Image src={loaImages['골드배경X']} imageSize="mini" type="image" circular={true} />
-        //     {tableProps.row}
-        //   </>
-        // ),
-        // Cell: () => (
-        //   <Image src={loaImages['골드배경X']} imageSize="mini" type="image" circular={true} />
-        // ),
+        id: 2,
+        name: '아바타',
+        lowestPrice: 500,
+        getMarketPrice: 'icon',
+        bookmark: 'icon',
       },
       {
-        Header: '최근 거래가',
-        accessor: 'recentPrice',
-      },
-      {
-        Header: '최저가',
-        accessor: 'lowestPrice',
-      },
-      {
-        Header: '시세조회',
-        accessor: 'getMarketPrice',
-      },
-      {
-        Header: '관심등록',
-        accessor: 'bookmark',
+        id: 3,
+        name: '아바타',
+        lowestPrice: 500,
+        getMarketPrice: 'icon',
+        bookmark: 'icon',
       },
     ],
     [],
   );
+
+  const columns: string[] = useMemo(
+    () => ['각인서명', '전일 평균 거래가', '최근 거래가', '최저가', '시세조회', '관심등록'],
+    [],
+  );
+
+  const columns2: string[] = useMemo(() => ['각인서명', '최저가', '시세조회', '관심등록'], []);
 
   return (
     <>
@@ -212,6 +210,7 @@ const ItemPricePage = () => {
       </TopTab>
       <MainTable data={data} columns={columns} />
       <MainTable data={data} columns={columns} />
+      <MainTable data={data2} columns={columns2} />
     </>
   );
 };
