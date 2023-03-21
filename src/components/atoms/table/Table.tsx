@@ -1,22 +1,26 @@
-import { Column, useTable } from 'react-table';
 import styled from 'styled-components';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { loaImages } from '@consts/imgSrc';
 
-const StyledTable = styled.table`
-  border-collapse: collapse;
-  border: 1px solid white;
-  margin: 10px;
-  width: 45%;
-  float: left;
+const StyledTable = styled(Table)`
+  && {
+    border-collapse: collapse;
+    border: 1px solid white;
+    background: white;
+    margin: 10px;
+    width: 48%;
+    float: left;
+  }
 `;
 
-const StyledHead = styled.thead`
+const StyledHead = styled(TableHead)`
   border-bottom: 1px solid white;
   height: 40px;
 `;
-const StyledBody = styled.tbody`
+const StyledBody = styled(TableBody)`
   text-align: center;
 `;
-const StyledRow = styled.tr`
+const StyledRow = styled(TableRow)`
   border-bottom: 1px solid white;
   height: 40px;
   &:last-child {
@@ -24,41 +28,55 @@ const StyledRow = styled.tr`
   }
 `;
 
-const Table = ({ columns, data }: { columns: Column[]; data: any }) => {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
-    columns,
-    data,
-  });
+const StyledCell = styled(TableCell)`
+  display: inline;
+`;
 
+const StyledSpan = styled.span`
+  color: black;
+`;
+
+const StyledImage = styled.img`
+  vertical-align: inherit;
+  width: 40px;
+`;
+
+const MainTable = ({ columns, data }: { columns: any; data: any }) => {
   return (
-    <StyledTable {...getTableProps()}>
+    <StyledTable>
       <StyledHead>
-        {headerGroups.map((headerGroup) => (
-          <StyledRow {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} key={column.id}>
-                {column.render('Header')}
-              </th>
-            ))}
+        <StyledRow>
+          <StyledCell>각인서명</StyledCell>
+          <StyledCell>전일 평균 거래가</StyledCell>
+          <StyledCell>최근 거래가</StyledCell>
+          <StyledCell>최저가</StyledCell>
+          <StyledCell>시세조회</StyledCell>
+          <StyledCell>관심등록</StyledCell>
+        </StyledRow>
+      </StyledHead>
+      <StyledBody>
+        {data.map((d: any, i: number) => (
+          <StyledRow key={d.name}>
+            <StyledCell>{d.name}</StyledCell>
+            <StyledCell>
+              <StyledSpan>{d.averagePrice}</StyledSpan>
+              <StyledImage src={loaImages['골드배경X']} />
+            </StyledCell>
+            <StyledCell>
+              <StyledSpan>{d.recentPrice}</StyledSpan>
+              <StyledImage src={loaImages['골드배경X']} />
+            </StyledCell>
+            <StyledCell>
+              <StyledSpan>{d.lowestPrice}</StyledSpan>
+              <StyledImage src={loaImages['골드배경X']} />
+            </StyledCell>
+            <StyledCell>{d.getMarketPrice}</StyledCell>
+            <StyledCell>{d.bookmark}</StyledCell>
           </StyledRow>
         ))}
-      </StyledHead>
-      <StyledBody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <StyledRow {...row.getRowProps()} key={row.id}>
-              {row.cells.map((cell, index) => (
-                <td {...cell.getCellProps()} key={index}>
-                  {cell.render('Cell')}
-                </td>
-              ))}
-            </StyledRow>
-          );
-        })}
       </StyledBody>
     </StyledTable>
   );
 };
 
-export { Table };
+export { MainTable };

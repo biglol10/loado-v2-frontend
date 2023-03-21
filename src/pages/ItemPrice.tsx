@@ -4,7 +4,7 @@ import BaseService from '@services/BaseService';
 import axios from 'axios';
 import styled from 'styled-components';
 import LOSTARK_API from '@consts/api';
-import { Table } from '@components/atoms/table/index';
+import { MainTable } from '@components/atoms/table/index';
 import { ITableData } from '@components/atoms/table/Types';
 import { Column } from 'react-table';
 
@@ -144,11 +144,20 @@ const ItemPricePage = () => {
     () => [
       {
         Header: '각인서명',
-        accessor: 'name', // accessor is the "key" in the data
+        accessor: 'name',
       },
       {
         Header: '전일 평균 거래가',
         accessor: 'averagePrice',
+        // Cell: (tableProps) => (
+        //   <>
+        //     <Image src={loaImages['골드배경X']} imageSize="mini" type="image" circular={true} />
+        //     {tableProps.row}
+        //   </>
+        // ),
+        // Cell: () => (
+        //   <Image src={loaImages['골드배경X']} imageSize="mini" type="image" circular={true} />
+        // ),
       },
       {
         Header: '최근 거래가',
@@ -201,7 +210,8 @@ const ItemPricePage = () => {
           </li>
         </ul>
       </TopTab>
-      <Table data={data} columns={columns} />
+      <MainTable data={data} columns={columns} />
+      <MainTable data={data} columns={columns} />
     </>
   );
 };
