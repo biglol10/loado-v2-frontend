@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.0.0",
+    "@material-ui/core": "^4.12.4",
     "@reduxjs/toolkit": "^1.9.2",
     "@tanstack/react-query": "^4.23.0",
     "@tanstack/react-query-devtools": "^4.23.0",
