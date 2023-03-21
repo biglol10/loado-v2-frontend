@@ -46,12 +46,9 @@ const MainTable = ({ columns, data }: { columns: any; data: any }) => {
     <StyledTable>
       <StyledHead>
         <StyledRow>
-          <StyledCell>각인서명</StyledCell>
-          <StyledCell>전일 평균 거래가</StyledCell>
-          <StyledCell>최근 거래가</StyledCell>
-          <StyledCell>최저가</StyledCell>
-          <StyledCell>시세조회</StyledCell>
-          <StyledCell>관심등록</StyledCell>
+          {columns.map((column: string, index: number) => (
+            <StyledCell key={index}>{column}</StyledCell>
+          ))}
         </StyledRow>
       </StyledHead>
       <StyledBody>
