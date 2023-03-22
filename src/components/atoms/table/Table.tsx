@@ -32,6 +32,11 @@ const StyledCell = styled(TableCell)`
   display: inline;
 `;
 
+const StyledImage = styled.img`
+  vertical-align: inherit;
+  width: 30px;
+`;
+
 const MainTable = ({ columns, data }: { columns: any; data: any }) => {
   return (
     <StyledTable>
@@ -44,23 +49,26 @@ const MainTable = ({ columns, data }: { columns: any; data: any }) => {
       </StyledHead>
       <StyledBody>
         {data.map((d: any, i: number) => (
-          <StyledRow key={d.id}>
-            <StyledCell>{d.name}</StyledCell>
-            {d.averagePrice && (
+          <StyledRow key={d.Id}>
+            <StyledCell>
+              <StyledImage src={d.Icon} />
+              {d.Name}
+            </StyledCell>
+            {d.YDayAvgPrice && (
               <StyledCell>
-                <TextWithGold text={d.averagePrice} width="30px" />
+                <TextWithGold text={d.YDayAvgPrice} width="30px" />
               </StyledCell>
             )}
-            {d.recentPrice && (
+            {d.RecentPrice && (
               <StyledCell>
-                <TextWithGold text={d.recentPrice} width="30px" />
+                <TextWithGold text={d.RecentPrice} width="30px" />
               </StyledCell>
             )}
             <StyledCell>
-              <TextWithGold text={d.lowestPrice} width="30px" />
+              <TextWithGold text={d.CurrentMinPrice} width="30px" />
             </StyledCell>
-            <StyledCell>{d.getMarketPrice}</StyledCell>
-            <StyledCell>{d.bookmark}</StyledCell>
+            <StyledCell>Icon</StyledCell>
+            <StyledCell>Icon</StyledCell>
           </StyledRow>
         ))}
       </StyledBody>

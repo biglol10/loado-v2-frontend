@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import LOSTARK_API from '@consts/api';
 import { MainTable } from '@components/atoms/table/index';
 import { ITableData } from '@components/atoms/table/Types';
-import { Column } from 'react-table';
 
 const TopTab = styled.div`
   .tab-list {
@@ -39,132 +38,59 @@ const TopTab = styled.div`
 
 const ItemPricePage = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'book' | 'material' | 'mylist'>('all');
+  const [marketItems, setMarketItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      // for (let index = 0; index < 140; index++) {
-      //   const res = await BaseService.request({
-      //     method: 'post',
-      //     url: LOSTARK_API.auction,
-      //     data: {
-      //       ItemLevelMin: 0,
-      //       ItemLevelMax: 1700,
-      //       ItemGradeQuality: 0,
-      //       Sort: 'CURRENT_MIN_PRICE',
-      //       CategoryCode: 210000,
-      //       ItemTier: 3,
-      //       ItemGrade: '유물',
-      //       ItemName: '10레벨 멸화의 보석',
-      //       PageNo: 1,
-      //       SortCondition: 'ASC',
-      //     },
-      //   });
-
-      //   console.log('res in useEffect is');
-      //   console.log(res);
-      // }
-
-      const res = await BaseService.request({
-        method: 'post',
-        url: LOSTARK_API.auction,
-        data: {
-          ItemLevelMin: 0,
-          ItemLevelMax: 1700,
-          ItemGradeQuality: 0,
-          Sort: 'CURRENT_MIN_PRICE',
-          CategoryCode: 210000,
-          ItemTier: 3,
-          ItemGrade: '유물',
-          ItemName: '10레벨 멸화의 보석',
-          PageNo: 1,
-          SortCondition: 'ASC',
-        },
-      });
-
-      console.log('res in useEffect is');
-      console.log(res);
-    };
-
-    const fetchData2 = async () => {
-      const axiosResult = await axios({
-        url: 'https://developer-lostark.game.onstove.com/markets/items',
+      await axios({
+        url: LOSTARK_API.market,
         method: 'post',
         data: {
           Sort: 'CURRENT_MIN_PRICE',
-          CategoryCode: 50000,
-          CharacterClass: '창술사',
+          CategoryCode: 40000,
           ItemTier: 0,
-          ItemName: '강석',
+          ItemName: '각인서',
+          ItemGrade: '전설',
           PageNo: 1,
           SortCondition: 'DESC',
         },
         headers: {
           Authorization: `bearer ${process.env.REACT_APP_SMILEGATE_TOKEN}`,
         },
-      });
-
-      console.log('axiosResult is');
-      console.log(axiosResult);
+      })
+        .then((res) => {
+          setMarketItems(res.data.Items);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
     fetchData();
   }, []);
 
-  const data: ITableData[] = useMemo(
-    () => [
-      {
-        id: 1,
-        name: '각인서명',
-        averagePrice: 500,
-        recentPrice: 500,
-        lowestPrice: 500,
-        getMarketPrice: 'icon',
-        bookmark: 'icon',
-      },
-      {
-        id: 2,
-        name: '각인서명',
-        averagePrice: 500,
-        recentPrice: 500,
-        lowestPrice: 500,
-        getMarketPrice: 'icon',
-        bookmark: 'icon',
-      },
-      {
-        id: 3,
-        name: '각인서명',
-        averagePrice: 500,
-        recentPrice: 500,
-        lowestPrice: 500,
-        getMarketPrice: 'icon',
-        bookmark: 'icon',
-      },
-    ],
-    [],
-  );
-
   const data2: ITableData[] = useMemo(
     () => [
       {
-        id: 1,
-        name: '아바타',
-        lowestPrice: 500,
-        getMarketPrice: 'icon',
+        Id: 1,
+        Name: '아바타',
+        CurrentMinPrice: 500,
+        Grade: 'icon',
+        Icon: 'icon',
+      },
+      {
+        Id: 2,
+        Name: '아바타',
+        CurrentMinPrice: 500,
+        Grade: 'icon',
         bookmark: 'icon',
       },
       {
-        id: 2,
-        name: '아바타',
-        lowestPrice: 500,
-        getMarketPrice: 'icon',
-        bookmark: 'icon',
-      },
-      {
-        id: 3,
-        name: '아바타',
-        lowestPrice: 500,
-        getMarketPrice: 'icon',
-        bookmark: 'icon',
+        Id: 3,
+        Name: '아바타',
+        CurrentMinPrice: 500,
+        Grade: 'icon',
+        Icon: 'icon',
       },
     ],
     [],
@@ -208,8 +134,8 @@ const ItemPricePage = () => {
           </li>
         </ul>
       </TopTab>
-      <MainTable data={data} columns={columns} />
-      <MainTable data={data} columns={columns} />
+      <MainTable data={marketItems} columns={columns} />
+      {/* <MainTable data={marketItems} columns={columns} /> */}
       <MainTable data={data2} columns={columns2} />
     </>
   );
