@@ -92,7 +92,7 @@ const MainLayout = ({ children }: LayoutChildren) => {
             className={activePage === 'simulation' ? 'active' : ''}
             onClick={() => changeRoute('simulation')}
           >
-            <h3>{deviceType === 'mobile' ? '시뮬' : '제련 시뮬레이션'}</h3>
+            <h3>{deviceType === 'mobile' ? '시뮬' : '재련 시뮬레이션'}</h3>
           </li>
           {deviceType !== 'mobile' && (
             <li

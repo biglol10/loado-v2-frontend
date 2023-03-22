@@ -37,6 +37,7 @@ const Button = ({
       loading={loading}
       onClick={onClick && onClick}
       // style={{ '--spacing': `${spacing}px` }}
+      fluid={true}
       disabled={disabled}
       spacing={spacing}
     />

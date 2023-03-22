@@ -15,11 +15,12 @@ export interface IInputDefault {
   disabled?: boolean;
   maxLength?: undefined | number;
   ref?: any;
-  stretch?: boolean;
+  // stretch?: boolean;
   error?: boolean;
   onEnter?: Function;
   clearInputValue?: Function;
   transparent?: boolean;
+  fluid?: boolean;
 }
 
 export interface IInputDefaultNumber {
@@ -35,11 +36,12 @@ export interface IInputDefaultNumber {
   disabled?: boolean;
   maxLength?: undefined | number;
   ref?: any;
-  stretch?: boolean;
+  // stretch?: boolean;
   error?: boolean;
   onEnter?: Function;
   clearInputValue?: Function;
   transparent?: boolean;
+  fluid?: boolean;
 }
 
 // ? Types in InputDropdown component
@@ -57,6 +59,7 @@ export interface IInputDropdown {
   error?: boolean;
   onEnter?: Function;
   keyboardInput?: boolean;
+  compact?: boolean;
 }
 
 // ? Types in InputLayout component
@@ -73,6 +76,7 @@ export interface IInputLayout {
   errorMsg?: string;
   errorLabelPosition?: 'bottom' | 'right';
   autoFitErrorLabel?: boolean;
+  inputWidth?: 'auto' | string;
 }
 
 // ? Types in InputSearch component
@@ -86,4 +90,5 @@ export interface IInputWithIcon extends IInputDefault {
   iconPosition?: 'left' | undefined;
   iconClick?: Function;
   setInputValue?: Function;
+  stretch?: boolean;
 }

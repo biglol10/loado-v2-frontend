@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Checkbox } from 'semantic-ui-react';
 import styled from 'styled-components';
+import _ from 'lodash';
 import { ICheckboxDefault } from './Types';
 import { Label } from '../label';
 
@@ -21,7 +22,7 @@ const StyledCheckboxLabelTop = styled.div<{ spacing: number }>`
 `;
 
 const StyledCheckboxLabelRight = styled.div<{ spacing: number }>`
-  background-color: white;
+  background-color: black;
   display: flex;
   align-items: center;
   width: max-content;
@@ -33,7 +34,7 @@ const StyledCheckboxLabelRight = styled.div<{ spacing: number }>`
     align-items: center;
   }
   & .checkBoxLabel {
-    background-color: white;
+    background-color: black;
     // height: 20px;
     display: flex;
     align-items: center;
@@ -48,26 +49,36 @@ const CheckboxDefault = ({
   size = 'small',
   label = 'test',
   labelPosition = 'right',
-  onClick = null,
+  onClick = () => null,
   spacing = 0,
   fontColor = 'black',
 }: ICheckboxDefault) => {
   const [isChecked, setIsChecked] = useState<boolean>(checked);
   const onChangeFn = () => {
-    setIsChecked((prevChecked) => !prevChecked);
+    setIsChecked((prevChecked) => {
+      onClick &&
+        _.debounce(() => {
+          onClick({
+            id,
+            isChecked: !prevChecked,
+          });
+        }, 50)();
+
+      return !prevChecked;
+    });
   };
 
-  useEffect(() => {
-    setIsChecked(checked);
-  }, [checked]);
+  // useEffect(() => {
+  //   setIsChecked(checked);
+  // }, [checked]);
 
-  useEffect(() => {
-    onClick &&
-      onClick({
-        id,
-        isChecked,
-      });
-  }, [id, isChecked, onClick]);
+  // useEffect(() => {
+  //   onClick &&
+  //     onClick({
+  //       id,
+  //       isChecked,
+  //     });
+  // }, [id, isChecked, onClick]);
 
   return (
     <>

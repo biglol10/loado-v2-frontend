@@ -5,9 +5,13 @@
 
 .ui.disabled.input,
 .ui.input:not(.disabled) input[disabled] {
-  opacity: 0.9;
+  opacity: 1;
 }
 
 input::placeholder {
   color: red;
+}
+
+.noMarginBottom {
+  margin-bottom: 0px;
 }

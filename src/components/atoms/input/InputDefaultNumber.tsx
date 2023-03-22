@@ -26,14 +26,14 @@ const InputDefaultNumber = forwardRef<{ inputElement: Input | undefined }, IInpu
       readOnly = false,
       disabled = false,
       maxLength = undefined,
-      stretch = false,
+      // stretch = false,
       error = false,
       onEnter = null,
       transparent = false,
+      fluid = false,
     },
     ref,
   ) => {
-    console.log(`value in InputDefaultNumber is ${value}`);
     // ! Styled에 props로 넘길 것은 string으로 하는게 에러가 발생 안 하는듯? stretch={boolean값} 했을 때 Warning: Received `true` for a non-boolean attribute `stretch`. 발생
     return (
       <StyledBaseInput
@@ -51,10 +51,11 @@ const InputDefaultNumber = forwardRef<{ inputElement: Input | undefined }, IInpu
         disabled={disabled}
         maxLength={maxLength}
         // style={stretch ? { width: '100%' } : {}}
-        stretch={stretch}
+        // stretch={stretch}
         onKeyUp={(evt: KeyboardEvent) => evt.key === 'Enter' && onEnter && onEnter()}
         transparent={transparent}
         defaultValue={value}
+        fluid={fluid}
       />
     );
   },

@@ -1,37 +1,10 @@
-import { useState, useEffect, useMemo } from 'react';
-import { InputDefaultNumber } from '@components/atoms/input';
-import Tooltip from '@components/atoms/tooltip/Tooltip';
-import {
-  InputDefault,
-  InputLayout,
-  Image,
-  InheritedMaterialsCountPriceDesktop,
-  RadioButtonGroup,
-} from '@components/index';
-import { loaImages } from '@consts/imgSrc';
-import styled from 'styled-components';
-import { itemNameMatch, itemNameArr } from '@consts/itemNameMatch';
-import { useQuery, useQueries } from '@tanstack/react-query';
-import { getSingleItemPrice, getAllItemPrice } from '@services/ItemPriceService';
-
-const InheritedMaterials = styled.div`
-  border: 1px solid slategrey;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(
-    ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '3'},
-    1fr
-  );
-  padding: 10px 0;
-`;
-
-const H3NoMargin = styled.h3`
-  margin-bottom: 0px;
-  margin-right: 20px;
-`;
-
-// height: 250px;
-// overflow-y: auto;
+import { useMemo, useState } from 'react';
+import { InheritedMaterialsCountPriceDesktop, RadioButtonGroup } from '@components/index';
+import { H3NoMargin, InheritedMaterials } from '@pageStyled/SimulationStyled';
+import { getAllItemPrice } from '@services/ItemPriceService';
+import { useQuery } from '@tanstack/react-query';
+import RefineSetting from '@components/custom/simulation/RefineSetting';
+import { StyledDiv } from '@consts/appStyled';
 
 const Simulation = () => {
   const [countObjDashboard, setCountObjDashboard] = useState({
@@ -133,12 +106,10 @@ const Simulation = () => {
     staleTime: 1000 * 3600,
   });
 
-  console.log(itemsQuery);
-
   const itemPriceInfoMapping = useMemo(() => {
     if (itemsQuery.status === 'success') {
       const itemPriceMapping: {
-        [x in string]: number;
+        [_ in string]: number;
       } = {};
 
       itemsQuery.data.map(({ Id, Name, CurrentMinPrice, Icon }: any) => {
@@ -151,20 +122,24 @@ const Simulation = () => {
   }, [itemsQuery]);
 
   const [selectedValue, setSelectedValue] = useState('count');
+  const [selectOptionParam, setSelectOptionParam] = useState({
+    option1: '아브노말',
+    option2: '무기',
+  });
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <H3NoMargin>※ 제련 시뮬레이션</H3NoMargin>
+      <StyledDiv display="flex" alignItems="center">
+        <H3NoMargin>※ 재련 시뮬레이션</H3NoMargin>
         <RadioButtonGroup
           options={[
             { label: '귀속재료개수', value: 'count' },
             { label: '재료가격', value: 'price' },
           ]}
           selectedValue={selectedValue}
-          onChange={(value: any) => setSelectedValue(value)}
+          onChange={(value: string) => setSelectedValue(value)}
         />
-      </div>
+      </StyledDiv>
       <br />
 
       <InheritedMaterials>
@@ -175,6 +150,12 @@ const Simulation = () => {
           itemPriceInfoMapping={itemPriceInfoMapping}
         />
       </InheritedMaterials>
+
+      <br />
+      <RefineSetting
+        selectOptionParam={selectOptionParam}
+        setSelectOptionParam={setSelectOptionParam}
+      />
     </div>
   );
 };

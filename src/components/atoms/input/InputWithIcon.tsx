@@ -61,8 +61,8 @@ const InputWithIcon = forwardRef<HTMLInputElement, IInputWithIcon>(
         error={error}
         icon
         iconPosition={iconPosition}
-        // style={stretch ? { width: '100%' } : {}}
-        stretch={stretch}
+        style={stretch ? { width: '100%' } : {}}
+        // stretch={stretch}
       >
         {iconPosition === 'left' ? (
           <>

@@ -32,6 +32,7 @@ const InputDropdown = forwardRef<
       stretch = false,
       error = false,
       onEnter = null,
+      compact = false,
     },
     ref,
   ) => {
@@ -61,6 +62,14 @@ const InputDropdown = forwardRef<
         onKeyUp={(evt: KeyboardEvent) => evt.key === 'Enter' && onEnter && onEnter()}
         // style={stretch ? { width: '100%' } : {}}
         stretch={stretch}
+        style={{
+          color: 'black',
+          padding: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        compact={compact}
       />
     );
   },

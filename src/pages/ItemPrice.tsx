@@ -198,7 +198,7 @@ const ItemPricePage = () => {
             className={`tab-item ${activeTab === 'material' ? 'active' : ''}`}
             onClick={() => setActiveTab('material')}
           >
-            <span className="tab-link">제련재료</span>
+            <span className="tab-link">재련재료</span>
           </li>
           <li
             className={`tab-item ${activeTab === 'mylist' ? 'active' : ''}`}

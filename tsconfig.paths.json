@@ -7,7 +7,8 @@
       "@consts/*": ["src/consts/*"],
       "@state/*": ["src/state/*"],
       "@services/*": ["src/services/*"],
-      "@hooks/*": ["src/hooks/*"]
+      "@hooks/*": ["src/hooks/*"],
+      "@pageStyled/*": ["src/pageStyled/*"]
     }
   }
 }

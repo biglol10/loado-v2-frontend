@@ -1,9 +1,9 @@
 import { JSXElementConstructor as JSX } from 'react';
-import { loaImages } from '@consts/imgSrc';
+import { loaImages, loaImagesType } from '@consts/imgSrc';
 
 export interface IAvatar {
   id?: string;
-  src?: keyof typeof loaImages | string | null;
+  src?: loaImagesType | string | null;
   content: string | JSX.Element;
   fontColor?: string;
   spacing?: number;

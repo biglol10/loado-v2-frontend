@@ -1,20 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
-  InputLayout,
+  Box,
   InputDefault,
   InputDropdown,
+  InputLayout,
   InputSearch,
   InputWithIcon,
-  Box,
   RadioButtonGroup,
 } from '@components/index';
-import { Divider, Icon, Input } from 'semantic-ui-react';
-import axios from 'axios';
 import { loaImages } from '@consts/imgSrc';
-import { RootState } from 'src/state/store';
-import { increment, decrement } from '@state/counterSlice';
 import useModal from '@hooks/ModalHooks';
-import { useSelector, useDispatch } from 'react-redux';
+import { decrement, increment } from '@state/counterSlice';
+import axios from 'axios';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { Divider, Icon, Input } from 'semantic-ui-react';
+import { RootState } from 'src/state/store';
 
 const options = [
   { key: 'angular', text: 'Angular', value: 'angular' },
