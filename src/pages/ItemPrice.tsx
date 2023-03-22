@@ -4,9 +4,8 @@ import BaseService from '@services/BaseService';
 import axios from 'axios';
 import styled from 'styled-components';
 import LOSTARK_API from '@consts/api';
-import { Table } from '@components/atoms/table/index';
+import { MainTable } from '@components/atoms/table/index';
 import { ITableData } from '@components/atoms/table/Types';
-import { Column } from 'react-table';
 
 const TopTab = styled.div`
   .tab-list {
@@ -39,145 +38,70 @@ const TopTab = styled.div`
 
 const ItemPricePage = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'book' | 'material' | 'mylist'>('all');
+  const [marketItems, setMarketItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      // for (let index = 0; index < 140; index++) {
-      //   const res = await BaseService.request({
-      //     method: 'post',
-      //     url: LOSTARK_API.auction,
-      //     data: {
-      //       ItemLevelMin: 0,
-      //       ItemLevelMax: 1700,
-      //       ItemGradeQuality: 0,
-      //       Sort: 'CURRENT_MIN_PRICE',
-      //       CategoryCode: 210000,
-      //       ItemTier: 3,
-      //       ItemGrade: '유물',
-      //       ItemName: '10레벨 멸화의 보석',
-      //       PageNo: 1,
-      //       SortCondition: 'ASC',
-      //     },
-      //   });
-
-      //   console.log('res in useEffect is');
-      //   console.log(res);
-      // }
-
-      const res = await BaseService.request({
-        method: 'post',
-        url: LOSTARK_API.auction,
-        data: {
-          ItemLevelMin: 0,
-          ItemLevelMax: 1700,
-          ItemGradeQuality: 0,
-          Sort: 'CURRENT_MIN_PRICE',
-          CategoryCode: 210000,
-          ItemTier: 3,
-          ItemGrade: '유물',
-          ItemName: '10레벨 멸화의 보석',
-          PageNo: 1,
-          SortCondition: 'ASC',
-        },
-      });
-
-      console.log('res in useEffect is');
-      console.log(res);
-    };
-
-    const fetchData2 = async () => {
-      const axiosResult = await axios({
-        url: 'https://developer-lostark.game.onstove.com/markets/items',
+      await axios({
+        url: LOSTARK_API.market,
         method: 'post',
         data: {
           Sort: 'CURRENT_MIN_PRICE',
-          CategoryCode: 50000,
-          CharacterClass: '창술사',
+          CategoryCode: 40000,
           ItemTier: 0,
-          ItemName: '강석',
+          ItemName: '각인서',
+          ItemGrade: '전설',
           PageNo: 1,
           SortCondition: 'DESC',
         },
         headers: {
           Authorization: `bearer ${process.env.REACT_APP_SMILEGATE_TOKEN}`,
         },
-      });
-
-      console.log('axiosResult is');
-      console.log(axiosResult);
+      })
+        .then((res) => {
+          setMarketItems(res.data.Items);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
     fetchData();
   }, []);
 
-  const data: ITableData[] = useMemo(
+  const data2: ITableData[] = useMemo(
     () => [
       {
-        name: '각인서명',
-        averagePrice: 500,
-        recentPrice: 500,
-        lowestPrice: 500,
-        getMarketPrice: 'icon',
+        Id: 1,
+        Name: '아바타',
+        CurrentMinPrice: 500,
+        Grade: 'icon',
+        Icon: 'icon',
+      },
+      {
+        Id: 2,
+        Name: '아바타',
+        CurrentMinPrice: 500,
+        Grade: 'icon',
         bookmark: 'icon',
       },
       {
-        name: '각인서명',
-        averagePrice: 500,
-        recentPrice: 500,
-        lowestPrice: 500,
-        getMarketPrice: 'icon',
-        bookmark: 'icon',
-      },
-      {
-        name: '각인서명',
-        averagePrice: 500,
-        recentPrice: 500,
-        lowestPrice: 500,
-        getMarketPrice: 'icon',
-        bookmark: 'icon',
+        Id: 3,
+        Name: '아바타',
+        CurrentMinPrice: 500,
+        Grade: 'icon',
+        Icon: 'icon',
       },
     ],
     [],
   );
 
-  const columns: Column[] = useMemo(
-    () => [
-      {
-        Header: '각인서명',
-        accessor: 'name', // accessor is the "key" in the data
-      },
-      {
-        Header: '전일 평균 거래가',
-        accessor: 'averagePrice',
-      },
-      {
-        Header: '최근 거래가',
-        accessor: 'recentPrice',
-      },
-      {
-        Header: '최저가',
-        accessor: 'lowestPrice',
-      },
-      {
-        Header: '시세조회',
-        accessor: 'getMarketPrice',
-      },
-      {
-        Header: '관심등록',
-        accessor: 'bookmark',
-      },
-    ],
+  const columns: string[] = useMemo(
+    () => ['각인서명', '전일 평균 거래가', '최근 거래가', '최저가', '시세조회', '관심등록'],
     [],
   );
 
-  const [backTest, setBackTest] = useState('');
-
-  useEffect(() => {
-    axios
-      .get('/api/test')
-      .then((response) => setBackTest(response.data))
-      .catch((error) => console.log(error));
-  }, []);
+  const columns2: string[] = useMemo(() => ['각인서명', '최저가', '시세조회', '관심등록'], []);
 
   return (
     <>
@@ -210,8 +134,9 @@ const ItemPricePage = () => {
           </li>
         </ul>
       </TopTab>
-      <Table data={data} columns={columns} />
-      <div>백엔드에서 가져온 데이터입니다 : {backTest}</div>
+      <MainTable data={marketItems} columns={columns} />
+      {/* <MainTable data={marketItems} columns={columns} /> */}
+      <MainTable data={data2} columns={columns2} />
     </>
   );
 };

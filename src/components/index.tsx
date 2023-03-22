@@ -12,6 +12,8 @@ import { List } from './atoms/list';
 import { Label } from './atoms/label';
 import { SharpDivider } from './atoms/sharpDivider';
 import { Tabs, TabHeader, Tab, TabPanels, TabPanel } from './atoms/tab';
+import { MainTable } from './atoms/table';
+import { TextWithGold } from './atoms/textWithGold';
 import { Toggle } from './atoms/toggle';
 import ModalPopup from './modal';
 import { CheckboxDefault, CheckboxListDefault } from './atoms/checkbox';
@@ -38,6 +40,8 @@ export {
   Tab,
   TabPanels,
   TabPanel,
+  MainTable,
+  TextWithGold,
   Toggle,
   ModalPopup,
   CheckboxDefault,
