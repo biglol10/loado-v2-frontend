@@ -170,6 +170,15 @@ const ItemPricePage = () => {
     [],
   );
 
+  const [backTest, setBackTest] = useState('');
+
+  useEffect(() => {
+    axios
+      .get('/api/test')
+      .then((response) => setBackTest(response.data))
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <>
       {/* <div>asdf</div> */}
@@ -202,6 +211,7 @@ const ItemPricePage = () => {
         </ul>
       </TopTab>
       <Table data={data} columns={columns} />
+      <div>백엔드에서 가져온 데이터입니다 : {backTest}</div>
     </>
   );
 };
