@@ -64,27 +64,32 @@ class BaseService {
       store.dispatch(hideLoader());
       return res;
     } catch (error: any) {
+      store.dispatch(hideLoader());
+      return this.handleError(error, method, url, data, retryCnt);
+    }
+  }
+
+  static async handleError(
+    error: unknown,
+    method: 'get' | 'post',
+    url: string,
+    data: any,
+    retryCnt: number,
+  ): Promise<any> {
+    if (error instanceof Error) {
       const errMsg = error.message;
 
-      // // eslint-disable-next-line no-debugger
-      // debugger;
-
-      if (errMsg === 'Request Limit' && MAX_RETCNT >= retryCnt) {
-        console.log('came to request limit');
+      if (errMsg === 'Request Limit' && MAX_RETCNT > retryCnt) {
         await new Promise((res) => setTimeout(res, RPS));
         const res = await this.request({ method, url, data, retryCnt: retryCnt + 1 });
 
-        console.log(`res in Request limit and retryCnt is ${retryCnt}`);
-        console.log(res);
-        return;
-      } else if (errMsg === 'Request Limit' && MAX_RETCNT < retryCnt) {
-        console.log('came to request limit Exceeded');
-        throw new Error('Rate Limit Exceeded');
+        return res;
+      } else if (errMsg === 'Request Limit' && MAX_RETCNT <= retryCnt) {
+        return error;
       }
-
-      store.dispatch(hideLoader());
-      return error;
     }
+
+    return error;
   }
 }
 

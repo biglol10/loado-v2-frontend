@@ -1,7 +1,7 @@
 const itemBaseFolder = './assets/images/items';
 const commBaseFolder = './assets/images/common';
 
-const imgSrc = Object.freeze({
+const imgSrc = {
   멸화10: `${itemBaseFolder}/10LevelDamage.webp`,
   홍염10: `${itemBaseFolder}/10LevelCoolDown.webp`,
   멸화9: `${itemBaseFolder}/9LevelDamage.webp`,
@@ -57,17 +57,17 @@ const imgSrc = Object.freeze({
   파괴결정석: `${itemBaseFolder}/파괴결정석.webp`,
   하급오레하: `${itemBaseFolder}/하급오레하.webp`,
   확률이미지: `${itemBaseFolder}/확률이미지.png`,
-});
+} as const;
 
-const commImg = Object.freeze({
+const commImg = {
   graphIcon: `${commBaseFolder}/graphIcon.png`,
   loadoIcon: `${commBaseFolder}/loado_logo.png`,
-});
+} as const;
 
-const loaImages = Object.freeze({
+const loaImages = {
   ...imgSrc,
   ...commImg,
-});
+} as const;
 
 export type loaImagesType = keyof typeof loaImages;
 

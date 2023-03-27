@@ -8,50 +8,49 @@ const axiosInstance = axios.create({
   timeout: 30000,
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    if (
-      config.url?.endsWith('/lostark/markets/items') ||
-      config.url?.endsWith('/lostark/auctions/items')
-    ) {
-      Object.assign(config.headers, {
-        Authorization: `bearer ${process.env.REACT_APP_SMILEGATE_TOKEN}`,
-      });
-    }
+const handleRequest = (config: any) => {
+  if (
+    config.url?.endsWith('/lostark/markets/items') ||
+    config.url?.endsWith('/lostark/auctions/items')
+  ) {
+    Object.assign(config.headers, {
+      Authorization: `bearer ${process.env.REACT_APP_SMILEGATE_TOKEN}`,
+    });
+  }
 
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
+  return config;
+};
 
-axiosInstance.interceptors.response.use(
-  (response) => {
-    if (response.status === 200) {
-      // throw new Error('Request Limit');
-      return response.data;
-    } else if (response.status === 429) {
-      throw new Error('Request Limit');
-    }
-    return response;
-  },
-  (error) => {
-    console.log('error in axiosInstance.interceptors.response.use');
-    console.log(error);
-    const { response } = error;
+const handleRequestError = (error: any) => {
+  return Promise.reject(error);
+};
 
-    if (response.status === 429) {
-      // // eslint-disable-next-line no-debugger
-      // debugger;
-      throw new Error('Request Limit');
-    }
+const handleResponseSuccess = (response: any) => {
+  if (response.status === 200) {
+    return response.data;
+  } else if (response.status === 429) {
+    return Promise.reject(new Error('Request Limit'));
+  }
+  return response;
+};
 
-    if (response && response.data) {
-      return Promise.reject(response.data);
-    }
-    return Promise.reject(error);
-  },
-);
+const handleResponseError = (error: any) => {
+  console.log('error in axiosInstance.interceptors.response.use');
+  console.log(error);
+
+  const { response } = error;
+
+  if (response.status === 429) {
+    return Promise.reject(new Error('Request Limit'));
+  }
+
+  if (response && response.data) {
+    return Promise.reject(response.data);
+  }
+  return Promise.reject(error);
+};
+
+axiosInstance.interceptors.request.use(handleRequest, handleRequestError);
+axiosInstance.interceptors.response.use(handleResponseSuccess, handleResponseError);
 
 export default axiosInstance;
