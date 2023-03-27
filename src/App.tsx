@@ -1,74 +1,78 @@
-import { Suspense, lazy, JSXElementConstructor as JSX } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import RouteElementMatch from '@pages/index';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { isMobile } from 'react-device-detect';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/state/store';
 import { ToastContainer } from 'react-toastify';
+import RouteElementMatch from '@pages/index';
+import { RootState } from '@state/store';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
-const publicUrl = process.env.PUBLIC_URL;
-
 const DynamicModal = lazy(() => import('@components/modal'));
 
 const CenteredLoader = ({ useDimmer = false }: { useDimmer?: boolean }) => {
-  if (!useDimmer) {
-    return (
-      <div
-        style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-        }}
-      >
-        <Loader content="로딩중" active inline="centered" />
-      </div>
-    );
-  }
+  const loader = <Loader content="로딩중" active inline="centered" />;
 
-  return (
+  return useDimmer ? (
     <Dimmer active inverted>
-      <Loader inverted>로딩중</Loader>
+      <Loader inverted>{loader}</Loader>
     </Dimmer>
+  ) : (
+    <div
+      style={{
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+    >
+      {loader}
+    </div>
   );
 };
 
 const App = () => {
+  const publicUrl = process.env.PUBLIC_URL;
+
   localStorage.setItem('deviceType', isMobile ? 'mobile' : 'desktop');
-
   const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
-
   const RouteElements = RouteElementMatch.map((el, idx) => {
     const DynamicElement = lazy(() => import(`${el.elementPath}`));
     const routeElement = <DynamicElement />;
-    const element = el.layout ? (
-      <el.layout>
-        {routeElement}
-        <DynamicModal />
-        <ToastContainer />
-        {isShowLoading && <CenteredLoader useDimmer={true} />}
-      </el.layout>
-    ) : (
-      <>
-        {routeElement}
-        <DynamicModal />
-        <ToastContainer className={'custom-toast'} bodyClassName={'custom-toast-body'} />
-        {isShowLoading && <CenteredLoader useDimmer={true} />}
-      </>
-    );
+    const Layout = el.layout;
 
-    return <Route key={`pageElement_${idx}`} path={el.path} element={element} />;
+    return (
+      <Route
+        key={`pageElement_${idx}`}
+        path={el.path}
+        element={
+          <Suspense fallback={<CenteredLoader />}>
+            {Layout ? (
+              <Layout>
+                {routeElement}
+                <DynamicModal />
+                <ToastContainer />
+                {isShowLoading && <CenteredLoader useDimmer={true} />}
+              </Layout>
+            ) : (
+              <>
+                {routeElement}
+                <DynamicModal />
+                <ToastContainer className="custom-toast" bodyClassName="custom-toast-body" />
+                {isShowLoading && <CenteredLoader useDimmer={true} />}
+              </>
+            )}
+          </Suspense>
+        }
+      />
+    );
   });
 
   return (
     <Router basename={publicUrl}>
-      <Suspense fallback={<CenteredLoader />}>
-        <Routes>{RouteElements}</Routes>
-      </Suspense>
+      <Routes>{RouteElements}</Routes>
     </Router>
   );
 };

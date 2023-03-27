@@ -1,3 +1,3 @@
-import { Table } from './Table';
+import { MainTable } from './Table';
 
-export { Table };
+export { MainTable };
