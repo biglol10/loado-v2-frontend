@@ -10,12 +10,7 @@ import {
 import { Icon as SemanticIcon, Dropdown, Label, Image as SemanticImage } from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import requiredRefineMaterials from '@consts/requiredRefineMaterials';
-import {
-  isRefineSuccessFunction,
-  refineSimulation,
-  returnFullSoomValues,
-} from '@services/LoaCommonUtils';
-import useModal from '@hooks/ModalHooks';
+import { refineSimulation, returnFullSoomValues } from '@services/LoaCommonUtils';
 import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
 
@@ -45,9 +40,22 @@ const refineItemKeyMatch = {
 
 type TRefineItemKeyMatch = keyof typeof refineItemKeyMatch;
 
+export interface ISimulationResult {
+  defaultPropb: Number;
+  tryCnt: Number;
+  startProb: Number;
+  artisanEnergy: Number;
+  isFullSoom: Boolean;
+  isIncreaseProb: Boolean;
+  refineTarget: Number;
+  bookProb: Number;
+  memoryArr: any[];
+}
+
 const RefineSetting = ({
   selectOptionParam,
   setSelectOptionParam,
+  setSimulationResult,
 }: {
   selectOptionParam: {
     option1: string;
@@ -59,6 +67,7 @@ const RefineSetting = ({
       option2: string;
     }>
   >;
+  setSimulationResult: React.Dispatch<React.SetStateAction<ISimulationResult[]>>;
 }) => {
   const [refineCurrent, setRefineCurrent] = useState('12');
 
@@ -170,8 +179,6 @@ const RefineSetting = ({
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
-    console.log(returnedObj);
-
     if (itemRank.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
@@ -184,11 +191,8 @@ const RefineSetting = ({
     }));
   }, [refineMaterialsMatch]);
 
-  const { showModal } = useModal();
-
   const refineSimulationStart = () => {
-    console.log(refineOverallSetting);
-    const { applyBook, applyFullSoom, artisanEnergy, honingSuccessRate } = refineOverallSetting;
+    const { applyFullSoom, artisanEnergy, honingSuccessRate } = refineOverallSetting;
 
     const errMsg: string[] = [];
 
@@ -220,19 +224,25 @@ const RefineSetting = ({
       return null;
     }
 
-    const result = refineSimulation({
-      defaultProb: honingSuccessRate as number,
-      count: 1,
-      startProb: honingSuccessRate as number,
-      artisanEnergy: 0,
-      isFullSoom: true,
-      isIncreaseProb: true,
-      refineTarget: 21,
-      bookProb: refineMaterialsMatch?.bookProb?.probability,
-      memoryArr: [],
-    });
+    const arr: ISimulationResult[] = [];
 
-    console.log(result);
+    for (let index = 0; index < 5000; index++) {
+      const result = refineSimulation({
+        defaultProb: Number(honingSuccessRate),
+        tryCnt: 1,
+        startProb: Number(honingSuccessRate),
+        artisanEnergy: 0,
+        isFullSoom: applyFullSoom,
+        isIncreaseProb: true,
+        refineTarget: refineCurrent,
+        bookProb: refineMaterialsMatch?.bookProb?.probability,
+        memoryArr: [],
+      });
+
+      arr.push(result);
+    }
+
+    setSimulationResult(arr);
   };
 
   return (
@@ -454,6 +464,8 @@ const RefineSetting = ({
               <Button color="red" content="시뮬레이션 시작" loading={false} />
             </StyledDiv>
           </StyledDiv>
+
+          <br />
         </StyledDiv>
       </div>
     </RefineSettingDiv>

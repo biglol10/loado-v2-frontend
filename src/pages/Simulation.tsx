@@ -1,10 +1,24 @@
-import { useMemo, useState } from 'react';
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-shadow */
+import React, { useMemo, useState } from 'react';
 import { InheritedMaterialsCountPriceDesktop, RadioButtonGroup } from '@components/index';
 import { H3NoMargin, InheritedMaterials } from '@pageStyled/SimulationStyled';
 import { getAllItemPrice } from '@services/ItemPriceService';
 import { useQuery } from '@tanstack/react-query';
-import RefineSetting from '@components/custom/simulation/RefineSetting';
+import RefineSetting, { ISimulationResult } from '@components/custom/simulation/RefineSetting';
 import { StyledDiv } from '@consts/appStyled';
+import SimulationBarChart from '@components/custom/simulation/SimulationBarChart';
+import _ from 'lodash';
+
+type ProcessedDataItem = {
+  range: string;
+  count: number;
+};
+
+type GraphDataType = {
+  processedData: ProcessedDataItem[];
+  top30PercentCategory?: ProcessedDataItem;
+};
 
 const Simulation = () => {
   const [countObjDashboard, setCountObjDashboard] = useState({
@@ -96,6 +110,8 @@ const Simulation = () => {
     },
   });
 
+  const [simulationResult, setSimulationResult] = useState<ISimulationResult[]>([]);
+
   const itemsQuery = useQuery({
     queryKey: ['itemsPrice'],
     queryFn: getAllItemPrice,
@@ -127,8 +143,55 @@ const Simulation = () => {
     option2: '무기',
   });
 
+  const graphData = useMemo<GraphDataType | null>(() => {
+    const dataPoints = simulationResult
+      .map((item: ISimulationResult) => item.tryCnt)
+      .sort((a: Number, b: Number) => (a as number) - (b as number)) as number[];
+
+    if (_.isEmpty(dataPoints)) return null;
+
+    const min = Math.min(...dataPoints);
+    const max = Math.max(...dataPoints);
+    const numBins = max > 80 ? 30 : max > 25 ? 20 : max;
+
+    const binSize = (max - min) / numBins;
+
+    const histogramData = new Array(numBins).fill(0);
+
+    dataPoints.forEach((value: number) => {
+      const binIndex = Math.min(Math.floor((value - min) / binSize), numBins - 1);
+
+      histogramData[binIndex] += 1;
+    });
+
+    const processedData = histogramData.map((count, index) => ({
+      range:
+        max < 25
+          ? `${index + 1}`
+          : `${Math.floor(min + index * binSize)}-${Math.floor(min + (index + 1) * binSize) - 1}`,
+      count,
+    }));
+
+    // 상위 30%를 찾는 부분
+    const totalDataPoints = dataPoints.length;
+    const top30PercentIndex = Math.floor(totalDataPoints * 0.3);
+
+    const top30PercentValue = dataPoints[top30PercentIndex];
+    const top30PercentCategory = processedData.find((category) => {
+      const rangeValues = category.range.split('-').map(Number);
+      const rangeMin = rangeValues[0];
+      const rangeMax = rangeValues.length > 1 ? rangeValues[1] : rangeMin;
+
+      return top30PercentValue >= rangeMin && top30PercentValue <= rangeMax;
+    });
+
+    console.log(top30PercentCategory);
+
+    return { processedData, top30PercentCategory };
+  }, [simulationResult]);
+
   return (
-    <div>
+    <StyledDiv>
       <StyledDiv display="flex" alignItems="center">
         <H3NoMargin>※ 재련 시뮬레이션</H3NoMargin>
         <RadioButtonGroup
@@ -155,8 +218,14 @@ const Simulation = () => {
       <RefineSetting
         selectOptionParam={selectOptionParam}
         setSelectOptionParam={setSelectOptionParam}
+        setSimulationResult={setSimulationResult}
       />
-    </div>
+
+      <br />
+
+      {graphData && graphData.processedData && <SimulationBarChart graphData={graphData} />}
+      <br />
+    </StyledDiv>
   );
 };
 

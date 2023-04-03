@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-debugger */
 const returnFullSoomValues = (refineNumber: number) => {
   if (refineNumber >= 12 && refineNumber <= 13) {
@@ -44,7 +45,7 @@ const isRefineSuccessFunction = (successProb: number) => {
 type refineSimulationType = {
   defaultProb: number;
   startProb: number;
-  count: number;
+  tryCnt: number;
   artisanEnergy: number;
   isFullSoom: boolean;
   bookProb?: number;
@@ -56,7 +57,7 @@ type refineSimulationType = {
 const refineSimulation: any = ({
   defaultProb,
   startProb,
-  count,
+  tryCnt,
   artisanEnergy,
   isFullSoom,
   bookProb = 0,
@@ -64,49 +65,56 @@ const refineSimulation: any = ({
   isIncreaseProb,
   memoryArr = [],
 }: refineSimulationType) => {
+  // debugger;
+
+  // console.log(refineTarget);
+  // console.log(
+  //   isFullSoom && refineTarget > 23 ? 1 : isFullSoom && refineTarget <= 23 ? defaultProb : 0,
+  // );
+
   const successProb =
-    defaultProb +
-    (count - 1 > 10 ? defaultProb : ((count - 1) * defaultProb) / 10) +
-    bookProb +
-    (isFullSoom ? defaultProb : 0);
+    Number(defaultProb) +
+    Number(tryCnt - 1 > 10 ? defaultProb : ((tryCnt - 1) * defaultProb) / 10) +
+    Number(bookProb) +
+    Number(
+      isFullSoom && refineTarget > 23 ? 1 : isFullSoom && refineTarget <= 23 ? defaultProb : 0,
+    );
 
   const isSuccess = isRefineSuccessFunction(successProb);
   const newArtisanEnergyNotFullSoom = Number((successProb - defaultProb) / 2.15);
   const newArtisanEnergyFullSoom = Number(successProb / 2.15);
 
-  // debugger;
-
   memoryArr.push({
+    successProb,
+    artisanEnergy: artisanEnergy.toFixed(2),
+    tryCnt,
     startProb,
-    count,
-    artisanEnergy,
-    isFullSoom,
-    bookProb,
-    refineTarget,
-    isIncreaseProb,
   });
 
   if (isSuccess) {
     return {
-      count,
-      lastRefineFullSoom: true,
+      tryCnt,
       memoryArr,
     };
   }
 
   if (artisanEnergy + newArtisanEnergyNotFullSoom >= 100) {
     return {
-      count: count + 1,
-      lastRefineFullSoom: false,
+      tryCnt: tryCnt + 1,
+      lastRefine: true,
       memoryArr,
+      isFullCount: true,
+      isFullSoom,
     };
   }
 
   if (artisanEnergy + newArtisanEnergyFullSoom >= 100) {
     return {
-      count: count + 1,
-      lastRefineFullSoom: true,
+      tryCnt: tryCnt + 1,
+      lastRefine: true,
       memoryArr,
+      isFullCount: true,
+      isFullSoom,
     };
   }
 
@@ -114,7 +122,7 @@ const refineSimulation: any = ({
 
   return refineSimulation({
     defaultProb,
-    count: count + 1,
+    tryCnt: tryCnt + 1,
     startProb: successProb,
     // artisanEnergy: artisanEnergy + Math.floor((successProb / 2.15) * 100) / 100,
     artisanEnergy: artisanEnergy + newArtisanEnergyFullSoom,
