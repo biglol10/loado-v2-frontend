@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyledDiv } from '@consts/appStyled';
 import {
   Tooltip,
@@ -28,27 +28,37 @@ type GraphDataType = {
   top30PercentCategory?: ProcessedDataItem;
 };
 
-const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <StyledDiv
-        backgroundColor="#ffffff"
-        style={{
-          padding: '8px',
-          border: '1px solid #ccc',
-          borderRadius: '5px',
-        }}
-      >
-        <p style={{ color: 'black' }}>성공범주: {label}</p>
-        <p style={{ color: 'black' }}>카운트: {payload[0].value}</p>
-      </StyledDiv>
-    );
-  }
-
-  return null;
-};
-
 const SimulationBarChart = ({ graphData }: { graphData: GraphDataType }) => {
+  const CustomTooltip: React.FC<CustomTooltipProps> = React.memo(
+    ({ active, payload, label }: any) => {
+      useEffect(() => {
+        alert(`label is ${label}`);
+      }, [label]);
+      if (active && payload && payload.length) {
+        return (
+          <StyledDiv
+            backgroundColor="#ffffff"
+            style={{
+              padding: '8px',
+              border: '1px solid #ccc',
+              borderRadius: '5px',
+            }}
+          >
+            <p style={{ color: 'black' }}>성공범주: {label}</p>
+            <p style={{ color: 'black' }}>카운트: {payload[0].value}건</p>
+            <div style={{ color: 'black' }}>
+              asdfasdfasdfasdfsaf <div style={{ color: 'black' }}>asdf</div>
+            </div>
+          </StyledDiv>
+        );
+      }
+
+      return null;
+    },
+  );
+
+  CustomTooltip.displayName = 'CustomTooltip';
+
   return (
     <StyledDiv display="flex" justifyContent="center">
       <BarChart

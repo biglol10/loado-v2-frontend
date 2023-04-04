@@ -680,9 +680,111 @@ const requiredRefineMaterials: any = {
       },
     },
   },
+} as const;
+
+const marketItemIdMatch = {
+  '66150010': {
+    Name: '에스더의 기운',
+    Grade: '에스더',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_10_81.png',
+  },
+  '66112532': {
+    Name: '야금술 : 단조 특화',
+    Grade: '',
+    Icon: '',
+  },
 };
 
-export default requiredRefineMaterials;
+const simulationObjectDashboard = {
+  categoryObj1: {
+    명예의파편: {
+      id: 66130133,
+      count: '',
+      price: '',
+    },
+    야금술특화: {
+      id: 66112532,
+      count: '',
+      price: '',
+    },
+    재봉술특화: {
+      id: 66112535,
+      count: '',
+      price: '',
+    },
+    야금술숙련: {
+      id: 66112531,
+      count: '',
+      price: '',
+    },
+    재봉술숙련: {
+      id: 66112534,
+      count: '',
+      price: '',
+    },
+  },
+  categoryObj2: {
+    파괴강석: {
+      id: 66102004,
+      count: '',
+      price: '',
+    },
+    수호강석: {
+      id: 66102104,
+      count: '',
+      price: '',
+    },
+    경명돌: {
+      id: 66110223,
+      count: '',
+      price: '',
+    },
+    정제된파괴강석: {
+      id: 66102005,
+      count: '',
+      price: '',
+    },
+    정제된수호강석: {
+      id: 66102105,
+      count: '',
+      price: '',
+    },
+    찬명돌: {
+      id: 66110224,
+      count: '',
+      price: '',
+    },
+  },
+  categoryObj3: {
+    태양의은총: {
+      id: 66111121,
+      count: '',
+      price: '',
+    },
+    태양의축복: {
+      id: 66111122,
+      count: '',
+      price: '',
+    },
+    태양의가호: {
+      id: 66111123,
+      count: '',
+      price: '',
+    },
+    상급오레하: {
+      id: 6861009,
+      count: '',
+      price: '',
+    },
+    최상급오레하: {
+      id: 6861011,
+      count: '',
+      price: '',
+    },
+  },
+};
+
+export { requiredRefineMaterials, simulationObjectDashboard };
 // function getRandomNumberWithDecimal() {
 //   return parseFloat((Math.random() * 100).toFixed(1));
 // }

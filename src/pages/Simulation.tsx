@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState, useRef } from 'react';
 import { InheritedMaterialsCountPriceDesktop, RadioButtonGroup } from '@components/index';
 import { H3NoMargin, InheritedMaterials } from '@pageStyled/SimulationStyled';
 import { getAllItemPrice } from '@services/ItemPriceService';
@@ -9,6 +9,7 @@ import RefineSetting, { ISimulationResult } from '@components/custom/simulation/
 import { StyledDiv } from '@consts/appStyled';
 import SimulationBarChart from '@components/custom/simulation/SimulationBarChart';
 import _ from 'lodash';
+import { simulationObjectDashboard } from '@consts/requiredRefineMaterials';
 
 type ProcessedDataItem = {
   range: string;
@@ -21,96 +22,10 @@ type GraphDataType = {
 };
 
 const Simulation = () => {
-  const [countObjDashboard, setCountObjDashboard] = useState({
-    categoryObj1: {
-      명예의파편: {
-        id: 66130133,
-        count: '',
-        price: '',
-      },
-      야금술특화: {
-        id: 66112532,
-        count: '',
-        price: '',
-      },
-      재봉술특화: {
-        id: 66112535,
-        count: '',
-        price: '',
-      },
-      야금술숙련: {
-        id: 66112531,
-        count: '',
-        price: '',
-      },
-      재봉술숙련: {
-        id: 66112534,
-        count: '',
-        price: '',
-      },
-    },
-    categoryObj2: {
-      파괴강석: {
-        id: 66102004,
-        count: '',
-        price: '',
-      },
-      수호강석: {
-        id: 66102104,
-        count: '',
-        price: '',
-      },
-      경명돌: {
-        id: 66110223,
-        count: '',
-        price: '',
-      },
-      정제된파괴강석: {
-        id: 66102005,
-        count: '',
-        price: '',
-      },
-      정제된수호강석: {
-        id: 66102105,
-        count: '',
-        price: '',
-      },
-      찬명돌: {
-        id: 66110224,
-        count: '',
-        price: '',
-      },
-    },
-    categoryObj3: {
-      태양의은총: {
-        id: 66111121,
-        count: '',
-        price: '',
-      },
-      태양의축복: {
-        id: 66111122,
-        count: '',
-        price: '',
-      },
-      태양의가호: {
-        id: 66111123,
-        count: '',
-        price: '',
-      },
-      상급오레하: {
-        id: 6861009,
-        count: '',
-        price: '',
-      },
-      최상급오레하: {
-        id: 6861011,
-        count: '',
-        price: '',
-      },
-    },
-  });
-
+  const [countObjDashboard, setCountObjDashboard] = useState(simulationObjectDashboard);
   const [simulationResult, setSimulationResult] = useState<ISimulationResult[]>([]);
+  const [topNPercentPoint, setTopNPercentPoint] = useState(30);
+  const refineMaterialsMatch = useRef<any>();
 
   const itemsQuery = useQuery({
     queryKey: ['itemsPrice'],
@@ -152,7 +67,7 @@ const Simulation = () => {
 
     const min = Math.min(...dataPoints);
     const max = Math.max(...dataPoints);
-    const numBins = max > 80 ? 30 : max > 25 ? 20 : max;
+    const numBins = max > 180 ? 40 : max > 80 ? 30 : max > 25 ? 20 : max;
 
     const binSize = (max - min) / numBins;
 
@@ -190,6 +105,12 @@ const Simulation = () => {
     return { processedData, top30PercentCategory };
   }, [simulationResult]);
 
+  const updateRefineMaterialsMatch = (obj: any) => {
+    console.log('updateRefineMaterialsMatch is');
+    console.log(obj);
+    refineMaterialsMatch.current = obj;
+  };
+
   return (
     <StyledDiv>
       <StyledDiv display="flex" alignItems="center">
@@ -219,6 +140,7 @@ const Simulation = () => {
         selectOptionParam={selectOptionParam}
         setSelectOptionParam={setSelectOptionParam}
         setSimulationResult={setSimulationResult}
+        updateRefineMaterialsMatch={updateRefineMaterialsMatch}
       />
 
       <br />

@@ -9,7 +9,7 @@ import {
 } from '@components/index';
 import { Icon as SemanticIcon, Dropdown, Label, Image as SemanticImage } from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
-import requiredRefineMaterials from '@consts/requiredRefineMaterials';
+import { requiredRefineMaterials } from '@consts/requiredRefineMaterials';
 import { refineSimulation, returnFullSoomValues } from '@services/LoaCommonUtils';
 import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
@@ -56,6 +56,7 @@ const RefineSetting = ({
   selectOptionParam,
   setSelectOptionParam,
   setSimulationResult,
+  updateRefineMaterialsMatch,
 }: {
   selectOptionParam: {
     option1: string;
@@ -68,6 +69,7 @@ const RefineSetting = ({
     }>
   >;
   setSimulationResult: React.Dispatch<React.SetStateAction<ISimulationResult[]>>;
+  updateRefineMaterialsMatch: Function;
 }) => {
   const [refineCurrent, setRefineCurrent] = useState('12');
 
@@ -179,6 +181,9 @@ const RefineSetting = ({
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
+    console.log('returnedObj is ');
+    console.log(returnedObj);
+
     if (itemRank.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
@@ -189,6 +194,7 @@ const RefineSetting = ({
       ...prev,
       honingSuccessRate: refineMaterialsMatch.probability,
     }));
+    updateRefineMaterialsMatch(refineMaterialsMatch);
   }, [refineMaterialsMatch]);
 
   const refineSimulationStart = () => {
@@ -390,10 +396,10 @@ const RefineSetting = ({
                 <SemanticImage
                   avatar
                   spaced="right"
-                  src={refineMaterialsMatch.mat2Img}
+                  src={'./assets/images/items/goldImage.webp'}
                   size="big"
                 />
-                {refineMaterialsMatch.mat2}
+                {refineMaterialsMatch.gold.toLocaleString()}
               </Label>
             </StyledDiv>
           </div>
@@ -438,6 +444,7 @@ const RefineSetting = ({
               }}
               disabled={!refineMaterialsMatch.bookProb}
             />
+
             <FullSoomBookAvailable
               sun1Count={refineMaterialsMatch['태양의은총']}
               sun2Count={refineMaterialsMatch['태양의축복']}
