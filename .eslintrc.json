@@ -37,7 +37,8 @@
     "no-console": "warn", // ? console.log 경고
     "consistent-return": "off", // ? 굳이 꼭 무언가를 리턴할 필요가 없게끔 설정
     "react-hooks/exhaustive-deps": "warn", // ? hook 안의 관련 dependency 전부 추가하게끔 하는 설정 off (warn으로 하고 useEffect 확인)
-    "no-unused-vars": "warn" // 안 쓰이는 변수들 워닝
+    "no-unused-vars": "warn", // 안 쓰이는 변수들 워닝
+    "no-nested-ternary": "off" // ? aa === 1 ? 'yes' : aaa === 2 ? 'yes2' : 'no' 이런거 허용
   },
   "settings": {
     "react": {

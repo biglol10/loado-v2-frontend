@@ -25,7 +25,7 @@ const ProbabilityValues = ({ refineOverallSetting, setRefineOverallSetting }: an
           onChange={({ value }: any) => {
             setRefineOverallSetting((prev: any) => ({
               ...prev,
-              honingSuccessRate: value,
+              honingSuccessRateManual: value,
             }));
           }}
           inputIcon={<Icon name="percent" color="black" />}

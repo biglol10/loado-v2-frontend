@@ -6,7 +6,7 @@ import { H3NoMargin, InheritedMaterials } from '@pageStyled/SimulationStyled';
 import { getAllItemPrice } from '@services/ItemPriceService';
 import { useQuery } from '@tanstack/react-query';
 import RefineSetting, { ISimulationResult } from '@components/custom/simulation/RefineSetting';
-import { StyledDiv } from '@consts/appStyled';
+import { StyledDiv, StyledHeading } from '@consts/appStyled';
 import SimulationBarChart from '@components/custom/simulation/SimulationBarChart';
 import _ from 'lodash';
 import { simulationObjectDashboard } from '@consts/requiredRefineMaterials';
@@ -25,15 +25,12 @@ const Simulation = () => {
   const [countObjDashboard, setCountObjDashboard] = useState(simulationObjectDashboard);
   const [simulationResult, setSimulationResult] = useState<ISimulationResult[]>([]);
   const [topNPercentPoint, setTopNPercentPoint] = useState(30);
-  const refineMaterialsMatch = useRef<any>();
+  const [refineMaterialsMatchOverall, setRefineMaterialsMatchOverall] = useState<any>(null);
 
   const itemsQuery = useQuery({
     queryKey: ['itemsPrice'],
     queryFn: getAllItemPrice,
-    onSuccess: (data) => {
-      console.log('came to onSuccess and data is');
-      console.log(data);
-    },
+    onSuccess: (data) => {},
     staleTime: 1000 * 3600,
   });
 
@@ -43,8 +40,12 @@ const Simulation = () => {
         [_ in string]: number;
       } = {};
 
-      itemsQuery.data.map(({ Id, Name, CurrentMinPrice, Icon }: any) => {
-        itemPriceMapping[`${Id}`] = CurrentMinPrice;
+      itemsQuery.data.resultArr?.map((item: any) => {
+        if (item) {
+          const { itemId, currentMinPrice } = item;
+
+          itemPriceMapping[`${itemId}`] = currentMinPrice;
+        }
         return null;
       });
 
@@ -83,7 +84,9 @@ const Simulation = () => {
       range:
         max < 25
           ? `${index + 1}`
-          : `${Math.floor(min + index * binSize)}-${Math.floor(min + (index + 1) * binSize) - 1}`,
+          : `${Math.floor(min + index * binSize)}-${
+              Math.floor(min + (index + 1) * binSize) - (index + 1 === histogramData.length ? 0 : 1)
+            }`,
       count,
     }));
 
@@ -100,15 +103,14 @@ const Simulation = () => {
       return top30PercentValue >= rangeMin && top30PercentValue <= rangeMax;
     });
 
+    console.log(`top30PercentCategory is ${top30PercentCategory}`);
     console.log(top30PercentCategory);
 
     return { processedData, top30PercentCategory };
   }, [simulationResult]);
 
   const updateRefineMaterialsMatch = (obj: any) => {
-    console.log('updateRefineMaterialsMatch is');
-    console.log(obj);
-    refineMaterialsMatch.current = obj;
+    setRefineMaterialsMatchOverall(obj);
   };
 
   return (
@@ -145,7 +147,13 @@ const Simulation = () => {
 
       <br />
 
-      {graphData && graphData.processedData && <SimulationBarChart graphData={graphData} />}
+      {graphData && graphData.processedData && simulationResult && (
+        <SimulationBarChart
+          graphData={graphData}
+          refineMaterialsMatchOverall={refineMaterialsMatchOverall}
+          isFullSoom={simulationResult[0].isFullSoom}
+        />
+      )}
       <br />
     </StyledDiv>
   );

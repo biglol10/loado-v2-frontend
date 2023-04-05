@@ -26,15 +26,15 @@ const getSingleItemPrice = async (item: string) => {
 };
 
 const getAllItemPrice = async () => {
-  const result = await Promise.all(
-    itemNameArr.map(async (item) => {
-      const res = await getSingleItemPrice(item);
+  const res = await BaseService.request({
+    method: 'post',
+    url: '/api/loadoPrice/currentMarketItemPrice',
+    data: {
+      itemList: itemNameArr,
+    },
+  });
 
-      return res;
-    }),
-  );
-
-  return result;
+  return res;
 };
 
 export { getSingleItemPrice, getAllItemPrice };

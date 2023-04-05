@@ -71,7 +71,9 @@ const InheritedMaterialsCountPriceDesktop = ({
                     type="image"
                     circular={true}
                   />
-                  <HeaderSpan>{subObjKey}</HeaderSpan>
+                  <HeaderSpan>
+                    {subObjKey === '명예의파편' ? '명예의파편 (대)' : subObjKey}
+                  </HeaderSpan>
                 </>
               }
               inputLabelSize={'h5'}
@@ -90,13 +92,17 @@ const InheritedMaterialsCountPriceDesktop = ({
                     return prevObj;
                   });
                 }}
-                value={
-                  countOrPrice === 'count'
-                    ? countObjDashboard[countObj][subObjKey].count
-                    : itemPriceInfoMapping[
-                        countObjDashboard[countObj][subObjKey].id
-                      ].toLocaleString()
-                }
+                value={(() => {
+                  if (countOrPrice === 'count') {
+                    return countObjDashboard[countObj][subObjKey].count;
+                  } else {
+                    if (subObjKey === '수호강석') return '1';
+                    if (subObjKey === '정제된수호강석') return '3';
+                    return itemPriceInfoMapping[
+                      countObjDashboard[countObj][subObjKey].id
+                    ]?.toLocaleString();
+                  }
+                })()}
                 type="number"
                 disabled={countOrPrice === 'price'}
                 fluid={true}

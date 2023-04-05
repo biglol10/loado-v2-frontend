@@ -137,6 +137,7 @@ const requiredRefineMaterials: any = {
         fusionMaterialId: '6861009',
         honorShard: 5000,
         gold: 1600,
+        probability: 1.5,
       },
     },
     armour: {
@@ -1141,7 +1142,7 @@ const marketItemIdMatch = {
 } as const;
 
 const marketItemNameMatch = {
-  '하급 오레하 융화 재료': {
+  '하급 오레하융화 재료': {
     Id: '6861007',
     Grade: '고급',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_9_70.png',

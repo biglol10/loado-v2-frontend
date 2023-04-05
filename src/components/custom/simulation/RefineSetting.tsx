@@ -77,11 +77,13 @@ const RefineSetting = ({
     applyFullSoom: boolean;
     applyBook: boolean;
     honingSuccessRate: number | string;
+    honingSuccessRateManual: number | string;
     artisanEnergy: number | string;
   }>({
     applyFullSoom: false,
     applyBook: false,
     honingSuccessRate: 0,
+    honingSuccessRateManual: 0,
     artisanEnergy: 0,
   });
 
@@ -163,6 +165,7 @@ const RefineSetting = ({
       requiredRefineMaterials[itemRank][weaponOrArmour][`${weaponOrArmour}${refineNumber}`];
 
     const returnedObj = {
+      weaponOrArmour,
       mat1: extracted[`${weaponOrArmour}Stone${materialRank}`],
       mat1Img:
         loaImages[
@@ -181,10 +184,10 @@ const RefineSetting = ({
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
-    console.log('returnedObj is ');
-    console.log(returnedObj);
-
     if (itemRank.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
+
+    console.log('returnedObj is');
+    console.log(returnedObj);
 
     return returnedObj;
   }, [refineCurrent, selectOptionParam]);
@@ -193,12 +196,18 @@ const RefineSetting = ({
     setRefineOverallSetting((prev) => ({
       ...prev,
       honingSuccessRate: refineMaterialsMatch.probability,
+      honingSuccessRateManual: refineMaterialsMatch.probability,
     }));
-    updateRefineMaterialsMatch(refineMaterialsMatch);
   }, [refineMaterialsMatch]);
 
+  useEffect(() => {
+    updateRefineMaterialsMatch({ ...refineMaterialsMatch, ...refineOverallSetting });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refineMaterialsMatch, refineOverallSetting]);
+
   const refineSimulationStart = () => {
-    const { applyFullSoom, artisanEnergy, honingSuccessRate } = refineOverallSetting;
+    const { applyFullSoom, artisanEnergy, honingSuccessRate, honingSuccessRateManual, applyBook } =
+      refineOverallSetting;
 
     const errMsg: string[] = [];
 
@@ -232,16 +241,30 @@ const RefineSetting = ({
 
     const arr: ISimulationResult[] = [];
 
+    // const result = refineSimulation({
+    //   defaultProb: Number(honingSuccessRate),
+    //   tryCnt: 1,
+    //   startProb: Number(honingSuccessRateManual),
+    //   artisanEnergy: 0,
+    //   isFullSoom: applyFullSoom,
+    //   isIncreaseProb: true,
+    //   refineTarget: refineCurrent,
+    //   bookProb: applyBook ? refineMaterialsMatch?.bookProb?.probability : 0,
+    //   memoryArr: [],
+    // });
+
+    // arr.push(result);
+
     for (let index = 0; index < 5000; index++) {
       const result = refineSimulation({
         defaultProb: Number(honingSuccessRate),
         tryCnt: 1,
-        startProb: Number(honingSuccessRate),
+        startProb: Number(honingSuccessRateManual),
         artisanEnergy: 0,
         isFullSoom: applyFullSoom,
         isIncreaseProb: true,
         refineTarget: refineCurrent,
-        bookProb: refineMaterialsMatch?.bookProb?.probability,
+        bookProb: applyBook ? refineMaterialsMatch?.bookProb?.probability : 0,
         memoryArr: [],
       });
 
@@ -434,7 +457,7 @@ const RefineSetting = ({
             <CheckboxDefault
               id="CheckboxDefault_ID2"
               spacing={7}
-              label={selectOptionParam.option2 === '무기' ? '야금술' : '재봉술적용'}
+              label={selectOptionParam.option2 === '무기' ? '야금술적용' : '재봉술적용'}
               checked={refineOverallSetting.applyBook}
               onClick={({ isChecked }) => {
                 setRefineOverallSetting((prev) => ({
