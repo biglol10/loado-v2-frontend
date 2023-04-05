@@ -37,17 +37,60 @@ const SimulationBarChart = ({
   graphData,
   refineMaterialsMatchOverall,
   isFullSoom,
+  itemsQueryData,
 }: {
   graphData: GraphDataType;
   refineMaterialsMatchOverall: any;
   isFullSoom: Boolean;
+  itemsQueryData: {
+    result: String;
+    resultArr: { itemId: String; itemName: String; currentMinPrice: number }[];
+  };
 }) => {
   const CustomTooltip: React.FC<CustomTooltipProps> = React.memo(
     ({ active, payload, label }: any) => {
       useEffect(() => {
         console.log(`label is ${label}`);
         console.log(refineMaterialsMatchOverall);
+        console.log('itemsQueryData is');
+        console.log(itemsQueryData);
       }, [label]);
+
+      const { weaponOrArmour, leapstoneId, fusionMaterialId, gold, honorShard, mat1, mat2, mat3 } =
+        refineMaterialsMatchOverall;
+
+      const goldValue = useMemo(() => {
+        if (!label) return 0;
+        const labelArr = label.split('-');
+        const refineStoneId = refineMaterialsMatchOverall[`${weaponOrArmour}StoneId`];
+
+        const priceToGetList = [
+          { id: refineStoneId, count: mat1, bundleCount: 10 },
+          { id: leapstoneId, count: mat2, bundleCount: 1 },
+          { id: fusionMaterialId, count: mat3, bundleCount: 1 },
+          { id: '66130133', count: 1, bundleCount: 1500 },
+        ];
+
+        console.log(itemsQueryData);
+
+        // eslint-disable-next-line prefer-const
+        let totalGold = 0;
+
+        for (const itemObj of priceToGetList) {
+          const currentMinPrice = itemsQueryData.resultArr.find(
+            (itemQuery) => itemQuery.itemId === itemObj.id,
+          )?.currentMinPrice;
+
+          // alert(`labelArr[0] is ${labelArr[0]} and value is ${currentMinPrice! * labelArr[0]}`);
+
+          if (currentMinPrice)
+            totalGold += Math.floor(
+              (currentMinPrice * labelArr[0] * itemObj.count) / itemObj.bundleCount,
+            );
+        }
+
+        return totalGold;
+      }, [fusionMaterialId, label, leapstoneId, mat1, mat2, mat3, weaponOrArmour]);
 
       const materialRangeText = (materialCount: number) => {
         const labelArr = label.split('-');
@@ -119,7 +162,7 @@ const SimulationBarChart = ({
                     type="image"
                     circular
                   />
-                  {materialRangeText(refineMaterialsMatchOverall.honorShard)}
+                  {materialRangeText(honorShard)}
                 </StyledDiv>
                 {isFullSoom && (
                   <>
@@ -178,7 +221,16 @@ const SimulationBarChart = ({
                     type="image"
                     circular
                   />
-                  {materialRangeText(refineMaterialsMatchOverall.gold)}
+                  {materialRangeText(gold)}
+                </StyledDiv>
+                <StyledDiv display="flex" alignItems="center">
+                  <Image
+                    src={'./assets/images/items/goldImage.webp'}
+                    imageSize="mini"
+                    type="image"
+                    circular
+                  />
+                  {goldValue.toLocaleString()}
                 </StyledDiv>
               </StyledDiv>
             </StyledDiv>

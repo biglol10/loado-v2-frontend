@@ -30,8 +30,12 @@ const Simulation = () => {
   const itemsQuery = useQuery({
     queryKey: ['itemsPrice'],
     queryFn: getAllItemPrice,
-    onSuccess: (data) => {},
-    staleTime: 1000 * 3600,
+    onSuccess: (data) => {
+      console.log('itemsQuery data is');
+      console.log(data);
+    },
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
   });
 
   const itemPriceInfoMapping = useMemo(() => {
@@ -152,6 +156,7 @@ const Simulation = () => {
           graphData={graphData}
           refineMaterialsMatchOverall={refineMaterialsMatchOverall}
           isFullSoom={simulationResult[0].isFullSoom}
+          itemsQueryData={itemsQuery.status === 'success' ? itemsQuery.data : null}
         />
       )}
       <br />
