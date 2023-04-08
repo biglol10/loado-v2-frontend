@@ -66,13 +66,15 @@ const InheritedMaterialsCountPriceDesktop = ({
               inputLabel={
                 <>
                   <Image
-                    src={loaImages[subObjKey as loaImagesType]}
+                    src={loaImages[countObjDashboard[countObj][subObjKey].name as loaImagesType]}
                     imageSize="mini"
                     type="image"
                     circular={true}
                   />
                   <HeaderSpan>
-                    {subObjKey === '명예의파편' ? '명예의파편 (대)' : subObjKey}
+                    {subObjKey === '66130133'
+                      ? '명예의파편 (대)'
+                      : countObjDashboard[countObj][subObjKey].name}
                   </HeaderSpan>
                 </>
               }
@@ -83,7 +85,9 @@ const InheritedMaterialsCountPriceDesktop = ({
               <InputDefaultNumber
                 key="key"
                 id={`ID_${subObjKey}`}
-                placeholder={countOrPrice === 'count' ? subObjKey : ''}
+                placeholder={
+                  countOrPrice === 'count' ? countObjDashboard[countObj][subObjKey].name : ''
+                }
                 onChange={(obj: { value: string }) => {
                   setCountObjDashboard((prev: any) => {
                     const prevObj = structuredClone(prev);
@@ -96,11 +100,7 @@ const InheritedMaterialsCountPriceDesktop = ({
                   if (countOrPrice === 'count') {
                     return countObjDashboard[countObj][subObjKey].count;
                   } else {
-                    if (subObjKey === '수호강석') return '1';
-                    if (subObjKey === '정제된수호강석') return '3';
-                    return itemPriceInfoMapping[
-                      countObjDashboard[countObj][subObjKey].id
-                    ]?.toLocaleString();
+                    return itemPriceInfoMapping[subObjKey]?.toLocaleString();
                   }
                 })()}
                 type="number"

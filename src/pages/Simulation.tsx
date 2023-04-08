@@ -155,8 +155,11 @@ const Simulation = () => {
         <SimulationBarChart
           graphData={graphData}
           refineMaterialsMatchOverall={refineMaterialsMatchOverall}
-          isFullSoom={simulationResult[0].isFullSoom}
+          lastRefineResult={simulationResult.find((item) => item.lastRefine)!.memoryArr}
+          isFullSoom={refineMaterialsMatchOverall.applyFullSoom}
+          isApplyBook={refineMaterialsMatchOverall.applyBook}
           itemsQueryData={itemsQuery.status === 'success' ? itemsQuery.data : null}
+          countObjDashboard={countObjDashboard}
         />
       )}
       <br />

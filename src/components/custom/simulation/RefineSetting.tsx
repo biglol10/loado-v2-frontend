@@ -49,7 +49,14 @@ export interface ISimulationResult {
   isIncreaseProb: Boolean;
   refineTarget: Number;
   bookProb: Number;
-  memoryArr: any[];
+  memoryArr: {
+    successProb: Number;
+    artisanEnergy: Number | String;
+    tryCnt: Number;
+    startProb: Number;
+  }[];
+  isFullCount: Boolean;
+  lastRefine: Boolean;
 }
 
 const RefineSetting = ({
@@ -72,6 +79,7 @@ const RefineSetting = ({
   updateRefineMaterialsMatch: Function;
 }) => {
   const [refineCurrent, setRefineCurrent] = useState('12');
+  const [simulationBtnDisabled, setSimulationBtnDisabled] = useState(false);
 
   const [refineOverallSetting, setRefineOverallSetting] = useState<{
     applyFullSoom: boolean;
@@ -197,6 +205,7 @@ const RefineSetting = ({
       ...prev,
       honingSuccessRate: refineMaterialsMatch.probability,
       honingSuccessRateManual: refineMaterialsMatch.probability,
+      // artisanEnergy: 0,
     }));
   }, [refineMaterialsMatch]);
 
@@ -255,12 +264,14 @@ const RefineSetting = ({
 
     // arr.push(result);
 
+    setSimulationBtnDisabled(true);
+
     for (let index = 0; index < 5000; index++) {
       const result = refineSimulation({
         defaultProb: Number(honingSuccessRate),
         tryCnt: 1,
         startProb: Number(honingSuccessRateManual),
-        artisanEnergy: 0,
+        artisanEnergy: Number(artisanEnergy),
         isFullSoom: applyFullSoom,
         isIncreaseProb: true,
         refineTarget: refineCurrent,
@@ -270,6 +281,11 @@ const RefineSetting = ({
 
       arr.push(result);
     }
+
+    setSimulationBtnDisabled(false);
+
+    console.log('simulationResult is');
+    console.log(arr);
 
     setSimulationResult(arr);
   };
@@ -488,6 +504,7 @@ const RefineSetting = ({
                 content="시뮬레이션 시작"
                 loading={false}
                 onClick={refineSimulationStart}
+                disabled={simulationBtnDisabled}
               />
             </StyledDiv>
             <StyledDiv paddingRight="10px">

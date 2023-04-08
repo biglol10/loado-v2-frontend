@@ -20,6 +20,7 @@ const requiredRefineMaterials: any = {
         probability: 10,
         bookProb: {
           bookType: '야금술숙련',
+          bookId: '66112531',
           probability: 10,
         } as bookProbType,
       },
@@ -35,6 +36,7 @@ const requiredRefineMaterials: any = {
         probability: 10,
         bookProb: {
           bookType: '야금술숙련',
+          bookId: '66112531',
           probability: 10,
         } as bookProbType,
       },
@@ -50,6 +52,7 @@ const requiredRefineMaterials: any = {
         probability: 5,
         bookProb: {
           bookType: '야금술숙련',
+          bookId: '66112531',
           probability: 5,
         } as bookProbType,
       },
@@ -65,6 +68,7 @@ const requiredRefineMaterials: any = {
         probability: 5,
         bookProb: {
           bookType: '야금술숙련',
+          bookId: '66112531',
           probability: 5,
         } as bookProbType,
       },
@@ -80,6 +84,7 @@ const requiredRefineMaterials: any = {
         probability: 4,
         bookProb: {
           bookType: '야금술특화',
+          bookId: '66112532',
           probability: 4,
         } as bookProbType,
       },
@@ -95,6 +100,7 @@ const requiredRefineMaterials: any = {
         probability: 4,
         bookProb: {
           bookType: '야금술특화',
+          bookId: '66112532',
           probability: 4,
         } as bookProbType,
       },
@@ -110,6 +116,7 @@ const requiredRefineMaterials: any = {
         probability: 3,
         bookProb: {
           bookType: '야금술특화',
+          bookId: '66112532',
           probability: 3,
         } as bookProbType,
       },
@@ -125,6 +132,7 @@ const requiredRefineMaterials: any = {
         probability: 3,
         bookProb: {
           bookType: '야금술특화',
+          bookId: '66112532',
           probability: 3,
         } as bookProbType,
       },
@@ -153,6 +161,7 @@ const requiredRefineMaterials: any = {
         probability: 10,
         bookProb: {
           bookType: '재봉술숙련',
+          bookId: '66112534',
           probability: 10,
         } as bookProbType,
       },
@@ -168,6 +177,7 @@ const requiredRefineMaterials: any = {
         probability: 10,
         bookProb: {
           bookType: '재봉술숙련',
+          bookId: '66112534',
           probability: 10,
         } as bookProbType,
       },
@@ -183,6 +193,7 @@ const requiredRefineMaterials: any = {
         probability: 5,
         bookProb: {
           bookType: '재봉술숙련',
+          bookId: '66112534',
           probability: 5,
         } as bookProbType,
       },
@@ -198,6 +209,7 @@ const requiredRefineMaterials: any = {
         probability: 5,
         bookProb: {
           bookType: '재봉술숙련',
+          bookId: '66112534',
           probability: 5,
         } as bookProbType,
       },
@@ -213,6 +225,7 @@ const requiredRefineMaterials: any = {
         probability: 4,
         bookProb: {
           bookType: '재봉술특화',
+          bookId: '66112535',
           probability: 4,
         } as bookProbType,
       },
@@ -228,6 +241,7 @@ const requiredRefineMaterials: any = {
         probability: 4,
         bookProb: {
           bookType: '재봉술특화',
+          bookId: '66112535',
           probability: 4,
         } as bookProbType,
       },
@@ -243,6 +257,7 @@ const requiredRefineMaterials: any = {
         probability: 3,
         bookProb: {
           bookType: '재봉술특화',
+          bookId: '66112535',
           probability: 3,
         } as bookProbType,
       },
@@ -258,6 +273,7 @@ const requiredRefineMaterials: any = {
         probability: 3,
         bookProb: {
           bookType: '재봉술특화',
+          bookId: '66112535',
           probability: 3,
         } as bookProbType,
       },
@@ -288,6 +304,7 @@ const requiredRefineMaterials: any = {
         probability: 10,
         bookProb: {
           bookType: '야금술숙련',
+          bookId: '66112531',
           probability: 10,
         } as bookProbType,
       },
@@ -303,6 +320,7 @@ const requiredRefineMaterials: any = {
         probability: 10,
         bookProb: {
           bookType: '야금술숙련',
+          bookId: '66112531',
           probability: 10,
         } as bookProbType,
       },
@@ -318,6 +336,7 @@ const requiredRefineMaterials: any = {
         probability: 5,
         bookProb: {
           bookType: '야금술숙련',
+          bookId: '66112531',
           probability: 5,
         } as bookProbType,
       },
@@ -333,6 +352,7 @@ const requiredRefineMaterials: any = {
         probability: 5,
         bookProb: {
           bookType: '야금술숙련',
+          bookId: '66112531',
           probability: 5,
         } as bookProbType,
       },
@@ -348,6 +368,7 @@ const requiredRefineMaterials: any = {
         probability: 4,
         bookProb: {
           bookType: '야금술특화',
+          bookId: '66112532',
           probability: 4,
         } as bookProbType,
       },
@@ -363,6 +384,7 @@ const requiredRefineMaterials: any = {
         probability: 4,
         bookProb: {
           bookType: '야금술특화',
+          bookId: '66112532',
           probability: 4,
         } as bookProbType,
       },
@@ -378,6 +400,7 @@ const requiredRefineMaterials: any = {
         probability: 3,
         bookProb: {
           bookType: '야금술특화',
+          bookId: '66112532',
           probability: 3,
         } as bookProbType,
       },
@@ -393,6 +416,7 @@ const requiredRefineMaterials: any = {
         probability: 3,
         bookProb: {
           bookType: '야금술특화',
+          bookId: '66112532',
           probability: 3,
         } as bookProbType,
       },
@@ -476,6 +500,7 @@ const requiredRefineMaterials: any = {
         probability: 10,
         bookProb: {
           bookType: '재봉술숙련',
+          bookId: '66112534',
           probability: 10,
         } as bookProbType,
       },
@@ -491,6 +516,7 @@ const requiredRefineMaterials: any = {
         probability: 10,
         bookProb: {
           bookType: '재봉술숙련',
+          bookId: '66112534',
           probability: 10,
         } as bookProbType,
       },
@@ -506,6 +532,7 @@ const requiredRefineMaterials: any = {
         probability: 5,
         bookProb: {
           bookType: '재봉술숙련',
+          bookId: '66112534',
           probability: 5,
         } as bookProbType,
       },
@@ -521,6 +548,7 @@ const requiredRefineMaterials: any = {
         probability: 5,
         bookProb: {
           bookType: '재봉술숙련',
+          bookId: '66112534',
           probability: 5,
         } as bookProbType,
       },
@@ -536,6 +564,7 @@ const requiredRefineMaterials: any = {
         probability: 4,
         bookProb: {
           bookType: '재봉술특화',
+          bookId: '66112535',
           probability: 4,
         } as bookProbType,
       },
@@ -551,6 +580,7 @@ const requiredRefineMaterials: any = {
         probability: 4,
         bookProb: {
           bookType: '재봉술특화',
+          bookId: '66112535',
           probability: 4,
         } as bookProbType,
       },
@@ -566,6 +596,7 @@ const requiredRefineMaterials: any = {
         probability: 3,
         bookProb: {
           bookType: '재봉술특화',
+          bookId: '66112535',
           probability: 3,
         } as bookProbType,
       },
@@ -581,6 +612,7 @@ const requiredRefineMaterials: any = {
         probability: 3,
         bookProb: {
           bookType: '재봉술특화',
+          bookId: '66112535',
           probability: 3,
         } as bookProbType,
       },
@@ -1316,6 +1348,79 @@ const marketItemNameMatch = {
 
 const simulationObjectDashboard = {
   categoryObj1: {
+    '66130133': {
+      name: '명예의파편',
+      count: '',
+    },
+    '66112532': {
+      name: '야금술특화',
+      count: '',
+    },
+    '66112535': {
+      name: '재봉술특화',
+      count: '',
+    },
+    '66112531': {
+      name: '야금술숙련',
+      count: '',
+    },
+    '66112534': {
+      name: '재봉술숙련',
+      count: '',
+    },
+  },
+  categoryObj2: {
+    '66102004': {
+      name: '파괴강석',
+      count: '',
+    },
+    '66102104': {
+      name: '수호강석',
+      count: '',
+    },
+    '66110223': {
+      name: '경명돌',
+      count: '',
+    },
+    '66102005': {
+      name: '정제된파괴강석',
+      count: '',
+    },
+    '66102105': {
+      name: '정제된수호강석',
+      count: '',
+    },
+    '66110224': {
+      name: '찬명돌',
+      count: '',
+    },
+  },
+  categoryObj3: {
+    '66111121': {
+      name: '태양의은총',
+      count: '',
+    },
+    '66111122': {
+      name: '태양의축복',
+      count: '',
+    },
+    '66111123': {
+      name: '태양의가호',
+      count: '',
+    },
+    '6861009': {
+      name: '상급오레하',
+      count: '',
+    },
+    '6861011': {
+      name: '최상급오레하',
+      count: '',
+    },
+  },
+};
+
+const simulationObjectDashboard2 = {
+  categoryObj1: {
     명예의파편: {
       id: 66130133,
       count: '',
@@ -1408,6 +1513,7 @@ export {
   simulationObjectDashboard,
   marketItemIdMatch,
   marketItemNameMatch,
+  simulationObjectDashboard2,
 };
 // function getRandomNumberWithDecimal() {
 //   return parseFloat((Math.random() * 100).toFixed(1));

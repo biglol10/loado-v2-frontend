@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { StyledDiv, StyledSpan } from '@consts/appStyled';
 import {
   Tooltip,
@@ -12,7 +12,6 @@ import {
   TooltipProps,
   ResponsiveContainer,
 } from 'recharts';
-import { marketItemIdMatch } from '@consts/requiredRefineMaterials';
 import { Image } from '@components/atoms/image';
 import { Divider } from 'semantic-ui-react';
 import { loaImages } from '@consts/imgSrc';
@@ -37,60 +36,207 @@ const SimulationBarChart = ({
   graphData,
   refineMaterialsMatchOverall,
   isFullSoom,
+  isApplyBook,
   itemsQueryData,
+  countObjDashboard,
+  lastRefineResult,
 }: {
   graphData: GraphDataType;
   refineMaterialsMatchOverall: any;
   isFullSoom: Boolean;
+  isApplyBook: Boolean;
   itemsQueryData: {
     result: String;
     resultArr: { itemId: String; itemName: String; currentMinPrice: number }[];
   };
+  countObjDashboard: any;
+  lastRefineResult: {
+    successProb: Number;
+    artisanEnergy: Number | String;
+    tryCnt: Number;
+    startProb: Number;
+  }[];
 }) => {
+  const countObjDashboardSpread = useMemo(() => {
+    return {
+      ...countObjDashboard.categoryObj1,
+      ...countObjDashboard.categoryObj2,
+      ...countObjDashboard.categoryObj3,
+    };
+  }, [countObjDashboard]);
+
   const CustomTooltip: React.FC<CustomTooltipProps> = React.memo(
     ({ active, payload, label }: any) => {
-      useEffect(() => {
-        console.log(`label is ${label}`);
-        console.log(refineMaterialsMatchOverall);
-        console.log('itemsQueryData is');
-        console.log(itemsQueryData);
-      }, [label]);
-
       const { weaponOrArmour, leapstoneId, fusionMaterialId, gold, honorShard, mat1, mat2, mat3 } =
         refineMaterialsMatchOverall;
 
-      const goldValue = useMemo(() => {
+      const goldJanggiSummary = useMemo(() => {
         if (!label) return 0;
         const labelArr = label.split('-');
         const refineStoneId = refineMaterialsMatchOverall[`${weaponOrArmour}StoneId`];
 
         const priceToGetList = [
-          { id: refineStoneId, count: mat1, bundleCount: 10 },
-          { id: leapstoneId, count: mat2, bundleCount: 1 },
-          { id: fusionMaterialId, count: mat3, bundleCount: 1 },
-          { id: '66130133', count: 1, bundleCount: 1500 },
+          { id: refineStoneId, count: mat1, bundleCount: 10, extraMultiplier: 1 },
+          { id: leapstoneId, count: mat2, bundleCount: 1, extraMultiplier: 1 },
+          { id: fusionMaterialId, count: mat3, bundleCount: 1, extraMultiplier: 1 },
+          { id: '66130133', count: 1, bundleCount: 1500, extraMultiplier: honorShard },
         ];
 
-        console.log(itemsQueryData);
+        if (isFullSoom) {
+          priceToGetList.push({
+            id: '66111121',
+            count: refineMaterialsMatchOverall['태양의은총'],
+            bundleCount: 1,
+            extraMultiplier: 1,
+          });
+          priceToGetList.push({
+            id: '66111122',
+            count: refineMaterialsMatchOverall['태양의축복'],
+            bundleCount: 1,
+            extraMultiplier: 1,
+          });
+          priceToGetList.push({
+            id: '66111123',
+            count: refineMaterialsMatchOverall['태양의가호'],
+            bundleCount: 1,
+            extraMultiplier: 1,
+          });
+        }
 
-        // eslint-disable-next-line prefer-const
-        let totalGold = 0;
+        if (
+          isApplyBook &&
+          Object.prototype.hasOwnProperty.call(refineMaterialsMatchOverall, 'bookProb')
+        ) {
+          priceToGetList.push({
+            id: refineMaterialsMatchOverall.bookProb.bookId,
+            count: 1,
+            bundleCount: 1,
+            extraMultiplier: 1,
+          });
+        }
+
+        let totalGold1 = 0;
+        let totalGold2 = 0;
+        let totalGoldAnother1 = 0;
+        let totalGoldAnother2 = 0;
+        let janggi1 = '';
+        let janggi2 = '';
 
         for (const itemObj of priceToGetList) {
           const currentMinPrice = itemsQueryData.resultArr.find(
             (itemQuery) => itemQuery.itemId === itemObj.id,
           )?.currentMinPrice;
 
-          // alert(`labelArr[0] is ${labelArr[0]} and value is ${currentMinPrice! * labelArr[0]}`);
-
-          if (currentMinPrice)
-            totalGold += Math.floor(
-              (currentMinPrice * labelArr[0] * itemObj.count) / itemObj.bundleCount,
+          if (currentMinPrice) {
+            totalGold1 += Math.ceil(
+              (currentMinPrice * labelArr[0] * itemObj.count * itemObj.extraMultiplier) /
+                itemObj.bundleCount,
             );
+            const itemCostCount1 =
+              labelArr[0] * itemObj.count * itemObj.extraMultiplier -
+                (countObjDashboardSpread[itemObj.id].count
+                  ? countObjDashboardSpread[itemObj.id].count.replace(/,/g, '')
+                  : 0) >
+              0
+                ? labelArr[0] * itemObj.count * itemObj.extraMultiplier -
+                  (countObjDashboardSpread[itemObj.id].count
+                    ? countObjDashboardSpread[itemObj.id].count.replace(/,/g, '')
+                    : 0)
+                : 0;
+
+            totalGoldAnother1 += Math.ceil(
+              (currentMinPrice * itemCostCount1) / itemObj.bundleCount,
+            );
+            if (labelArr.length > 1) {
+              totalGold2 += Math.ceil(
+                (currentMinPrice * labelArr[1] * itemObj.count * itemObj.extraMultiplier) /
+                  itemObj.bundleCount,
+              );
+              const itemCostCount2 =
+                labelArr[1] * itemObj.count * itemObj.extraMultiplier -
+                  (countObjDashboardSpread[itemObj.id].count
+                    ? countObjDashboardSpread[itemObj.id].count.replace(/,/g, '')
+                    : 0) >
+                0
+                  ? labelArr[1] * itemObj.count * itemObj.extraMultiplier -
+                    (countObjDashboardSpread[itemObj.id].count
+                      ? countObjDashboardSpread[itemObj.id].count.replace(/,/g, '')
+                      : 0)
+                  : 0;
+
+              totalGoldAnother2 += Math.ceil(
+                (currentMinPrice * itemCostCount2) / itemObj.bundleCount,
+              );
+            }
+          }
         }
 
-        return totalGold;
-      }, [fusionMaterialId, label, leapstoneId, mat1, mat2, mat3, weaponOrArmour]);
+        if (labelArr.length > 1) {
+          totalGold1 += labelArr[0] * gold;
+          totalGold2 += labelArr[1] * gold;
+          totalGoldAnother1 += labelArr[0] * gold;
+          totalGoldAnother2 += labelArr[1] * gold;
+          janggi1 = lastRefineResult[
+            labelArr[0] - 1 < lastRefineResult.length - 1
+              ? labelArr[0] - 1
+              : lastRefineResult.length - 1
+          ].artisanEnergy as string;
+          janggi2 = lastRefineResult[
+            labelArr[1] - 1 < lastRefineResult.length - 1
+              ? labelArr[1] - 1
+              : lastRefineResult.length - 1
+          ].artisanEnergy as string;
+          return {
+            totalGold: (
+              <>
+                <StyledSpan marginLeft="2px">합계: {totalGold1.toLocaleString()}</StyledSpan>~
+                <StyledSpan>{totalGold2.toLocaleString()}</StyledSpan>
+              </>
+            ),
+            totalGoldAnother: (
+              <>
+                <StyledSpan marginLeft="2px">
+                  귀속O: {totalGoldAnother1.toLocaleString()}
+                </StyledSpan>
+                ~<StyledSpan>{totalGoldAnother2.toLocaleString()}</StyledSpan>
+              </>
+            ),
+            jangi: (
+              <>
+                <StyledSpan marginLeft="2px">{janggi1}</StyledSpan>~
+                <StyledSpan>{janggi2}</StyledSpan>
+              </>
+            ),
+          };
+        } else {
+          totalGold1 += labelArr[0] * gold;
+          totalGoldAnother1 += labelArr[0] * gold;
+          janggi1 = lastRefineResult[
+            labelArr[0] - 1 < lastRefineResult.length - 1
+              ? labelArr[0] - 1
+              : lastRefineResult.length - 1
+          ].artisanEnergy as string;
+          return {
+            totalGold: (
+              <StyledSpan marginLeft="2px">합계: {totalGold1.toLocaleString()}</StyledSpan>
+            ),
+            totalGoldAnother: (
+              <StyledSpan marginLeft="2px">귀속O: {totalGoldAnother1.toLocaleString()}</StyledSpan>
+            ),
+            jangi: <StyledSpan marginLeft="2px">{janggi1}</StyledSpan>,
+          };
+        }
+      }, [
+        fusionMaterialId,
+        gold,
+        honorShard,
+        label,
+        leapstoneId,
+        mat1,
+        mat2,
+        mat3,
+        weaponOrArmour,
+      ]);
 
       const materialRangeText = (materialCount: number) => {
         const labelArr = label.split('-');
@@ -230,7 +376,27 @@ const SimulationBarChart = ({
                     type="image"
                     circular
                   />
-                  {goldValue.toLocaleString()}
+                  {goldJanggiSummary && goldJanggiSummary.totalGold && goldJanggiSummary.totalGold}
+                </StyledDiv>
+                <StyledDiv display="flex" alignItems="center">
+                  <Image
+                    src={'./assets/images/items/goldImage.webp'}
+                    imageSize="mini"
+                    type="image"
+                    circular
+                  />
+                  {goldJanggiSummary &&
+                    goldJanggiSummary.totalGoldAnother &&
+                    goldJanggiSummary.totalGoldAnother}
+                </StyledDiv>
+                <StyledDiv display="flex" alignItems="center">
+                  <Image
+                    src={'./assets/images/common/refinejanggi.png'}
+                    imageSize="mini"
+                    type="image"
+                    circular
+                  />
+                  {goldJanggiSummary && goldJanggiSummary.jangi && goldJanggiSummary.jangi}
                 </StyledDiv>
               </StyledDiv>
             </StyledDiv>

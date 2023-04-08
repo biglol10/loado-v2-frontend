@@ -109,6 +109,12 @@ const refineSimulation: any = ({
   }
 
   if (artisanEnergy + addArtisanEnergy >= 100) {
+    memoryArr.push({
+      successProb,
+      artisanEnergy: '100.00',
+      tryCnt: tryCnt + 1,
+      startProb,
+    });
     return {
       tryCnt: tryCnt + 1,
       lastRefine: true,
