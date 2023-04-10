@@ -1,7 +1,12 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
 import { useMemo, useState, useRef } from 'react';
-import { InheritedMaterialsCountPriceDesktop, RadioButtonGroup } from '@components/index';
+import {
+  InheritedMaterialsCountPriceDesktop,
+  InputLayout,
+  InputWithIcon,
+  RadioButtonGroup,
+} from '@components/index';
 import { H3NoMargin, InheritedMaterials } from '@pageStyled/SimulationStyled';
 import { getAllItemPrice } from '@services/ItemPriceService';
 import { useQuery } from '@tanstack/react-query';
@@ -10,6 +15,7 @@ import { StyledDiv, StyledHeading } from '@consts/appStyled';
 import SimulationBarChart from '@components/custom/simulation/SimulationBarChart';
 import _ from 'lodash';
 import { simulationObjectDashboard } from '@consts/requiredRefineMaterials';
+import { Icon, Label } from 'semantic-ui-react';
 
 type ProcessedDataItem = {
   range: string;
@@ -26,6 +32,7 @@ const Simulation = () => {
   const [simulationResult, setSimulationResult] = useState<ISimulationResult[]>([]);
   const [topNPercentPoint, setTopNPercentPoint] = useState(30);
   const [refineMaterialsMatchOverall, setRefineMaterialsMatchOverall] = useState<any>(null);
+  const [simulationCount, setSimulationCount] = useState('1000');
 
   const itemsQuery = useQuery({
     queryKey: ['itemsPrice'],
@@ -147,20 +154,45 @@ const Simulation = () => {
         setSelectOptionParam={setSelectOptionParam}
         setSimulationResult={setSimulationResult}
         updateRefineMaterialsMatch={updateRefineMaterialsMatch}
+        simulationCount={simulationCount}
+        setSimulationCount={setSimulationCount}
       />
 
       <br />
 
       {graphData && graphData.processedData && simulationResult && (
-        <SimulationBarChart
-          graphData={graphData}
-          refineMaterialsMatchOverall={refineMaterialsMatchOverall}
-          lastRefineResult={simulationResult.find((item) => item.lastRefine)!.memoryArr}
-          isFullSoom={refineMaterialsMatchOverall.applyFullSoom}
-          isApplyBook={refineMaterialsMatchOverall.applyBook}
-          itemsQueryData={itemsQuery.status === 'success' ? itemsQuery.data : null}
-          countObjDashboard={countObjDashboard}
-        />
+        <>
+          <InputLayout
+            inputLabel={
+              <Label as="a" basic color="red">
+                운 상위N%
+              </Label>
+            }
+            inputLabelSize={'h6'}
+            stretch={false}
+            showInputLabel={true}
+            // spacing={8}
+            inputWidth={'150px'}
+          >
+            <InputWithIcon
+              value={'0'}
+              fluid={false}
+              size={'mini'}
+              inputIcon={<Icon name="percent" color="black" />}
+              type="number"
+            />
+          </InputLayout>
+          <br />
+          <SimulationBarChart
+            graphData={graphData}
+            refineMaterialsMatchOverall={refineMaterialsMatchOverall}
+            lastRefineResult={simulationResult.find((item) => item.lastRefine)!.memoryArr}
+            isFullSoom={refineMaterialsMatchOverall.applyFullSoom}
+            isApplyBook={refineMaterialsMatchOverall.applyBook}
+            itemsQueryData={itemsQuery.status === 'success' ? itemsQuery.data : null}
+            countObjDashboard={countObjDashboard}
+          />
+        </>
       )}
       <br />
     </StyledDiv>

@@ -7,7 +7,13 @@ import {
   ProbabilityValues,
   Button,
 } from '@components/index';
-import { Icon as SemanticIcon, Dropdown, Label, Image as SemanticImage } from 'semantic-ui-react';
+import {
+  Icon as SemanticIcon,
+  Dropdown,
+  Label,
+  Image as SemanticImage,
+  Button as SemanticButton,
+} from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import { requiredRefineMaterials } from '@consts/requiredRefineMaterials';
 import { refineSimulation, returnFullSoomValues } from '@services/LoaCommonUtils';
@@ -41,29 +47,37 @@ const refineItemKeyMatch = {
 type TRefineItemKeyMatch = keyof typeof refineItemKeyMatch;
 
 export interface ISimulationResult {
-  defaultPropb: Number;
-  tryCnt: Number;
-  startProb: Number;
-  artisanEnergy: Number;
+  defaultPropb: number;
+  tryCnt: number;
+  startProb: number;
+  artisanEnergy: number;
   isFullSoom: Boolean;
   isIncreaseProb: Boolean;
-  refineTarget: Number;
-  bookProb: Number;
+  refineTarget: number;
+  bookProb: number;
   memoryArr: {
-    successProb: Number;
-    artisanEnergy: Number | String;
-    tryCnt: Number;
-    startProb: Number;
+    successProb: number;
+    artisanEnergy: number | String;
+    tryCnt: number;
+    startProb: number;
   }[];
   isFullCount: Boolean;
   lastRefine: Boolean;
 }
+
+const simulationNumberOptions = [
+  { key: 'simulation_1000', text: '1000회', value: '1000' },
+  { key: 'simulation_5000', text: '5000회', value: '5000' },
+  { key: 'simulation_10000', text: '10000회', value: '10000' },
+];
 
 const RefineSetting = ({
   selectOptionParam,
   setSelectOptionParam,
   setSimulationResult,
   updateRefineMaterialsMatch,
+  simulationCount,
+  setSimulationCount,
 }: {
   selectOptionParam: {
     option1: string;
@@ -77,10 +91,11 @@ const RefineSetting = ({
   >;
   setSimulationResult: React.Dispatch<React.SetStateAction<ISimulationResult[]>>;
   updateRefineMaterialsMatch: Function;
+  simulationCount: string;
+  setSimulationCount: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [refineCurrent, setRefineCurrent] = useState('12');
   const [simulationBtnDisabled, setSimulationBtnDisabled] = useState(false);
-
   const [refineOverallSetting, setRefineOverallSetting] = useState<{
     applyFullSoom: boolean;
     applyBook: boolean;
@@ -194,9 +209,6 @@ const RefineSetting = ({
 
     if (itemRank.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
 
-    console.log('returnedObj is');
-    console.log(returnedObj);
-
     return returnedObj;
   }, [refineCurrent, selectOptionParam]);
 
@@ -220,9 +232,13 @@ const RefineSetting = ({
 
     const errMsg: string[] = [];
 
-    if (honingSuccessRate === '' || honingSuccessRate >= 100 || honingSuccessRate <= 0)
+    if (
+      honingSuccessRate === '' ||
+      Number(honingSuccessRate) >= 100 ||
+      Number(honingSuccessRate) <= 0
+    )
       errMsg.push('최종확률에 올바른 값을 입력해주세요');
-    if (artisanEnergy === '' || artisanEnergy >= 100 || artisanEnergy < 0)
+    if (artisanEnergy === '' || Number(artisanEnergy) >= 100 || Number(artisanEnergy) < 0)
       errMsg.push('장인의 기운 수치에 올바른 값을 입력해주세요');
 
     if (errMsg.length > 0) {
@@ -250,23 +266,9 @@ const RefineSetting = ({
 
     const arr: ISimulationResult[] = [];
 
-    // const result = refineSimulation({
-    //   defaultProb: Number(honingSuccessRate),
-    //   tryCnt: 1,
-    //   startProb: Number(honingSuccessRateManual),
-    //   artisanEnergy: 0,
-    //   isFullSoom: applyFullSoom,
-    //   isIncreaseProb: true,
-    //   refineTarget: refineCurrent,
-    //   bookProb: applyBook ? refineMaterialsMatch?.bookProb?.probability : 0,
-    //   memoryArr: [],
-    // });
-
-    // arr.push(result);
-
     setSimulationBtnDisabled(true);
 
-    for (let index = 0; index < 5000; index++) {
+    for (let index = 0; index < Number(simulationCount); index++) {
       const result = refineSimulation({
         defaultProb: Number(honingSuccessRate),
         tryCnt: 1,
@@ -283,10 +285,6 @@ const RefineSetting = ({
     }
 
     setSimulationBtnDisabled(false);
-
-    console.log('simulationResult is');
-    console.log(arr);
-
     setSimulationResult(arr);
   };
 
@@ -508,7 +506,19 @@ const RefineSetting = ({
               />
             </StyledDiv>
             <StyledDiv paddingRight="10px">
-              <Button color="red" content="시뮬레이션 시작" loading={false} />
+              <SemanticButton.Group color="blue" size="mini">
+                <SemanticButton>{simulationCount}회</SemanticButton>
+                <Dropdown
+                  className="button icon"
+                  floating
+                  options={simulationNumberOptions}
+                  trigger={<></>}
+                  value={simulationCount}
+                  onChange={(_, data) => {
+                    setSimulationCount(data.value as string);
+                  }}
+                />
+              </SemanticButton.Group>
             </StyledDiv>
           </StyledDiv>
 
