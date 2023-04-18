@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-shadow */
-import { useMemo, useState, useRef } from 'react';
+import { useMemo, useState, useRef, ChangeEvent } from 'react';
 import {
   InheritedMaterialsCountPriceDesktop,
   InputLayout,
@@ -26,6 +26,13 @@ type GraphDataType = {
   processedData: ProcessedDataItem[];
   top30PercentCategory?: ProcessedDataItem;
 };
+
+interface IInputChangeEventValue extends ChangeEvent<HTMLInputElement> {
+  value: any;
+  data: {
+    value: any;
+  };
+}
 
 const Simulation = () => {
   const [countObjDashboard, setCountObjDashboard] = useState(simulationObjectDashboard);
@@ -164,7 +171,7 @@ const Simulation = () => {
         <>
           <InputLayout
             inputLabel={
-              <Label as="a" basic color="red">
+              <Label as="a" basic color="orange">
                 운 상위N%
               </Label>
             }
@@ -180,6 +187,9 @@ const Simulation = () => {
               size={'mini'}
               inputIcon={<Icon name="percent" color="black" />}
               type="number"
+              onChange={(e: IInputChangeEventValue) => {
+                if (e.value) console.log(e.value);
+              }}
             />
           </InputLayout>
           <br />

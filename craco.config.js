@@ -1,6 +1,8 @@
 const CracoAlias = require('craco-alias');
 const _ = require('lodash');
 const TerserPlugin = require('terser-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const path = require('path');
 
 const isEnvDevelopment = process.env.REACT_APP_MODE === 'development';
 const isEnvProduction = process.env.REACT_APP_MODE === 'production';
@@ -101,6 +103,15 @@ const getConfig = (webpackConfig, paths) => {
 const apiProxyTarget = 'https://developer-lostark.game.onstove.com';
 
 module.exports = {
+  webpack: {
+    plugins: [
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        reportFilename: path.resolve(__dirname, 'bundleReport', 'report.html'), // npm run build && webpack-bundle-analyzer build/static/stats.json
+        openAnalyzer: false,
+      }),
+    ],
+  },
   plugins: [
     {
       plugin: CracoAlias,

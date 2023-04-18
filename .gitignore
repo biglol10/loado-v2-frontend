@@ -14,6 +14,9 @@
 # craco
 craco.config2.js
 
+# bundleReport
+/bundleReport
+
 # misc
 .DS_Store
 .env.local

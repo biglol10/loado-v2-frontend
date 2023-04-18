@@ -59,7 +59,7 @@ const Navigation = styled.header`
 `;
 
 const MainLayout = ({ children }: LayoutChildren) => {
-  const [activePage, setActivePage] = useState('itemPrice');
+  const [activePage, setActivePage] = useState('simulation');
   const navigate = useNavigate();
 
   const deviceType = localStorage.getItem('deviceType');
