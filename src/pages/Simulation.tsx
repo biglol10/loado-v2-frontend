@@ -11,11 +11,12 @@ import { H3NoMargin, InheritedMaterials } from '@pageStyled/SimulationStyled';
 import { getAllItemPrice } from '@services/ItemPriceService';
 import { useQuery } from '@tanstack/react-query';
 import RefineSetting, { ISimulationResult } from '@components/custom/simulation/RefineSetting';
-import { StyledDiv, StyledHeading } from '@consts/appStyled';
+import { StyledDiv, StyledHeading, StyledSpan } from '@consts/appStyled';
 import SimulationBarChart from '@components/custom/simulation/SimulationBarChart';
 import _ from 'lodash';
 import { simulationObjectDashboard } from '@consts/requiredRefineMaterials';
 import { Icon, Label } from 'semantic-ui-react';
+import { Image } from '@components/atoms/image';
 
 type ProcessedDataItem = {
   range: string;
@@ -109,8 +110,10 @@ const Simulation = () => {
     }));
 
     // 상위 30%를 찾는 부분
+    if (!topNPercentPoint || topNPercentPoint > 100 || topNPercentPoint < 1)
+      return { processedData };
     const totalDataPoints = dataPoints.length;
-    const top30PercentIndex = Math.floor(totalDataPoints * 0.3);
+    const top30PercentIndex = Math.floor((totalDataPoints * Number(topNPercentPoint)) / 100);
 
     const top30PercentValue = dataPoints[top30PercentIndex];
     const top30PercentCategory = processedData.find((category) => {
@@ -121,11 +124,8 @@ const Simulation = () => {
       return top30PercentValue >= rangeMin && top30PercentValue <= rangeMax;
     });
 
-    console.log(`top30PercentCategory is ${top30PercentCategory}`);
-    console.log(top30PercentCategory);
-
     return { processedData, top30PercentCategory };
-  }, [simulationResult]);
+  }, [simulationResult, topNPercentPoint]);
 
   const updateRefineMaterialsMatch = (obj: any) => {
     setRefineMaterialsMatchOverall(obj);
@@ -168,30 +168,39 @@ const Simulation = () => {
       <br />
 
       {graphData && graphData.processedData && simulationResult && (
-        <>
-          <InputLayout
-            inputLabel={
-              <Label as="a" basic color="orange">
-                운 상위N%
-              </Label>
-            }
-            inputLabelSize={'h6'}
-            stretch={false}
-            showInputLabel={true}
-            // spacing={8}
-            inputWidth={'150px'}
-          >
-            <InputWithIcon
-              value={'0'}
-              fluid={false}
-              size={'mini'}
-              inputIcon={<Icon name="percent" color="black" />}
-              type="number"
-              onChange={(e: IInputChangeEventValue) => {
-                if (e.value) console.log(e.value);
-              }}
-            />
-          </InputLayout>
+        <StyledDiv>
+          <StyledDiv display="flex" marginLeft="50px">
+            <Label style={{ backgroundColor: 'beige' }}>
+              <StyledDiv display="flex" justifyContent="center" alignItems="center" gap="20px">
+                <Image
+                  src={'./assets/images/common/refineAnimation.gif'}
+                  imageSize="mini"
+                  type="image"
+                  // circular
+                />
+                <StyledSpan color="black">운 상위N%의 범주</StyledSpan>
+                <InputLayout
+                  inputLabelSize={'h6'}
+                  stretch={false}
+                  showInputLabel={false}
+                  // spacing={8}
+                  inputWidth={'100px'}
+                >
+                  <InputWithIcon
+                    value={topNPercentPoint}
+                    fluid={false}
+                    size={'mini'}
+                    inputIcon={<Icon name="percent" color="black" />}
+                    type="number"
+                    onChange={(e: IInputChangeEventValue) => {
+                      setTopNPercentPoint(Number(e.value));
+                    }}
+                  />
+                </InputLayout>
+              </StyledDiv>
+            </Label>
+          </StyledDiv>
+
           <br />
           <SimulationBarChart
             graphData={graphData}
@@ -201,8 +210,9 @@ const Simulation = () => {
             isApplyBook={refineMaterialsMatchOverall.applyBook}
             itemsQueryData={itemsQuery.status === 'success' ? itemsQuery.data : null}
             countObjDashboard={countObjDashboard}
+            topNPercentPoint={topNPercentPoint}
           />
-        </>
+        </StyledDiv>
       )}
       <br />
     </StyledDiv>

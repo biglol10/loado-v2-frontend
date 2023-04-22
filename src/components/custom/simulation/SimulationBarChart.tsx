@@ -40,6 +40,7 @@ const SimulationBarChart = ({
   itemsQueryData,
   countObjDashboard,
   lastRefineResult,
+  topNPercentPoint,
 }: {
   graphData: GraphDataType;
   refineMaterialsMatchOverall: any;
@@ -56,6 +57,7 @@ const SimulationBarChart = ({
     tryCnt: Number;
     startProb: Number;
   }[];
+  topNPercentPoint: Number;
 }) => {
   const countObjDashboardSpread = useMemo(() => {
     return {
@@ -391,7 +393,7 @@ const SimulationBarChart = ({
                 </StyledDiv>
                 <StyledDiv display="flex" alignItems="center">
                   <Image
-                    src={'./assets/images/common/refinejanggi.png'}
+                    src={'./assets/images/common/refinejanggi.gif'}
                     imageSize="mini"
                     type="image"
                     circular
@@ -440,7 +442,7 @@ const SimulationBarChart = ({
             <ReferenceLine
               x={graphData.top30PercentCategory.range}
               stroke="orange"
-              label={{ value: 'Top 30%', position: 'top', stroke: 'orange' }}
+              label={{ value: `Top ${topNPercentPoint}%`, position: 'top', stroke: 'orange' }}
             />
           )}
         </BarChart>
