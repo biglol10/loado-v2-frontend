@@ -20,10 +20,14 @@ const InheritedMaterials = styled.div`
   }
 `;
 
-const RefineSettingDiv = styled.div`
+const RefineSettingDiv = styled.div<{ isMobile: boolean }>`
   border: 1px solid slategrey;
-  display: flex;
-  padding: 10px 20px;
+  display: ${(props) => (props.isMobile ? 'block' : 'flex')};
+  padding: ${(props) => (props.isMobile ? '10px 5px' : '10px 20px')};
+
+  > div {
+    margin-bottom: ${(props) => (props.isMobile ? '10px' : '0px')};
+  }
 `;
 
 const H3NoMargin = styled.h3`

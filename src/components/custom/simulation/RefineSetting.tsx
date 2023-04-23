@@ -19,6 +19,7 @@ import { requiredRefineMaterials } from '@consts/requiredRefineMaterials';
 import { refineSimulation, returnFullSoomValues } from '@services/LoaCommonUtils';
 import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
+import useDeviceType from '@hooks/DeviceTypeHook';
 
 const option1KeyMatch = {
   아브노말: 'AbrelNormal',
@@ -109,6 +110,7 @@ const RefineSetting = ({
     honingSuccessRateManual: 0,
     artisanEnergy: 0,
   });
+  const deviceType = useDeviceType();
 
   const imgSrc = {
     weapon: `${selectOptionParam.option1}무기`,
@@ -289,7 +291,7 @@ const RefineSetting = ({
   };
 
   return (
-    <RefineSettingDiv>
+    <RefineSettingDiv isMobile={deviceType === 'mobile'}>
       <div style={{ minWidth: '600px' }}>
         <StyledDiv display="flex">
           <StyledDiv>

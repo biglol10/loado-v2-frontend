@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { StyledDiv, StyledSpan } from '@consts/appStyled';
 import {
   Tooltip,
@@ -16,6 +16,7 @@ import { Image } from '@components/atoms/image';
 import { Divider } from 'semantic-ui-react';
 import { loaImages } from '@consts/imgSrc';
 import useDeviceType from '@hooks/DeviceTypeHook';
+import styled from 'styled-components';
 
 interface CustomTooltipProps extends TooltipProps<number, string> {
   active?: boolean;
@@ -31,6 +32,28 @@ type ProcessedDataItem = {
 type GraphDataType = {
   processedData: ProcessedDataItem[];
   top30PercentCategory?: ProcessedDataItem;
+};
+
+const StyledMobileToolDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
+  div {
+    margin: 2px;
+  }
+`;
+
+const TooltipContentDiv = ({ children }: { children: ReactNode }) => {
+  const deviceType = useDeviceType();
+
+  if (deviceType === 'mobile') {
+    return <StyledMobileToolDiv>{children}</StyledMobileToolDiv>;
+  }
+  return (
+    <StyledDiv display="grid" gridTemplateColumns="1fr 1fr" gap="2px">
+      {children}
+    </StyledDiv>
+  );
 };
 
 const SimulationBarChart = ({
@@ -276,7 +299,7 @@ const SimulationBarChart = ({
             </StyledDiv>
             <Divider />
             <StyledDiv color="white">
-              <StyledDiv display="grid" gridTemplateColumns="1fr 1fr" gap="2px">
+              <TooltipContentDiv>
                 <StyledDiv display="flex" alignItems="center">
                   <Image
                     src={refineMaterialsMatchOverall.mat1Img}
@@ -401,7 +424,7 @@ const SimulationBarChart = ({
                   />
                   {goldJanggiSummary && goldJanggiSummary.jangi && goldJanggiSummary.jangi}
                 </StyledDiv>
-              </StyledDiv>
+              </TooltipContentDiv>
             </StyledDiv>
           </StyledDiv>
         );
@@ -423,7 +446,7 @@ const SimulationBarChart = ({
           margin={{
             top: 20,
             right: deviceType === 'mobile' ? 0 : 30,
-            left: deviceType === 'mobile' ? -55 : 20,
+            left: deviceType === 'mobile' ? -30 : 20,
             bottom: 5,
           }}
         >

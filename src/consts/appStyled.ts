@@ -8,6 +8,7 @@ const StyledDiv = styled.div<{
   color?: string;
   display?: 'flex' | 'grid' | 'block';
   flexDirection?: 'row' | 'column';
+  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
   fontSize?: string;
   fontWeight?: 'normal' | 'bold' | 'bolder' | 'lighter' | number;
   gap?: string;
@@ -41,6 +42,7 @@ const StyledDiv = styled.div<{
   color: ${(props) => props.color || 'inherit'};
   display: ${(props) => `${props.display || 'block'}`};
   flex-direction: ${(props) => `${props.flexDirection || 'row'}`};
+  flex-wrap: ${(props) => props.flexWrap || 'nowrap'};
   font-size: ${(props) => props.fontSize || 'inherit'};
   font-weight: ${(props) => props.fontWeight || 'normal'};
   gap: ${(props) => props.gap || '0px'};

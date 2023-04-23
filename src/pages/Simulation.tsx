@@ -18,6 +18,7 @@ import { simulationObjectDashboard } from '@consts/requiredRefineMaterials';
 import { Icon, Label } from 'semantic-ui-react';
 import { Image } from '@components/atoms/image';
 import useDeviceType from '@hooks/DeviceTypeHook';
+import RefineSettingMobile from '@components/custom/simulation/RefineSettingMobile';
 
 type ProcessedDataItem = {
   range: string;
@@ -136,7 +137,7 @@ const Simulation = () => {
 
   return (
     <StyledDiv>
-      <StyledDiv display="flex" alignItems="center">
+      <StyledDiv display="flex" alignItems="center" flexWrap="wrap">
         <H3NoMargin>※ 재련 시뮬레이션</H3NoMargin>
         <RadioButtonGroup
           options={[
@@ -159,14 +160,25 @@ const Simulation = () => {
       </InheritedMaterials>
 
       <br />
-      <RefineSetting
-        selectOptionParam={selectOptionParam}
-        setSelectOptionParam={setSelectOptionParam}
-        setSimulationResult={setSimulationResult}
-        updateRefineMaterialsMatch={updateRefineMaterialsMatch}
-        simulationCount={simulationCount}
-        setSimulationCount={setSimulationCount}
-      />
+      {deviceType !== 'mobile' ? (
+        <RefineSetting
+          selectOptionParam={selectOptionParam}
+          setSelectOptionParam={setSelectOptionParam}
+          setSimulationResult={setSimulationResult}
+          updateRefineMaterialsMatch={updateRefineMaterialsMatch}
+          simulationCount={simulationCount}
+          setSimulationCount={setSimulationCount}
+        />
+      ) : (
+        <RefineSettingMobile
+          selectOptionParam={selectOptionParam}
+          setSelectOptionParam={setSelectOptionParam}
+          setSimulationResult={setSimulationResult}
+          updateRefineMaterialsMatch={updateRefineMaterialsMatch}
+          simulationCount={simulationCount}
+          setSimulationCount={setSimulationCount}
+        />
+      )}
 
       <br />
 
