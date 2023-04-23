@@ -2,29 +2,31 @@ import { InputDefaultNumber } from '@components/atoms/input';
 import { InputLayout, Image } from '@components/index';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import styled from 'styled-components';
+import useDeviceType from '@hooks/DeviceTypeHook';
 
-const ColumnDiv = styled.div`
+type ColumnDivProps = {
+  columns: number;
+  columnsMobile: number;
+  titleColumns: number;
+  titleColumnsMobile: number;
+};
+
+const ColumnDiv = styled.div<ColumnDivProps>`
   display: grid;
-  grid-template-columns: repeat(
-    ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '3'},
-    1fr
-  );
+  grid-template-columns: repeat(${(props) => props.columns}, 1fr);
   grid-row-gap: 15px;
 
   @media (max-width: 750px) {
-    grid-template-columns: repeat(
-      ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '2'},
-      1fr
-    );
+    grid-template-columns: repeat(${(props) => props.columnsMobile}, 1fr);
   }
 
   .columnDiv_Title {
-    grid-column: span ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '3'};
+    grid-column: span ${(props) => props.titleColumns};
     padding: 2px 20px;
     margin: 0px;
 
     @media (max-width: 750px) {
-      grid-column: span ${localStorage.getItem('deviceType') === 'mobile' ? '1' : '2'};
+      grid-column: span ${(props) => props.titleColumnsMobile};
     }
   }
 
@@ -53,10 +55,23 @@ const InheritedMaterialsCountPriceDesktop = ({
     categoryObj3: '🛑 특수/융화 재료 (귀속)',
   };
 
+  const deviceType = useDeviceType();
+
+  const columns = deviceType === 'mobile' ? 1 : 3;
+  const columnsMobile = deviceType === 'mobile' ? 1 : 2;
+  const titleColumns = deviceType === 'mobile' ? 1 : 3;
+  const titleColumnsMobile = deviceType === 'mobile' ? 1 : 2;
+
   return (
     <>
       {Object.keys(countObjDashboard).map((countObj: string) => (
-        <ColumnDiv key={`columnDiv_${countObj}`}>
+        <ColumnDiv
+          key={`columnDiv_${countObj}`}
+          columns={columns}
+          columnsMobile={columnsMobile}
+          titleColumns={titleColumns}
+          titleColumnsMobile={titleColumnsMobile}
+        >
           <h3 className="columnDiv_Title">
             {categoryTextMapping[countObj as keyof typeof categoryTextMapping]}
           </h3>

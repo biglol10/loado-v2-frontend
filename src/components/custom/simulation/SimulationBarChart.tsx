@@ -15,6 +15,7 @@ import {
 import { Image } from '@components/atoms/image';
 import { Divider } from 'semantic-ui-react';
 import { loaImages } from '@consts/imgSrc';
+import useDeviceType from '@hooks/DeviceTypeHook';
 
 interface CustomTooltipProps extends TooltipProps<number, string> {
   active?: boolean;
@@ -412,12 +413,19 @@ const SimulationBarChart = ({
 
   CustomTooltip.displayName = 'CustomTooltip';
 
+  const deviceType = useDeviceType();
+
   return (
     <StyledDiv display="flex">
-      <ResponsiveContainer width="55%" height={350}>
+      <ResponsiveContainer width={deviceType === 'mobile' ? '100%' : '55%'} height={350}>
         <BarChart
           data={graphData.processedData}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          margin={{
+            top: 20,
+            right: deviceType === 'mobile' ? 0 : 30,
+            left: deviceType === 'mobile' ? -55 : 20,
+            bottom: 5,
+          }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="range" />

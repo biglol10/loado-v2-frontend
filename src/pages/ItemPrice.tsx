@@ -4,13 +4,15 @@ import BaseService from '@services/BaseService';
 import axios from 'axios';
 import styled from 'styled-components';
 import LOSTARK_API from '@consts/api';
+import useDeviceType from '@hooks/DeviceTypeHook';
 import { MainTable } from '@components/atoms/table/index';
 import { ITableData } from '@components/atoms/table/Types';
+import { IIsMobile } from '@consts/interfaces';
 
-const TopTab = styled.div`
+const TopTab = styled.div<IIsMobile>`
   .tab-list {
     display: flex;
-    width: ${localStorage.getItem('deviceType') === 'mobile' ? '100%' : '500px'};
+    width: ${(props) => (props.isMobile ? '100%' : '500px')};
     list-style: none;
     margin: 0;
     padding: 0;
@@ -39,6 +41,7 @@ const TopTab = styled.div`
 const ItemPricePage = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'book' | 'material' | 'mylist'>('all');
   const [marketItems, setMarketItems] = useState([]);
+  const deviceType = useDeviceType();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,7 +109,7 @@ const ItemPricePage = () => {
   return (
     <>
       {/* <div>asdf</div> */}
-      <TopTab>
+      <TopTab isMobile={deviceType === 'mobile'}>
         <ul className="tab-list">
           <li
             className={`tab-item ${activeTab === 'all' ? 'active' : ''}`}

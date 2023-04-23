@@ -2,10 +2,11 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { isMobile } from 'react-device-detect';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import RouteElementMatch from '@pages/index';
 import { RootState } from '@state/store';
+import { setDeviceType } from '@state/appCommonSlice';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
@@ -13,6 +14,10 @@ import './App.css';
 const DynamicModal = lazy(() => import('@components/modal'));
 
 const CenteredLoader = ({ useDimmer = false }: { useDimmer?: boolean }) => {
+  const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
+
+  if (isShowLoading) return null;
+
   const loader = <Loader content="로딩중" active inline="centered" />;
 
   return useDimmer ? (
@@ -35,8 +40,10 @@ const CenteredLoader = ({ useDimmer = false }: { useDimmer?: boolean }) => {
 
 const App = () => {
   const publicUrl = process.env.PUBLIC_URL;
+  const dispatch = useDispatch();
 
-  localStorage.setItem('deviceType', isMobile ? 'mobile' : 'desktop');
+  dispatch(setDeviceType(isMobile ? 'mobile' : 'desktop'));
+
   const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
   const RouteElements = RouteElementMatch.map((el, idx) => {
     const DynamicElement = lazy(() => import(`${el.elementPath}`));

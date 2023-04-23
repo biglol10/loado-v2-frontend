@@ -3,6 +3,9 @@ import { Image } from '@components/index';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { loaImages, loaImageNames } from '@consts/imgSrc';
+import useDeviceType from '@hooks/DeviceTypeHook';
+import { IIsMobile } from '@consts/interfaces';
+import store from '@state/store';
 
 interface LayoutChildren {
   children: React.ReactNode;
@@ -14,7 +17,9 @@ const LayoutDiv = styled.div`
   background-color: #0e0f15;
 `;
 
-const Navigation = styled.header`
+const appC = store.getState().appCommon;
+
+const Navigation = styled.header<IIsMobile>`
   background-color: #40444f;
   display: flex;
   padding-left: 8%;
@@ -36,8 +41,7 @@ const Navigation = styled.header`
     list-style-type: none;
     display: flex;
     align-items: center;
-    margin-left: ${localStorage.getItem('deviceType') === 'mobile' ? '20px' : '50px'};
-    height: ${localStorage.getItem('deviceType') === 'mobile' ? 'auto' : '100%'};
+    margin-left: ${(props) => (props.isMobile ? '20px' : '50px')};
 
     li {
       padding: 0px 20px;
@@ -61,8 +65,7 @@ const Navigation = styled.header`
 const MainLayout = ({ children }: LayoutChildren) => {
   const [activePage, setActivePage] = useState('simulation');
   const navigate = useNavigate();
-
-  const deviceType = localStorage.getItem('deviceType');
+  const deviceType = useDeviceType();
 
   const changeRoute = (nextRoute: string) => {
     setActivePage(nextRoute);
@@ -75,7 +78,7 @@ const MainLayout = ({ children }: LayoutChildren) => {
 
   return (
     <LayoutDiv>
-      <Navigation>
+      <Navigation isMobile={deviceType === 'mobile'}>
         {deviceType === 'mobile' ? <h1>Loado</h1> : <h1>Loado V2</h1>}
         {deviceType !== 'mobile' && (
           <Image src={loaImages['멸화10']} imageSize="mini" type="image" circular={true} />

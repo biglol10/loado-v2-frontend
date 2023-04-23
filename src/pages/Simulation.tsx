@@ -17,6 +17,7 @@ import _ from 'lodash';
 import { simulationObjectDashboard } from '@consts/requiredRefineMaterials';
 import { Icon, Label } from 'semantic-ui-react';
 import { Image } from '@components/atoms/image';
+import useDeviceType from '@hooks/DeviceTypeHook';
 
 type ProcessedDataItem = {
   range: string;
@@ -131,6 +132,8 @@ const Simulation = () => {
     setRefineMaterialsMatchOverall(obj);
   };
 
+  const deviceType = useDeviceType();
+
   return (
     <StyledDiv>
       <StyledDiv display="flex" alignItems="center">
@@ -169,7 +172,7 @@ const Simulation = () => {
 
       {graphData && graphData.processedData && simulationResult && (
         <StyledDiv>
-          <StyledDiv display="flex" marginLeft="50px">
+          <StyledDiv display="flex" marginLeft={deviceType === 'mobile' ? '0px' : '50px'}>
             <Label style={{ backgroundColor: 'beige' }}>
               <StyledDiv display="flex" justifyContent="center" alignItems="center" gap="20px">
                 <Image
@@ -178,7 +181,7 @@ const Simulation = () => {
                   type="image"
                   // circular
                 />
-                <StyledSpan color="black">운 상위N%의 범주</StyledSpan>
+                <StyledSpan color="black">운 상위 N%의 범주</StyledSpan>
                 <InputLayout
                   inputLabelSize={'h6'}
                   stretch={false}

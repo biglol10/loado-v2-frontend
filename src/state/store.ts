@@ -2,11 +2,13 @@ import { configureStore, combineReducers, AnyAction, Store } from '@reduxjs/tool
 import counterSlice from './counterSlice';
 import modalSlice from './modalSlice';
 import loaderSlice from './loaderSlice';
+import appCommon from './appCommonSlice';
 
 const rootReducer = combineReducers({
   counter: counterSlice,
   modal: modalSlice,
   loader: loaderSlice,
+  appCommon,
 });
 
 const devMode = process.env.NODE_ENV === 'development';
