@@ -13,10 +13,7 @@ import { IInputDropdown } from './Types';
 import InputHoc from './hoc/InputHOC';
 import { StyledBaseDropdown } from './Styled';
 
-const InputDropdown = forwardRef<
-  { inputElement: Component<DropdownProps, any, any> },
-  IInputDropdown
->(
+const InputDropdown = forwardRef<null, IInputDropdown>(
   (
     {
       id = '',

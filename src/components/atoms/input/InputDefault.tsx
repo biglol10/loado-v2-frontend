@@ -7,12 +7,12 @@
  ********************************************************************************************/
 
 import { forwardRef } from 'react';
-import { Input } from 'semantic-ui-react';
+import { Input, InputProps } from 'semantic-ui-react';
 import { IInputDefault } from './Types';
 import { StyledBaseInput } from './Styled';
 import InputHoc from './hoc/InputHOC';
 
-const InputDefault = forwardRef<{ inputElement: Input | undefined }, IInputDefault>(
+const InputDefault = forwardRef<null, IInputDefault>(
   (
     {
       id = '',

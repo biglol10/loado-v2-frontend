@@ -13,7 +13,7 @@ import { IInputWithIcon } from './Types';
 import { StyledBaseInput } from './Styled';
 import InputHoc from './hoc/InputHOC';
 
-const InputWithIcon = forwardRef<HTMLInputElement, IInputWithIcon>(
+const InputWithIcon = forwardRef<null, IInputWithIcon>(
   (
     {
       id = '',
@@ -70,9 +70,7 @@ const InputWithIcon = forwardRef<HTMLInputElement, IInputWithIcon>(
             <input
               ref={ref}
               value={value}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                onChange && onChange(e);
-              }}
+              onChange={onChange}
               type={`${type === 'default' ? '' : type}`}
               placeholder={placeholder}
               readOnly={readOnly}

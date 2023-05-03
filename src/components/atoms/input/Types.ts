@@ -1,13 +1,19 @@
 import React, { ReactNode, JSXElementConstructor as JSX, ChangeEvent, SyntheticEvent } from 'react';
-import { ButtonProps, StrictLabelProps } from 'semantic-ui-react';
+import {
+  ButtonProps,
+  DropdownProps,
+  InputOnChangeData,
+  InputProps,
+  StrictLabelProps,
+} from 'semantic-ui-react';
 
 // ? Types in InputDefault component
-export interface IInputDefault {
+export interface IInputDefault extends InputProps {
   id: string;
   placeholder?: string;
   value?: string;
   className?: string;
-  onChange?: Function;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => void;
   size?: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
   loading?: boolean;
   type?: 'default' | 'password' | 'number';
@@ -23,12 +29,12 @@ export interface IInputDefault {
   fluid?: boolean;
 }
 
-export interface IInputDefaultNumber {
+export interface IInputDefaultNumber extends InputProps {
   id: string;
   placeholder?: string;
   value?: string;
   className?: string;
-  onChange?: Function;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => void;
   size?: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
   loading?: boolean;
   type?: 'number';
@@ -45,13 +51,13 @@ export interface IInputDefaultNumber {
 }
 
 // ? Types in InputDropdown component
-export interface IInputDropdown {
+export interface IInputDropdown extends DropdownProps {
   id?: string;
   className?: string;
   placeholder?: string;
   value?: any;
   options?: object[];
-  onChange?: Function;
+  onChange?: (event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => void;
   loading?: boolean;
   multiple?: boolean;
   disabled?: boolean;
@@ -91,4 +97,5 @@ export interface IInputWithIcon extends IInputDefault {
   iconClick?: Function;
   setInputValue?: Function;
   stretch?: boolean;
+  onChange?: any;
 }

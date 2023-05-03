@@ -12,7 +12,7 @@ import { IInputDefaultNumber } from './Types';
 import { StyledBaseInput } from './Styled';
 import InputHoc from './hoc/InputHOC';
 
-const InputDefaultNumber = forwardRef<{ inputElement: Input | undefined }, IInputDefaultNumber>(
+const InputDefaultNumber = forwardRef<null, IInputDefaultNumber>(
   (
     {
       id = '',

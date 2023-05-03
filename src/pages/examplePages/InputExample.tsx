@@ -164,10 +164,13 @@ const InputExample = () => {
           ref={inputRef3}
           value={inputValue3}
           options={options}
-          onChange={(obj: { value: string | Array<string> }) => {
-            console.log(obj.value);
-            setInputValue3(obj.value);
+          onChange={(val) => {
+            setInputValue3(val);
           }}
+          // onChange={(obj: { value: string | Array<string> }) => {
+          //   console.log(obj.value);
+          //   setInputValue3(obj.value);
+          // }}
           keyboardInput={false}
           multiple={true}
           loading={false}
