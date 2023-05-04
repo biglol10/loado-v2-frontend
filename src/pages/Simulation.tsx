@@ -207,8 +207,8 @@ const Simulation = () => {
                     size={'mini'}
                     inputIcon={<Icon name="percent" color="black" />}
                     type="number"
-                    onChange={(e: IInputChangeEventValue) => {
-                      setTopNPercentPoint(Number(e.value));
+                    onChangeHOC={(obj) => {
+                      setTopNPercentPoint(Number(obj.value));
                     }}
                   />
                 </InputLayout>

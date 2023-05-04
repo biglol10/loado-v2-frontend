@@ -11,24 +11,22 @@ import React, {
 } from 'react';
 import { debounce, isEqual } from 'lodash';
 import { Input, InputProps as SemanticInputProps } from 'semantic-ui-react';
+import { TInputHOCRefMain } from '../Types';
 
 interface InputProps {
   value: string | number | object;
-  onChange?: (value: string | number | object) => void;
+  onChangeHOC?<S extends { value: any }>(value: S): void;
   multiple?: boolean;
 }
 
 const InputHoc = (
   WrappedComponent: React.ForwardRefExoticComponent<Partial<SemanticInputProps>>,
 ) => {
-  const WithInput = (
-    props: InputProps,
-    ref: React.Ref<{ inputElement: Input | undefined; clear: () => void }>,
-  ) => {
+  const WithInput = (props: InputProps | SemanticInputProps, ref: TInputHOCRefMain) => {
     const [inputValue, setInputValue] = useState<string | number | object>(props.value);
     const inputRef = useRef<Input>();
 
-    const { onChange } = props;
+    const { onChangeHOC } = props;
 
     useEffect(() => {
       !isEqual(inputValue, props.value) && setInputValue(props.value);
@@ -46,8 +44,8 @@ const InputHoc = (
           if (!isMatch) {
             setInputValue('');
             debounce(() => {
-              onChange &&
-                onChange({
+              onChangeHOC &&
+                onChangeHOC({
                   value: '',
                 });
             }, 50)();
@@ -55,8 +53,8 @@ const InputHoc = (
             setInputValue(Number(e.target.value.replaceAll(',', '')).toLocaleString());
 
             debounce(() => {
-              onChange &&
-                onChange({
+              onChangeHOC &&
+                onChangeHOC({
                   value: e.target.value, // at this time of point, the input value which is e.target.value is formatted with comma
                 });
             }, 50)();
@@ -67,13 +65,13 @@ const InputHoc = (
         setInputValue(!isDropdown ? e.target.value : data.value);
 
         debounce(() => {
-          onChange &&
-            onChange({
+          onChangeHOC &&
+            onChangeHOC({
               value: !isDropdown ? e.target.value : data.value,
             });
         }, 50)();
       },
-      [onChange],
+      [onChangeHOC],
     );
 
     useImperativeHandle(ref, () => ({
@@ -97,6 +95,8 @@ const InputHoc = (
 
   return forwardRef(WithInput);
 };
+
+export default InputHoc;
 
 // // props: P & ICommInput
 // const InputHoc = <P extends object>(OriginalComponent: React.ComponentType<P>) => {
@@ -173,5 +173,3 @@ const InputHoc = (
 // };
 
 // InputHoc.displayName = 'InputHoc';
-
-export default InputHoc;

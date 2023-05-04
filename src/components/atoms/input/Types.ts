@@ -2,6 +2,7 @@ import React, { ReactNode, JSXElementConstructor as JSX, ChangeEvent, SyntheticE
 import {
   ButtonProps,
   DropdownProps,
+  Input,
   InputOnChangeData,
   InputProps,
   StrictLabelProps,
@@ -99,3 +100,7 @@ export interface IInputWithIcon extends IInputDefault {
   stretch?: boolean;
   onChange?: any;
 }
+
+export type TInputHOCRef = { inputElement: Input | undefined; clear: () => void };
+
+export type TInputHOCRefMain = React.Ref<TInputHOCRef> | undefined;

@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Divider, Icon, Input } from 'semantic-ui-react';
 import { RootState } from 'src/state/store';
 
+import { TInputHOCRef } from '@components/atoms/input/Types';
+
 const options = [
   { key: 'angular', text: 'Angular', value: 'angular' },
   { key: 'css', text: 'CSS', value: 'css' },
@@ -46,7 +48,7 @@ const InputExample = () => {
   // InputDefault
   const [inputError1, setInputError1] = useState(false);
   const [inputValue1, setInputValue1] = useState('');
-  const inputRef1 = useRef<{ inputElement: Input | undefined; clear: () => void }>();
+  const inputRef1 = useRef<{ inputElement: Input | undefined; clear: () => void }>(null);
 
   // InputWithIcon
   const [inputError2, setInputError2] = useState(false);
@@ -91,7 +93,7 @@ const InputExample = () => {
           stretch={false}
           placeholder="제목"
           ref={inputRef1}
-          onChange={(obj: { value: string }) => {
+          onChangeHOC={(obj) => {
             setInputValue1(obj.value);
             setInputError1(obj.value.includes('z'));
             console.log('inputRef1 ref is');
@@ -164,8 +166,8 @@ const InputExample = () => {
           ref={inputRef3}
           value={inputValue3}
           options={options}
-          onChange={(val) => {
-            setInputValue3(val);
+          onChangeHOC={(obj) => {
+            setInputValue3(obj.value);
           }}
           // onChange={(obj: { value: string | Array<string> }) => {
           //   console.log(obj.value);
