@@ -1,12 +1,13 @@
-import styled from 'styled-components';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
 import { TextWithGold } from '../textWithGold';
 
 const StyledTable = styled(Table)`
   && {
     border-collapse: collapse;
-    border: 1px solid white;
-    background: white;
+    border: 1px solid slategrey;
+    color: white;
+    background: #04111f;
     margin: 10px;
     width: 48%;
     float: left;
@@ -14,14 +15,14 @@ const StyledTable = styled(Table)`
 `;
 
 const StyledHead = styled(TableHead)`
-  border-bottom: 1px solid white;
   height: 40px;
+  color: white;
 `;
 const StyledBody = styled(TableBody)`
   text-align: center;
 `;
 const StyledRow = styled(TableRow)`
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid slategrey;
   height: 40px;
   &:last-child {
     border-bottom: none;
@@ -30,12 +31,13 @@ const StyledRow = styled(TableRow)`
 
 const StyledCell = styled(TableCell)`
   display: inline;
+  color: white;
 `;
 
-const StyledImage = styled.img`
-  vertical-align: inherit;
-  width: 30px;
-`;
+// const StyledImage = styledc.img`
+//   vertical-align: inherit;
+//   width: 30px;
+// `;
 
 const MainTable = ({ columns, data }: { columns: any; data: any }) => {
   return (
@@ -51,7 +53,7 @@ const MainTable = ({ columns, data }: { columns: any; data: any }) => {
         {data.map((d: any, i: number) => (
           <StyledRow key={d.Id}>
             <StyledCell>
-              <StyledImage src={d.Icon} />
+              {/* <StyledImage src={d.Icon} /> */}
               {d.Name}
             </StyledCell>
             {d.YDayAvgPrice && (

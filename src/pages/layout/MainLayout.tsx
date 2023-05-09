@@ -14,13 +14,14 @@ interface LayoutChildren {
 const LayoutDiv = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-color: #0e0f15;
+  background-color: #122438;
 `;
 
 const appC = store.getState().appCommon;
 
 const Navigation = styled.header<IIsMobile>`
-  background-color: #40444f;
+  border-bottom: 2px solid slategrey;
+  background-color: #122438;
   display: flex;
   padding-left: 8%;
   align-items: center;
