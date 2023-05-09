@@ -38,6 +38,10 @@ const TopTab = styled.div<IIsMobile>`
   }
 `;
 
+const TableWrapper = styled.div`
+  display: inline;
+`;
+
 const ItemPricePage = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'book' | 'material' | 'mylist'>('all');
   const [marketItems, setMarketItems] = useState([]);
@@ -137,9 +141,11 @@ const ItemPricePage = () => {
           </li>
         </ul>
       </TopTab>
-      <MainTable data={marketItems} columns={columns} />
-      {/* <MainTable data={marketItems} columns={columns} /> */}
-      <MainTable data={data2} columns={columns2} />
+      <TableWrapper>
+        <MainTable headerTitle="전설 각인서" data={marketItems} columns={columns} />
+        <MainTable headerTitle="재련 재료" data={marketItems} columns={columns} />
+        <MainTable headerTitle="아바타" data={data2} columns={columns2} />
+      </TableWrapper>
     </>
   );
 };
