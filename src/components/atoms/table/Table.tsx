@@ -45,7 +45,7 @@ const MainTable = ({ columns, data }: { columns: any; data: any }) => {
       <StyledHead>
         <StyledRow>
           {columns.map((column: string, index: number) => (
-            <StyledCell key={index} style={{ color: 'white' }}>
+            <StyledCell key={index} style={{ color: 'white', padding: '8px' }}>
               {column}
             </StyledCell>
           ))}
@@ -54,25 +54,25 @@ const MainTable = ({ columns, data }: { columns: any; data: any }) => {
       <StyledBody>
         {data.map((d: any, i: number) => (
           <StyledRow key={d.Id}>
-            <StyledCell style={{ color: 'white' }}>
+            <StyledCell style={{ color: 'white', padding: '8px' }}>
               <StyledImage src={d.Icon} />
               {d.Name}
             </StyledCell>
             {d.YDayAvgPrice && (
-              <StyledCell style={{ color: 'white' }}>
+              <StyledCell style={{ color: 'white', padding: '8px' }}>
                 <TextWithGold text={d.YDayAvgPrice} width="30px" />
               </StyledCell>
             )}
             {d.RecentPrice && (
-              <StyledCell style={{ color: 'white' }}>
+              <StyledCell style={{ color: 'white', padding: '8px' }}>
                 <TextWithGold text={d.RecentPrice} width="30px" />
               </StyledCell>
             )}
-            <StyledCell style={{ color: 'white' }}>
+            <StyledCell style={{ color: 'white', padding: '8px' }}>
               <TextWithGold text={d.CurrentMinPrice} width="30px" />
             </StyledCell>
-            <StyledCell style={{ color: 'white' }}>Icon</StyledCell>
-            <StyledCell style={{ color: 'white' }}>Icon</StyledCell>
+            <StyledCell style={{ color: 'white', padding: '8px' }}>Icon</StyledCell>
+            <StyledCell style={{ color: 'white', padding: '8px' }}>Icon</StyledCell>
           </StyledRow>
         ))}
       </StyledBody>
