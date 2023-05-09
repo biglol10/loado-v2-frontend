@@ -7,7 +7,7 @@ type TextWithGoldProps = {
 };
 
 const StyledSpan = styled.span`
-  color: black;
+  color: white;
 `;
 
 const StyledImage = styled.img`

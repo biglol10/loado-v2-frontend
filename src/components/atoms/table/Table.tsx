@@ -1,5 +1,5 @@
+import styled from 'styled-components';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { styled } from '@mui/material/styles';
 import { TextWithGold } from '../textWithGold';
 
 const StyledTable = styled(Table)`
@@ -16,11 +16,11 @@ const StyledTable = styled(Table)`
 
 const StyledHead = styled(TableHead)`
   height: 40px;
-  color: white;
 `;
 const StyledBody = styled(TableBody)`
   text-align: center;
 `;
+
 const StyledRow = styled(TableRow)`
   border-bottom: 1px solid slategrey;
   height: 40px;
@@ -34,10 +34,10 @@ const StyledCell = styled(TableCell)`
   color: white;
 `;
 
-// const StyledImage = styledc.img`
-//   vertical-align: inherit;
-//   width: 30px;
-// `;
+const StyledImage = styled.img`
+  vertical-align: inherit;
+  width: 30px;
+`;
 
 const MainTable = ({ columns, data }: { columns: any; data: any }) => {
   return (
@@ -45,32 +45,34 @@ const MainTable = ({ columns, data }: { columns: any; data: any }) => {
       <StyledHead>
         <StyledRow>
           {columns.map((column: string, index: number) => (
-            <StyledCell key={index}>{column}</StyledCell>
+            <StyledCell key={index} style={{ color: 'white' }}>
+              {column}
+            </StyledCell>
           ))}
         </StyledRow>
       </StyledHead>
       <StyledBody>
         {data.map((d: any, i: number) => (
           <StyledRow key={d.Id}>
-            <StyledCell>
-              {/* <StyledImage src={d.Icon} /> */}
+            <StyledCell style={{ color: 'white' }}>
+              <StyledImage src={d.Icon} />
               {d.Name}
             </StyledCell>
             {d.YDayAvgPrice && (
-              <StyledCell>
+              <StyledCell style={{ color: 'white' }}>
                 <TextWithGold text={d.YDayAvgPrice} width="30px" />
               </StyledCell>
             )}
             {d.RecentPrice && (
-              <StyledCell>
+              <StyledCell style={{ color: 'white' }}>
                 <TextWithGold text={d.RecentPrice} width="30px" />
               </StyledCell>
             )}
-            <StyledCell>
+            <StyledCell style={{ color: 'white' }}>
               <TextWithGold text={d.CurrentMinPrice} width="30px" />
             </StyledCell>
-            <StyledCell>Icon</StyledCell>
-            <StyledCell>Icon</StyledCell>
+            <StyledCell style={{ color: 'white' }}>Icon</StyledCell>
+            <StyledCell style={{ color: 'white' }}>Icon</StyledCell>
           </StyledRow>
         ))}
       </StyledBody>
