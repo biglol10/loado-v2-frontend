@@ -1,23 +1,18 @@
+/* eslint-disable no-debugger */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Image } from '@components/index';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { loaImages, loaImageNames } from '@consts/imgSrc';
+import { loaImages } from '@consts/imgSrc';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import { IIsMobile } from '@consts/interfaces';
-import store from '@state/store';
-
-interface LayoutChildren {
-  children: React.ReactNode;
-}
 
 const LayoutDiv = styled.div`
   width: 100%;
   min-height: 100vh;
   background-color: #122438;
 `;
-
-const appC = store.getState().appCommon;
 
 const Navigation = styled.header<IIsMobile>`
   border-bottom: 2px solid slategrey;
@@ -63,8 +58,24 @@ const Navigation = styled.header<IIsMobile>`
   }
 `;
 
+interface LayoutChildren {
+  children: React.ReactNode;
+}
+
+export enum ERoute {
+  DEV = '/dev',
+  ITEMPRICE = '/itemPrice',
+  SIMULATION = '/simulation',
+  INPUTEXAMPLE = '/inputExample',
+}
+
 const MainLayout = ({ children }: LayoutChildren) => {
-  const [activePage, setActivePage] = useState('simulation');
+  const [activePage, setActivePage] = useState<string | keyof typeof ERoute>(() => {
+    const currentRoute = location.pathname.replace(ERoute.DEV, '');
+
+    if (currentRoute && currentRoute !== '/' && currentRoute !== ERoute.DEV) return currentRoute;
+    else return ERoute.ITEMPRICE;
+  });
   const navigate = useNavigate();
   const deviceType = useDeviceType();
 
@@ -72,9 +83,8 @@ const MainLayout = ({ children }: LayoutChildren) => {
     setActivePage(nextRoute);
   };
 
-  // inputExample
   useEffect(() => {
-    navigate(`/${activePage}`);
+    navigate(`${activePage}`);
   }, [activePage, navigate]);
 
   return (
@@ -87,21 +97,21 @@ const MainLayout = ({ children }: LayoutChildren) => {
 
         <ul>
           <li
-            className={activePage === 'itemPrice' ? 'active' : ''}
-            onClick={() => changeRoute('itemPrice')}
+            className={activePage === ERoute.ITEMPRICE ? 'active' : ''}
+            onClick={() => changeRoute(ERoute.ITEMPRICE)}
           >
             <h3>{deviceType === 'mobile' ? '시세' : '아이템 시세'}</h3>
           </li>
           <li
-            className={activePage === 'simulation' ? 'active' : ''}
-            onClick={() => changeRoute('simulation')}
+            className={activePage === ERoute.SIMULATION ? 'active' : ''}
+            onClick={() => changeRoute(ERoute.SIMULATION)}
           >
             <h3>{deviceType === 'mobile' ? '시뮬' : '재련 시뮬레이션'}</h3>
           </li>
           {deviceType !== 'mobile' && (
             <li
-              className={activePage === 'inputExample' ? 'active' : ''}
-              onClick={() => changeRoute('inputExample')}
+              className={activePage === ERoute.INPUTEXAMPLE ? 'active' : ''}
+              onClick={() => changeRoute(ERoute.INPUTEXAMPLE)}
             >
               <h3>예시 페이지</h3>
             </li>

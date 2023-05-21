@@ -1,5 +1,5 @@
-import React, { ReactNode, JSXElementConstructor as JSX, ChangeEvent, SyntheticEvent } from 'react';
-import { ButtonProps, StrictLabelProps } from 'semantic-ui-react';
+import { ReactNode, JSXElementConstructor as JSX } from 'react';
+import { StrictLabelProps } from 'semantic-ui-react';
 
 export interface ILabel {
   basic?: boolean;

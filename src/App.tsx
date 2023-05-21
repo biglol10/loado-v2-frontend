@@ -16,7 +16,7 @@ const DynamicModal = lazy(() => import('@components/modal'));
 const CenteredLoader = ({ useDimmer = false }: { useDimmer?: boolean }) => {
   const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
 
-  if (isShowLoading) return null;
+  if (!isShowLoading) return null;
 
   const loader = <Loader content="로딩중" active inline="centered" />;
 

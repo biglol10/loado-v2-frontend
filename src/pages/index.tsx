@@ -1,6 +1,11 @@
+import React from 'react';
 import MainLayout from './layout/MainLayout';
 
-const routeElementMatch = Object.freeze([
+const routeElementMatch: readonly {
+  path: string;
+  elementPath: string;
+  layout: React.ComponentType<any>;
+}[] = [
   {
     path: '/',
     elementPath: './pages/Home',
@@ -36,6 +41,6 @@ const routeElementMatch = Object.freeze([
     elementPath: './pages/Simulation',
     layout: MainLayout,
   },
-]);
+];
 
 export default routeElementMatch;
