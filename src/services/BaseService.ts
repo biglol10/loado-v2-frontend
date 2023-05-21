@@ -1,9 +1,14 @@
 import store from '@state/store';
 import { showLoader, hideLoader } from '@state/loaderSlice';
+import queryString from 'query-string';
 import axiosInstance from './AxiosInstance';
 
 const RPS = 60 * 1020;
 const MAX_RETCNT = 2;
+
+type TData = {
+  [_ in string]: string | number;
+};
 
 class BaseService {
   static AUTH: {
@@ -19,6 +24,7 @@ class BaseService {
   static requestMethod = {
     get: axiosInstance.get,
     post: axiosInstance.post,
+    put: axiosInstance.put,
   };
 
   static setAuth(param: typeof this.AUTH) {
@@ -46,15 +52,42 @@ class BaseService {
     sessionStorage.setItem('auth', '');
   }
 
+  static async get(url: string, data?: TData) {
+    const urlValue =
+      data === null
+        ? url
+        : queryString.stringify(data!) !== ''
+        ? `${url}?${queryString.stringify(data!)}`
+        : url;
+    const res = await this.request({
+      method: 'get',
+      url: urlValue,
+    });
+
+    return res;
+  }
+
+  static async post(url: string, data: TData) {
+    const res = await this.request({ method: 'post', url, data });
+
+    return res;
+  }
+
+  static async put(url: string, data: TData) {
+    const res = await this.request({ method: 'put', url, data });
+
+    return res;
+  }
+
   static async request({
     method = 'get',
     url,
     data,
     retryCnt = 0,
   }: {
-    method: 'get' | 'post';
+    method: 'get' | 'post' | 'put';
     url: string;
-    data: any;
+    data?: any;
     retryCnt?: number;
   }) {
     try {
@@ -71,7 +104,7 @@ class BaseService {
 
   static async handleError(
     error: unknown,
-    method: 'get' | 'post',
+    method: 'get' | 'post' | 'put',
     url: string,
     data: any,
     retryCnt: number,

@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Divider, Icon, Input } from 'semantic-ui-react';
 import { RootState } from 'src/state/store';
 
+import ItemPriceModal from '@components/custom/itemPrice/ItemPriceModal';
+
 import { TInputHOCRef } from '@components/atoms/input/Types';
 
 const options = [
@@ -75,8 +77,18 @@ const InputExample = () => {
 
   const [selectedValue, setSelectedValue] = useState('option1');
 
+  const showItemPrice = () => {
+    showModal({
+      modalContent: (
+        <ItemPriceModal itemName="원한 각인서" startDate="2023-04-01" endDate="2023-04-28" />
+      ),
+    });
+  };
+
   return (
     <div>
+      <button onClick={showItemPrice}>아이템 시세 modal 오픈</button>
+      <br />
       <InputLayout
         error={inputError1}
         errorMsg="올바르지 않은 글자가 포함되어 있습니다11"

@@ -37,4 +37,22 @@ const getAllItemPrice = async () => {
   return res;
 };
 
-export { getSingleItemPrice, getAllItemPrice };
+const getPeriodItemPrice = async (itemName: string, startDate: string, endDate: string) => {
+  console.log(`itemName is ${itemName}`);
+  console.log(`startDate is ${startDate}`);
+  console.log(`endDate is ${endDate}`);
+  // const res = await BaseService.get({
+  //   url: '/api/loadoPrice/getPeriodMarketItemPrice',
+  //   data: { itemName, startDate, endDate },
+  // });
+
+  const res = await BaseService.get('/api/loadoPrice/getPeriodMarketItemPrice', {
+    itemName,
+    startDate,
+    endDate,
+  });
+
+  return res;
+};
+
+export { getSingleItemPrice, getAllItemPrice, getPeriodItemPrice };
