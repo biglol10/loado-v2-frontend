@@ -53,6 +53,8 @@ class BaseService {
   }
 
   static async get(url: string, data?: TData) {
+    // eslint-disable-next-line no-debugger
+    debugger;
     const urlValue =
       data === null
         ? url
@@ -64,19 +66,19 @@ class BaseService {
       url: urlValue,
     });
 
-    return res;
+    return res.data;
   }
 
   static async post(url: string, data: TData) {
     const res = await this.request({ method: 'post', url, data });
 
-    return res;
+    return res.data;
   }
 
   static async put(url: string, data: TData) {
     const res = await this.request({ method: 'put', url, data });
 
-    return res;
+    return res.data;
   }
 
   static async request({
