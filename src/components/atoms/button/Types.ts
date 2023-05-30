@@ -13,4 +13,5 @@ export interface IButton {
   onClick?: any;
   spacing?: number;
   disabled?: boolean;
+  inverted?: boolean;
 }

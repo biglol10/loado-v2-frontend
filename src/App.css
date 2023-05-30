@@ -15,3 +15,7 @@ input::placeholder {
 .noMarginBottom {
   margin-bottom: 0px;
 }
+
+.react-datepicker-wrapper {
+  width: auto;
+}

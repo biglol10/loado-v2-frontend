@@ -79,9 +79,8 @@ const InputExample = () => {
 
   const showItemPrice = () => {
     showModal({
-      modalContent: (
-        <ItemPriceModal itemName="원한 각인서" startDate="2023-04-01" endDate="2023-04-28" />
-      ),
+      modalContent: <ItemPriceModal itemName="원한 각인서" />,
+      modalSize: 'large',
     });
   };
 

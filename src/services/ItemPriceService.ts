@@ -37,14 +37,14 @@ const getAllItemPrice = async () => {
   return res;
 };
 
-const getPeriodItemPrice = async (itemName: string, startDate: string, endDate: string) => {
-  const res = await BaseService.get('/api/loadoPrice/getPeriodMarketItemPrice', {
+const getPeriodYearMonthItemPrice = async (itemName: string, year: number, month: number) => {
+  const res = await BaseService.get('/api/loadoPrice/getPeriodYearMonthMarketItemPrice', {
     itemName,
-    startDate,
-    endDate,
+    year,
+    month,
   });
 
   return res;
 };
 
-export { getSingleItemPrice, getAllItemPrice, getPeriodItemPrice };
+export { getSingleItemPrice, getAllItemPrice, getPeriodYearMonthItemPrice };

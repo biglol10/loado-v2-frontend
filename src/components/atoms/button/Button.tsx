@@ -21,6 +21,7 @@ const Button = ({
   onClick = undefined,
   spacing = 0,
   disabled = false,
+  inverted = false,
 }: IButton) => {
   const isPrimary = buttonType === 'primary';
   const isSecondary = buttonType === 'secondary';
@@ -40,6 +41,7 @@ const Button = ({
       fluid={true}
       disabled={disabled}
       spacing={spacing}
+      inverted={inverted}
     />
   );
 };

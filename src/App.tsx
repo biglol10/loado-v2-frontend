@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { isMobile } from 'react-device-detect';
@@ -9,6 +9,7 @@ import { RootState } from '@state/store';
 import { setDeviceType } from '@state/appCommonSlice';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import './App.css';
 
 const DynamicModal = lazy(() => import('@components/modal'));
@@ -42,7 +43,9 @@ const App = () => {
   const publicUrl = process.env.PUBLIC_URL;
   const dispatch = useDispatch();
 
-  dispatch(setDeviceType(isMobile ? 'mobile' : 'desktop'));
+  useEffect(() => {
+    dispatch(setDeviceType(isMobile ? 'mobile' : 'desktop'));
+  }, [dispatch]);
 
   const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
   const RouteElements = RouteElementMatch.map((el, idx) => {

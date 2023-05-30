@@ -53,8 +53,6 @@ class BaseService {
   }
 
   static async get(url: string, data?: TData) {
-    // eslint-disable-next-line no-debugger
-    debugger;
     const urlValue =
       data === null
         ? url
