@@ -1,12 +1,10 @@
-import React, { useState, useEffect, forwardRef, ForwardRefRenderFunction } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getPeriodYearMonthItemPrice } from '@services/ItemPriceService';
 import useModal from '@hooks/ModalHooks';
 import { Image } from '@components/atoms/image';
 import { Divider, Dropdown, Button as SemanticButton } from 'semantic-ui-react';
 import styled from 'styled-components';
-import { ko } from 'date-fns/esm/locale';
-import DatePicker from 'react-datepicker';
 import { getMonth, getYear } from 'date-fns';
 import { Button } from '@components/atoms/button';
 import { SharpDivider } from '@components/atoms/sharpDivider';
@@ -14,14 +12,18 @@ import {
   ResponsiveContainer,
   ComposedChart,
   Line,
-  Area,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
+  Scatter,
 } from 'recharts';
+import { loaImages } from '@consts/imgSrc';
+import { toast } from 'react-toastify';
+import { StyledDiv } from '@consts/appStyled';
+import CustomTooltip from './CustomTooltip';
 
 const ModalTitle = styled.header`
   display: flex;
@@ -52,12 +54,21 @@ const monthOptions = Array.from({ length: 12 }, (_, i) => ({
   value: i + 1,
 }));
 
-const AA = styled.div`
+const ItemImageDiv = styled.div`
   background-color: #122437;
   border-radius: 10px;
   box-shadow: 2px 2px 4px rgba(200, 0, 0, 0.8);
   padding: 5px;
   margin-right: 10px;
+`;
+
+interface TooltipKeyProps {
+  color?: string;
+}
+
+const StyledLabel = styled.span<TooltipKeyProps>`
+  font-style: italic;
+  color: ${(props) => props.color};
 `;
 
 interface IGraphData {
@@ -69,83 +80,66 @@ interface IGraphData {
   minCurrentMinPrice: number;
 }
 
-const data: IGraphData[] = [
-  // Your array of IGraphData objects here
-  // Example data:
-  {
-    _id: '1',
-    avgCurrentMinPrice: 10,
-    date: '2022-01-01',
-    itemName: 'Item A',
-    maxCurrentMinPrice: 20,
-    minCurrentMinPrice: 5,
-  },
-  {
-    _id: '2',
-    avgCurrentMinPrice: 15,
-    date: '2022-01-02',
-    itemName: 'Item A',
-    maxCurrentMinPrice: 25,
-    minCurrentMinPrice: 10,
-  },
-];
+export const colorMapping = {
+  maxCurrentMinPrice: '#4565FF',
+  avgCurrentMinPrice: '#ff7300',
+  minCurrentMinPrice: '#ECB32B',
+};
 
 const ItemPriceModal = ({ itemName = '원한 각인서' }: { itemName: string }) => {
   const { hideModal } = useModal();
   const [yearValue, setYearValue] = useState<number>(getYear(new Date()));
   const [monthValue, setMonthValue] = useState<number>(getMonth(new Date()));
-  const [graphData, setGraphData] = useState<IGraphData[]>([]);
 
-  const itemPriceQuery = useQuery({
+  const itemPriceQuery = useQuery<IGraphData[]>({
     queryKey: ['itemPeriodPrice', itemName, yearValue, monthValue],
     queryFn: () => getPeriodYearMonthItemPrice(itemName, yearValue, monthValue),
-    onSuccess: (data) => {
-      console.log('itemPeriodPrice data is');
-      console.log(data);
-    },
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
-    enabled: false, // Disable the query initially
+    enabled: false,
   });
 
   if (itemPriceQuery.status === 'error') {
-    alert('에러가 발생했습니다');
+    toast.error(<StyledDiv color="black">데이터를 가져오지 못했습니다</StyledDiv>, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
     hideModal();
     return null;
   }
 
   const searchClick = async () => {
     try {
-      const data = (await itemPriceQuery.refetch()) as unknown as IGraphData[];
-
-      setGraphData(data);
-
-      console.log(data);
+      await itemPriceQuery.refetch();
     } catch (error) {
-      console.error('Error occurred while fetching data:', error);
-      alert('에러가 발생했습니다');
+      toast.error(<StyledDiv color="black">데이터를 가져오지 못했습니다</StyledDiv>, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+      });
     }
   };
 
   return (
     <div>
       <ModalTitle>
-        <h2 style={{ color: 'gold' }}>거래소 시세 확인</h2>
+        <h2 style={{ color: 'gold', fontStyle: 'italic' }}>거래소 시세 확인</h2>
       </ModalTitle>
-      {/* <Divider /> */}
       <SharpDivider dividerColor="orange" />
       <ViewCondition>
         <div>
-          <AA>
-            <Image
-              src={'./assets/images/items/명예의파편.webp'}
-              imageSize="mini"
-              type="image"
-              circular
-            />
-          </AA>
+          <ItemImageDiv>
+            <Image src={loaImages['전설각인서']} imageSize="mini" type="image" circular />
+          </ItemImageDiv>
 
-          <h2>파괴강석</h2>
+          <h2>{itemName}</h2>
         </div>
         <div style={{ display: 'flex', gap: '20px' }}>
           <SemanticButton.Group color="grey" inverted size="mini">
@@ -178,24 +172,60 @@ const ItemPriceModal = ({ itemName = '원한 각인서' }: { itemName: string })
             <Button content={'조회'} basic size="mini" inverted onClick={searchClick} />
           </div>
         </div>
-
-        {/* <StyledDatePicker label={'"month" and "year"'} views={['month', 'year']} /> */}
       </ViewCondition>
       <br />
       <Divider />
       <br />
 
-      {graphData && graphData.length > 0 && (
-        <div style={{ width: '100%', height: 300 }}>
-          <span>sadf</span>
-        </div>
+      {itemPriceQuery && itemPriceQuery.data && itemPriceQuery.data.length > 0 && (
+        <>
+          <ResponsiveContainer width={800} height={500}>
+            <ComposedChart width={700} height={500} data={itemPriceQuery.data}>
+              <CartesianGrid stroke="#f5f5f5" />
+              <XAxis dataKey="date" scale="band" />
+              <YAxis />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend
+                payload={[
+                  {
+                    value: (
+                      <StyledLabel color={colorMapping.avgCurrentMinPrice}>평균가격</StyledLabel>
+                    ),
+                    type: 'rect',
+                    color: colorMapping.avgCurrentMinPrice,
+                  },
+                  {
+                    value: (
+                      <StyledLabel color={colorMapping.minCurrentMinPrice}>최소가격</StyledLabel>
+                    ),
+                    type: 'line',
+                    color: colorMapping.minCurrentMinPrice,
+                  },
+                  {
+                    value: (
+                      <StyledLabel color={colorMapping.maxCurrentMinPrice}>최대가격</StyledLabel>
+                    ),
+                    type: 'rect',
+                    color: colorMapping.maxCurrentMinPrice,
+                  },
+                ]}
+              />
+              {/* <Area type="monotone" dataKey="avgCurrentMinPrice" fill="#8884d8" stroke="#8884d8" /> */}
+              <Bar
+                dataKey="minCurrentMinPrice"
+                barSize={19}
+                fill={colorMapping.minCurrentMinPrice}
+              />
+              <Line
+                type="monotone"
+                dataKey="avgCurrentMinPrice"
+                stroke={colorMapping.avgCurrentMinPrice}
+              />
+              <Scatter dataKey="maxCurrentMinPrice" fill={colorMapping.maxCurrentMinPrice} />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </>
       )}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 };

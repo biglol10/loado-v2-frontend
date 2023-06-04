@@ -17,6 +17,7 @@ import { Divider } from 'semantic-ui-react';
 import { loaImages } from '@consts/imgSrc';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import styled from 'styled-components';
+import { isEqual } from 'lodash';
 
 interface CustomTooltipProps extends TooltipProps<number, string> {
   active?: boolean;
@@ -436,6 +437,14 @@ const SimulationBarChart = ({
 
   CustomTooltip.displayName = 'CustomTooltip';
 
+  const areEqualProps = (prevProps: CustomTooltipProps, nextProps: CustomTooltipProps) => {
+    return (
+      isEqual(prevProps.label, nextProps.label) && isEqual(prevProps.payload, nextProps.payload)
+    );
+  };
+
+  const CustomizeTooltipMemo = React.memo(CustomTooltip, areEqualProps);
+
   const deviceType = useDeviceType();
 
   return (
@@ -453,7 +462,7 @@ const SimulationBarChart = ({
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="range" />
           <YAxis />
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip content={<CustomizeTooltipMemo />} />
           <Legend
             wrapperStyle={{
               position: 'relative',

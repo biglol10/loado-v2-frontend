@@ -19,3 +19,22 @@ input::placeholder {
 .react-datepicker-wrapper {
   width: auto;
 }
+
+.custom-tooltip {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip-content {
+  margin-top: 8px;
+}
+
+.tooltip-content p {
+  margin: 0;
+}
+
+.tooltip-content p span {
+  font-weight: bold;
+}
