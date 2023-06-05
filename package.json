@@ -42,10 +42,11 @@
     "webpack": "^5.75.0"
   },
   "scripts": {
-    "start": "env-cmd -f .env.development craco start",
+    "dev": "env-cmd -f .env.development craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "env-cmd -f .env.production craco start"
   },
   "eslintConfig": {
     "extends": [
