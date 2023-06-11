@@ -80,16 +80,18 @@ const CustomTooltip = ({ active, payload, label }: ITooltipProps) => {
         <TooltipDivider />
         <TooltipContent>
           <TooltipItem>
-            <TooltipKey color={colorMapping.maxCurrentMinPrice}>최대가격:</TooltipKey> {maxPrice}
+            <TooltipKey color={colorMapping.maxCurrentMinPrice}>최대가격:</TooltipKey>{' '}
+            {maxPrice.toLocaleString()}
             <StyledImage src={loaImages['골드배경X']} width={25} />
           </TooltipItem>
           <TooltipItem>
             <TooltipKey color={colorMapping.avgCurrentMinPrice}>평균가격:</TooltipKey>{' '}
-            {Number(avgPrice.toFixed(2))}
+            {Number(avgPrice.toFixed(2)).toLocaleString()}
             <StyledImage src={loaImages['골드배경X']} width={25} />
           </TooltipItem>
           <TooltipItem>
-            <TooltipKey color={colorMapping.minCurrentMinPrice}>최소가격:</TooltipKey> {minPrice}
+            <TooltipKey color={colorMapping.minCurrentMinPrice}>최소가격:</TooltipKey>{' '}
+            {minPrice.toLocaleString()}
             <StyledImage src={loaImages['골드배경X']} width={25} />
           </TooltipItem>
         </TooltipContent>

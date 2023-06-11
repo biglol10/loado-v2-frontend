@@ -23,11 +23,17 @@ import {
 import { loaImages } from '@consts/imgSrc';
 import { toast } from 'react-toastify';
 import { StyledDiv } from '@consts/appStyled';
+import useDeviceType from '@hooks/DeviceTypeHook';
+import TableStatistics from './TableStatistics';
 import CustomTooltip from './CustomTooltip';
 
 const ModalTitle = styled.header`
   display: flex;
   justify-content: center;
+  > h2 {
+    color: gold;
+    font-style: italic;
+  }
 `;
 
 const ViewCondition = styled.div`
@@ -71,7 +77,7 @@ const StyledLabel = styled.span<TooltipKeyProps>`
   color: ${(props) => props.color};
 `;
 
-interface IGraphData {
+export interface IGraphData {
   _id: string;
   avgCurrentMinPrice: number;
   date: string;
@@ -86,14 +92,21 @@ export const colorMapping = {
   minCurrentMinPrice: '#ECB32B',
 };
 
-const ItemPriceModal = ({ itemName = '원한 각인서' }: { itemName: string }) => {
+const ItemPriceModal = ({
+  itemId = '65200504',
+  itemName = '원한 각인서',
+}: {
+  itemId: string;
+  itemName: string;
+}) => {
   const { hideModal } = useModal();
   const [yearValue, setYearValue] = useState<number>(getYear(new Date()));
   const [monthValue, setMonthValue] = useState<number>(getMonth(new Date()));
+  const deviceType = useDeviceType();
 
   const itemPriceQuery = useQuery<IGraphData[]>({
-    queryKey: ['itemPeriodPrice', itemName, yearValue, monthValue],
-    queryFn: () => getPeriodYearMonthItemPrice(itemName, yearValue, monthValue),
+    queryKey: ['itemPeriodPrice', itemId, yearValue, monthValue],
+    queryFn: () => getPeriodYearMonthItemPrice(itemId, yearValue, monthValue),
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
     enabled: false,
@@ -130,7 +143,7 @@ const ItemPriceModal = ({ itemName = '원한 각인서' }: { itemName: string })
   return (
     <div>
       <ModalTitle>
-        <h2 style={{ color: 'gold', fontStyle: 'italic' }}>거래소 시세 확인</h2>
+        <h2>거래소 시세 확인</h2>
       </ModalTitle>
       <SharpDivider dividerColor="orange" />
       <ViewCondition>
@@ -141,7 +154,7 @@ const ItemPriceModal = ({ itemName = '원한 각인서' }: { itemName: string })
 
           <h2>{itemName}</h2>
         </div>
-        <div style={{ display: 'flex', gap: '20px' }}>
+        <StyledDiv display="flex" gap="20px">
           <SemanticButton.Group color="grey" inverted size="mini">
             <SemanticButton>{yearValue}년</SemanticButton>
             <Dropdown
@@ -171,16 +184,16 @@ const ItemPriceModal = ({ itemName = '원한 각인서' }: { itemName: string })
           <div style={{ width: '100px', marginLeft: '100px' }}>
             <Button content={'조회'} basic size="mini" inverted onClick={searchClick} />
           </div>
-        </div>
+        </StyledDiv>
       </ViewCondition>
       <br />
       <Divider />
       <br />
 
       {itemPriceQuery && itemPriceQuery.data && itemPriceQuery.data.length > 0 && (
-        <>
-          <ResponsiveContainer width={800} height={500}>
-            <ComposedChart width={700} height={500} data={itemPriceQuery.data}>
+        <StyledDiv display="grid" gridTemplateColumns="70% 30%" gap="20px">
+          <ResponsiveContainer width={deviceType !== 'mobile' ? '100%' : '100%'} height={500}>
+            <ComposedChart data={itemPriceQuery.data}>
               <CartesianGrid stroke="#f5f5f5" />
               <XAxis dataKey="date" scale="band" />
               <YAxis />
@@ -213,7 +226,7 @@ const ItemPriceModal = ({ itemName = '원한 각인서' }: { itemName: string })
               {/* <Area type="monotone" dataKey="avgCurrentMinPrice" fill="#8884d8" stroke="#8884d8" /> */}
               <Bar
                 dataKey="minCurrentMinPrice"
-                barSize={19}
+                barSize={16}
                 fill={colorMapping.minCurrentMinPrice}
               />
               <Line
@@ -224,7 +237,12 @@ const ItemPriceModal = ({ itemName = '원한 각인서' }: { itemName: string })
               <Scatter dataKey="maxCurrentMinPrice" fill={colorMapping.maxCurrentMinPrice} />
             </ComposedChart>
           </ResponsiveContainer>
-        </>
+          <StyledDiv height="500px" width="100%">
+            {itemPriceQuery && itemPriceQuery.data && itemPriceQuery.data.length > 0 && (
+              <TableStatistics graphData={itemPriceQuery.data} />
+            )}
+          </StyledDiv>
+        </StyledDiv>
       )}
     </div>
   );

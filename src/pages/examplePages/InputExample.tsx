@@ -79,7 +79,7 @@ const InputExample = () => {
 
   const showItemPrice = () => {
     showModal({
-      modalContent: <ItemPriceModal itemName="원한 각인서" />,
+      modalContent: <ItemPriceModal itemId="65200504" itemName="원한 각인서" />,
       modalSize: 'large',
     });
   };

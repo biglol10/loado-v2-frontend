@@ -37,9 +37,9 @@ const getAllItemPrice = async () => {
   return res;
 };
 
-const getPeriodYearMonthItemPrice = async (itemName: string, year: number, month: number) => {
+const getPeriodYearMonthItemPrice = async (itemId: string, year: number, month: number) => {
   const res = await BaseService.get('/api/loadoPrice/getPeriodYearMonthMarketItemPrice', {
-    itemName,
+    itemId,
     year,
     month,
   });
