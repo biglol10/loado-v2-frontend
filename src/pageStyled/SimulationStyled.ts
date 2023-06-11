@@ -1,3 +1,4 @@
+import { IIsMobile } from '@consts/interfaces';
 import styled from 'styled-components';
 
 const InheritedMaterials = styled.div`
@@ -20,7 +21,7 @@ const InheritedMaterials = styled.div`
   }
 `;
 
-const RefineSettingDiv = styled.div<{ isMobile: boolean }>`
+const RefineSettingDiv = styled.div<IIsMobile>`
   border: 1px solid slategrey;
   display: ${(props) => (props.isMobile ? 'block' : 'flex')};
   padding: ${(props) => (props.isMobile ? '10px 5px' : '10px 20px')};

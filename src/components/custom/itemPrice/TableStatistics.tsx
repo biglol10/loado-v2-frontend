@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { TextWithGold } from '@components/atoms/textWithGold';
 import { Icon } from 'semantic-ui-react';
+import useDeviceType from '@hooks/DeviceTypeHook';
+import { IIsMobile } from '@consts/interfaces';
 import { IGraphData } from './ItemPriceModal';
 
 interface Props {
@@ -22,12 +24,12 @@ const Wrapper = styled.div`
   overflow-y: auto;
 `;
 
-const StyledTable = styled(Table)`
+const StyledTable = styled(Table)<IIsMobile>`
   && {
     border-collapse: collapse;
     color: white;
     background: #04111f;
-    width: 90%;
+    width: ${(props) => (props.isMobile ? '100%' : '90%')};
     float: left;
   }
 `;
@@ -70,6 +72,7 @@ const IconStyle = styled(Icon)`
 const TableStatistics = (props: Props) => {
   const [activeInfo, setActiveInfo] = useState<ActiveInfo>('minCurrentMinPrice');
   const [dateOrder, setDateOrder] = useState<DateOrder>('desc');
+  const deviceType = useDeviceType();
 
   const graphData = useMemo(() => {
     const sortedData = [...props.graphData];
@@ -85,7 +88,7 @@ const TableStatistics = (props: Props) => {
   return (
     <Wrapper>
       <div>
-        <StyledTable>
+        <StyledTable isMobile={deviceType === 'mobile'}>
           <StyledHead>
             <StyledCell>
               날짜
