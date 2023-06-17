@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material'
 import { TextWithGold } from '@components/atoms/textWithGold';
 import { Icon } from 'semantic-ui-react';
 import useDeviceType from '@hooks/DeviceTypeHook';
-import { IIsMobile } from '@consts/interfaces';
+import { IsMobile } from '@consts/interfaces';
 import { IGraphData } from './ItemPriceModal';
 
 interface Props {
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   overflow-y: auto;
 `;
 
-const StyledTable = styled(Table)<IIsMobile>`
+const StyledTable = styled(Table)<IsMobile>`
   && {
     border-collapse: collapse;
     color: white;

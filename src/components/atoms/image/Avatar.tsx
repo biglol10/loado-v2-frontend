@@ -8,7 +8,7 @@
  ********************************************************************************************/
 
 import React from 'react';
-import { Image as SemanticUIImage } from 'semantic-ui-react';
+import { Image as SemanticUImageProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { Label } from '@components/index';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
@@ -40,7 +40,7 @@ const Avatar = ({
   return (
     <>
       <StyledAvatar id={id} className={''} spacing={spacing}>
-        <SemanticUIImage src={imgSrc} avatar={avatar} size={imageSize} />
+        <SemanticUImageProps src={imgSrc} avatar={avatar} size={imageSize} />
         {content && <Label content={content} color={fontColor} size={labelSize} paddingNone />}
       </StyledAvatar>
     </>

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Header, Input, Dropdown } from 'semantic-ui-react';
-import { IInputLayout } from './Types';
+import { InputLayoutProps } from './Types';
 
-const StyledInputLayout = styled.div<IInputLayout>`
+const StyledInputLayout = styled.div<InputLayoutProps>`
   margin-top: ${(props) => props.spacing};
   width: ${(props) => (props.stretch ? '100%' : 'auto')};
 `;

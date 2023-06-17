@@ -1,6 +1,6 @@
 import { JSXElementConstructor as JSX } from 'react';
 import { ButtonProps } from 'semantic-ui-react';
-import { IInputDefault } from '../input/Types';
+import { InputDefaultProps } from '../input/Types';
 
 export interface IButton {
   className?: string;
@@ -8,7 +8,7 @@ export interface IButton {
   content: string | JSX.Element;
   basic?: boolean;
   color?: ButtonProps['color'];
-  size?: IInputDefault['size'];
+  size?: InputDefaultProps['size'];
   loading?: boolean;
   onClick?: any;
   spacing?: number;

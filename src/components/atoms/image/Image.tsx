@@ -1,7 +1,7 @@
 import { Image as SemanticImage, SemanticFLOATS } from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 
-interface IImage {
+interface ImageProps {
   id?: string;
   className?: string;
   src?: loaImagesType | string | null;
@@ -31,7 +31,7 @@ const Image = ({
   centered = false,
   floated = undefined,
   circular = false,
-}: IImage) => {
+}: ImageProps) => {
   const imgSrc =
     src && Object.prototype.hasOwnProperty.call(loaImages, src)
       ? loaImages[src as loaImagesType]

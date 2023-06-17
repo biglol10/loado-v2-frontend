@@ -6,7 +6,7 @@ import axiosInstance from './AxiosInstance';
 const RPS = 60 * 1020;
 const MAX_RETCNT = 2;
 
-type TData = {
+type DataType = {
   [_ in string]: string | number;
 };
 
@@ -52,7 +52,7 @@ class BaseService {
     sessionStorage.setItem('auth', '');
   }
 
-  static async get(url: string, data?: TData) {
+  static async get(url: string, data?: DataType) {
     const urlValue =
       data === null
         ? url
@@ -67,13 +67,13 @@ class BaseService {
     return res.data;
   }
 
-  static async post(url: string, data: TData) {
+  static async post(url: string, data: DataType) {
     const res = await this.request({ method: 'post', url, data });
 
     return res.data;
   }
 
-  static async put(url: string, data: TData) {
+  static async put(url: string, data: DataType) {
     const res = await this.request({ method: 'put', url, data });
 
     return res.data;

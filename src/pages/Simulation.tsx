@@ -1,6 +1,4 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-shadow */
-import { useMemo, useState, useRef, ChangeEvent } from 'react';
+import { useMemo, useState } from 'react';
 import {
   InheritedMaterialsCountPriceDesktop,
   InputLayout,
@@ -11,7 +9,7 @@ import { H3NoMargin, InheritedMaterials } from '@pageStyled/SimulationStyled';
 import { getAllItemPrice } from '@services/ItemPriceService';
 import { useQuery } from '@tanstack/react-query';
 import RefineSetting, { ISimulationResult } from '@components/custom/simulation/RefineSetting';
-import { StyledDiv, StyledHeading, StyledSpan } from '@consts/appStyled';
+import { StyledDiv, StyledSpan } from '@consts/appStyled';
 import SimulationBarChart from '@components/custom/simulation/SimulationBarChart';
 import _ from 'lodash';
 import { simulationObjectDashboard } from '@consts/requiredRefineMaterials';
@@ -30,13 +28,6 @@ type GraphDataType = {
   top30PercentCategory?: ProcessedDataItem;
 };
 
-interface IInputChangeEventValue extends ChangeEvent<HTMLInputElement> {
-  value: any;
-  data: {
-    value: any;
-  };
-}
-
 const Simulation = () => {
   const [countObjDashboard, setCountObjDashboard] = useState(simulationObjectDashboard);
   const [simulationResult, setSimulationResult] = useState<ISimulationResult[]>([]);
@@ -47,10 +38,6 @@ const Simulation = () => {
   const itemsQuery = useQuery({
     queryKey: ['itemsPrice'],
     queryFn: getAllItemPrice,
-    onSuccess: (data) => {
-      console.log('itemsQuery data is');
-      console.log(data);
-    },
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
   });

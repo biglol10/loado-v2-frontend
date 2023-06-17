@@ -8,12 +8,12 @@
 
 import { forwardRef, Component, useRef, useImperativeHandle } from 'react';
 import { DropdownProps } from 'semantic-ui-react';
-import { IInputDropdown } from './Types';
+import { InputDropdownProps } from './Types';
 // import InputDropdownHOC from './hoc/InputDropdownHOC';
 import InputHoc from './hoc/InputHOC';
 import { StyledBaseDropdown } from './Styled';
 
-const InputDropdown = forwardRef<null, IInputDropdown>(
+const InputDropdown = forwardRef<null, InputDropdownProps>(
   (
     {
       id = '',

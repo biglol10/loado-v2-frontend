@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/display-name */
 import React, {
   useState,
   useCallback,
@@ -11,7 +9,7 @@ import React, {
 } from 'react';
 import { debounce, isEqual } from 'lodash';
 import { Input, InputProps as SemanticInputProps } from 'semantic-ui-react';
-import { TInputHOCRefMain } from '../Types';
+import { InputHOCRefMainType } from '../Types';
 
 interface InputProps {
   value: string | number | object;
@@ -22,7 +20,7 @@ interface InputProps {
 const InputHoc = (
   WrappedComponent: React.ForwardRefExoticComponent<Partial<SemanticInputProps>>,
 ) => {
-  const WithInput = (props: InputProps | SemanticInputProps, ref: TInputHOCRefMain) => {
+  const WithInput = (props: InputProps | SemanticInputProps, ref: InputHOCRefMainType) => {
     const [inputValue, setInputValue] = useState<string | number | object>(props.value);
     const inputRef = useRef<Input>();
 
@@ -30,6 +28,7 @@ const InputHoc = (
 
     useEffect(() => {
       !isEqual(inputValue, props.value) && setInputValue(props.value);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.value]);
 
     const onChangeFn = useCallback(

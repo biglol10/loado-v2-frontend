@@ -1,12 +1,10 @@
-/* eslint-disable no-debugger */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Image } from '@components/index';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { loaImages } from '@consts/imgSrc';
 import useDeviceType from '@hooks/DeviceTypeHook';
-import { IIsMobile } from '@consts/interfaces';
+import { IsMobile } from '@consts/interfaces';
 
 const LayoutDiv = styled.div`
   width: 100%;
@@ -14,7 +12,11 @@ const LayoutDiv = styled.div`
   background-color: #122438;
 `;
 
-const Navigation = styled.header<IIsMobile>`
+const AppContent = styled.div<IsMobile>`
+  margin: ${(props) => (props.isMobile ? '20px 15px' : '20px 40px')};
+`;
+
+const Navigation = styled.header<IsMobile>`
   border-bottom: 2px solid slategrey;
   background-color: #122438;
   display: flex;
@@ -118,7 +120,7 @@ const MainLayout = ({ children }: LayoutChildren) => {
           )}
         </ul>
       </Navigation>
-      <div className="appContent">{children}</div>
+      <AppContent isMobile={deviceType === 'mobile'}>{children}</AppContent>
     </LayoutDiv>
   );
 };

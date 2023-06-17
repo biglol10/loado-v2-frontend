@@ -13,9 +13,9 @@ import { Label, Header } from 'semantic-ui-react';
 // import classNames from 'classnames/bind';
 import styled from 'styled-components';
 
-import { IInputLayout } from './Types';
+import { InputLayoutProps } from './Types';
 
-const StyledInputLayout = styled.div<IInputLayout>`
+const StyledInputLayout = styled.div<InputLayoutProps>`
   margin-top: ${(props) => `${props.spacing || 0}px`};
   width: ${(props) => (props.stretch ? '100%' : props.inputWidth)} !important;
   padding-right: 10px;
@@ -49,7 +49,7 @@ const InputLayout = ({
   errorLabelPosition = 'bottom',
   autoFitErrorLabel = false,
   inputWidth = 'auto', // stretch false 일 경우 width 따로 지정
-}: IInputLayout) => {
+}: InputLayoutProps) => {
   const labelSize = 'tiny';
 
   // ? By default, styled components are expected to have a single child... So Wrapped with React.Fragment

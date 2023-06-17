@@ -1,5 +1,3 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-debugger */
 const returnFullSoomValues = (refineNumber: number) => {
   if (refineNumber >= 12 && refineNumber <= 13) {
     return {

@@ -8,11 +8,11 @@
 
 import { forwardRef } from 'react';
 import { Input, InputProps } from 'semantic-ui-react';
-import { IInputDefault } from './Types';
+import { InputDefaultProps } from './Types';
 import { StyledBaseInput } from './Styled';
 import InputHoc from './hoc/InputHOC';
 
-const InputDefault = forwardRef<null, IInputDefault>(
+const InputDefault = forwardRef<null, InputDefaultProps>(
   (
     {
       id = '',

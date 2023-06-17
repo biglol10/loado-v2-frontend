@@ -7,9 +7,9 @@ import LOSTARK_API from '@consts/api';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import { MainTable } from '@components/atoms/table/index';
 import { ITableData } from '@components/atoms/table/Types';
-import { IIsMobile } from '@consts/interfaces';
+import { IsMobile } from '@consts/interfaces';
 
-const TopTab = styled.div<IIsMobile>`
+const TopTab = styled.div<IsMobile>`
   .tab-list {
     display: flex;
     width: ${(props) => (props.isMobile ? '100%' : '500px')};

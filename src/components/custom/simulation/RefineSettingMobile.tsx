@@ -45,7 +45,7 @@ const refineItemKeyMatch = {
   gold: '골드2',
 };
 
-type TRefineItemKeyMatch = keyof typeof refineItemKeyMatch;
+type RefineItemKeyMatchType = keyof typeof refineItemKeyMatch;
 
 export interface ISimulationResult {
   defaultPropb: number;
@@ -195,13 +195,13 @@ const RefineSetting = ({
       mat1Img:
         loaImages[
           refineItemKeyMatch[
-            `${weaponOrArmour}Stone${materialRank}` as TRefineItemKeyMatch
+            `${weaponOrArmour}Stone${materialRank}` as RefineItemKeyMatchType
           ] as loaImagesType
         ],
       mat2: extracted[`leapstone${materialRank}`],
       mat2Img:
         loaImages[
-          refineItemKeyMatch[`leapstone${materialRank}` as TRefineItemKeyMatch] as loaImagesType
+          refineItemKeyMatch[`leapstone${materialRank}` as RefineItemKeyMatchType] as loaImagesType
         ],
       mat3: extracted[`fusionMaterial${materialRank}`],
       mat3Img: loaImages[refineItemKeyMatch[`fusionMaterial${materialRank}`] as loaImagesType],

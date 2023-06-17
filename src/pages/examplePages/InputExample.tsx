@@ -19,7 +19,7 @@ import { RootState } from 'src/state/store';
 
 import ItemPriceModal from '@components/custom/itemPrice/ItemPriceModal';
 
-import { TInputHOCRef } from '@components/atoms/input/Types';
+import { InputHOCRefType } from '@components/atoms/input/Types';
 
 const options = [
   { key: 'angular', text: 'Angular', value: 'angular' },

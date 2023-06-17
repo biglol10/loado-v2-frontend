@@ -1,3 +1,3 @@
-export interface IIsMobile {
+export interface IsMobile {
   isMobile: boolean;
 }

@@ -9,7 +9,7 @@ import {
 } from 'semantic-ui-react';
 
 // ? Types in InputDefault component
-export interface IInputDefault extends InputProps {
+export interface InputDefaultProps extends InputProps {
   id: string;
   placeholder?: string;
   value?: string;
@@ -30,7 +30,7 @@ export interface IInputDefault extends InputProps {
   fluid?: boolean;
 }
 
-export interface IInputDefaultNumber extends InputProps {
+export interface InputDefaultPropsNumber extends InputProps {
   id: string;
   placeholder?: string;
   value?: string;
@@ -52,7 +52,7 @@ export interface IInputDefaultNumber extends InputProps {
 }
 
 // ? Types in InputDropdown component
-export interface IInputDropdown extends DropdownProps {
+export interface InputDropdownProps extends DropdownProps {
   id?: string;
   className?: string;
   placeholder?: string;
@@ -70,7 +70,7 @@ export interface IInputDropdown extends DropdownProps {
 }
 
 // ? Types in InputLayout component
-export interface IInputLayout {
+export interface InputLayoutProps {
   id?: string;
   className?: string;
   children: React.ReactElement;
@@ -87,12 +87,12 @@ export interface IInputLayout {
 }
 
 // ? Types in InputSearch component
-export interface IInputSearch extends IInputDefault {
+export interface InputSearchProps extends InputDefaultProps {
   onSearchIconClick?: Function;
 }
 
 // ? Types in InputWithIcon component
-export interface IInputWithIcon extends IInputDefault {
+export interface InputWithIconProps extends InputDefaultProps {
   inputIcon?: React.ReactElement;
   iconPosition?: 'left' | undefined;
   iconClick?: Function;
@@ -101,6 +101,6 @@ export interface IInputWithIcon extends IInputDefault {
   onChange?: any;
 }
 
-export type TInputHOCRef = { inputElement: Input | undefined; clear: () => void };
+export type InputHOCRefType = { inputElement: Input | undefined; clear: () => void };
 
-export type TInputHOCRefMain = React.Ref<TInputHOCRef> | undefined;
+export type InputHOCRefMainType = React.Ref<InputHOCRefType> | undefined;
