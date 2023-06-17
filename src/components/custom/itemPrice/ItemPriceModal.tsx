@@ -254,10 +254,12 @@ const ItemPriceModal = ({
                 {chartData.map((chartDataSlice, idx) => (
                   <>
                     {deviceType === 'mobile'}{' '}
-                    <ChartTitle>
-                      기간: {getMonthDay(chartDataSlice[0].date)} ~{' '}
-                      {getMonthDay(chartDataSlice[chartDataSlice.length - 1].date)}
-                    </ChartTitle>
+                    {deviceType === 'mobile' && (
+                      <ChartTitle>
+                        기간: {getMonthDay(chartDataSlice[0].date)} ~{' '}
+                        {getMonthDay(chartDataSlice[chartDataSlice.length - 1].date)}
+                      </ChartTitle>
+                    )}
                     <StyledResponsiveContainer
                       key={`ResponsiveContainer_${idx}`}
                       width={'100%'}

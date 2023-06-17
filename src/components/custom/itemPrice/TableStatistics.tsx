@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { TextWithGold } from '@components/atoms/textWithGold';
 import { Icon } from 'semantic-ui-react';
 import useDeviceType from '@hooks/DeviceTypeHook';
