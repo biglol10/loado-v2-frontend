@@ -6,9 +6,7 @@ import axiosInstance from './AxiosInstance';
 const RPS = 60 * 1020;
 const MAX_RETCNT = 2;
 
-type DataType = {
-  [_ in string]: string | number;
-};
+type DataType = any;
 
 class BaseService {
   static AUTH: {
