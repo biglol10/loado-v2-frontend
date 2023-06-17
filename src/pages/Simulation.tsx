@@ -123,9 +123,9 @@ const Simulation = () => {
   const deviceType = useDeviceType();
 
   return (
-    <StyledDiv>
+    <StyledDiv paddingBottom="50px">
       <StyledDiv display="flex" alignItems="center" flexWrap="wrap">
-        <H3NoMargin>※ 재련 시뮬레이션</H3NoMargin>
+        <H3NoMargin isMobile={deviceType === 'mobile'}>※ 재련 시뮬레이션</H3NoMargin>
         <RadioButtonGroup
           options={[
             { label: '귀속재료개수', value: 'count' },
@@ -216,7 +216,6 @@ const Simulation = () => {
           />
         </StyledDiv>
       )}
-      <br />
     </StyledDiv>
   );
 };

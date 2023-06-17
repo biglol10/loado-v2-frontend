@@ -9,8 +9,6 @@
 
 import React from 'react';
 import { Label, Header } from 'semantic-ui-react';
-// import { inputElCommStyle } from '@utils/styleRelated/stylehelper';
-// import classNames from 'classnames/bind';
 import styled from 'styled-components';
 
 import { InputLayoutProps } from './Types';

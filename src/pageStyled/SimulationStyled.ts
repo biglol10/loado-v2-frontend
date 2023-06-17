@@ -31,8 +31,8 @@ const RefineSettingDiv = styled.div<IsMobile>`
   }
 `;
 
-const H3NoMargin = styled.h3`
-  margin-bottom: 0px;
+const H3NoMargin = styled.h3<IsMobile>`
+  margin-bottom: ${(props) => (props.isMobile ? '20px' : '0px')};
   margin-right: 20px;
 `;
 

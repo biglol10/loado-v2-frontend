@@ -66,6 +66,11 @@ export interface ISimulationResult {
   lastRefine: Boolean;
 }
 
+const ProbAndRefine = styled(InputLayout)`
+  padding: 0px;
+  width: 90%;
+`;
+
 const simulationNumberOptions = [
   { key: 'simulation_1000', text: '1000회', value: '1000' },
   { key: 'simulation_5000', text: '5000회', value: '5000' },
@@ -472,13 +477,14 @@ const RefineSetting = ({
           </MarginTopLabel>
         )}
       </StyledDiv>
-      <StyledDiv marginTop="20px">
-        <InputLayout
+      <StyledDiv marginTop="20px" display="grid" gridTemplateColumns="1fr 1fr">
+        <ProbAndRefine
           inputLabel={'최종확률'}
           inputLabelSize={'h6'}
-          stretch={true}
+          stretch={false}
           showInputLabel={true}
           spacing={8}
+          inputWidth="80%"
         >
           <InputWithIcon
             value={refineOverallSetting.honingSuccessRate}
@@ -493,13 +499,14 @@ const RefineSetting = ({
             inputIcon={<Icon name="percent" color="black" />}
             type="number"
           />
-        </InputLayout>
-        <InputLayout
+        </ProbAndRefine>
+        <ProbAndRefine
           inputLabel={'장인의기운'}
           inputLabelSize={'h6'}
-          stretch={true}
+          stretch={false}
           showInputLabel={true}
           spacing={8}
+          inputWidth="80%"
         >
           <InputWithIcon
             value={refineOverallSetting.artisanEnergy}
@@ -514,7 +521,7 @@ const RefineSetting = ({
             inputIcon={<Icon name="percent" color="black" />}
             type="number"
           />
-        </InputLayout>
+        </ProbAndRefine>
       </StyledDiv>
       <StyledDiv display="grid" gridTemplateColumns="2fr 1fr" marginTop="20px">
         <StyledDiv paddingRight="10px">

@@ -3,18 +3,19 @@ import { InputLayout, Image } from '@components/index';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import styled from 'styled-components';
 import useDeviceType from '@hooks/DeviceTypeHook';
+import { IsMobile } from '@consts/interfaces';
 
-type ColumnDivProps = {
+interface ColumnDivProps extends IsMobile {
   columns: number;
   columnsMobile: number;
   titleColumns: number;
   titleColumnsMobile: number;
-};
+}
 
 const ColumnDiv = styled.div<ColumnDivProps>`
   display: grid;
   grid-template-columns: repeat(${(props) => props.columns}, 1fr);
-  grid-row-gap: 15px;
+  grid-row-gap: ${(props) => (props.isMobile ? '0px' : '15px')};
 
   @media (max-width: 750px) {
     grid-template-columns: repeat(${(props) => props.columnsMobile}, 1fr);
@@ -23,7 +24,7 @@ const ColumnDiv = styled.div<ColumnDivProps>`
   .columnDiv_Title {
     grid-column: span ${(props) => props.titleColumns};
     padding: 2px 20px;
-    margin: 0px;
+    margin: ${(props) => (props.isMobile ? '0 0 20px 0' : '0px')};
 
     @media (max-width: 750px) {
       grid-column: span ${(props) => props.titleColumnsMobile};
@@ -71,6 +72,7 @@ const InheritedMaterialsCountPriceDesktop = ({
           columnsMobile={columnsMobile}
           titleColumns={titleColumns}
           titleColumnsMobile={titleColumnsMobile}
+          isMobile={deviceType === 'mobile'}
         >
           <h3 className="columnDiv_Title">
             {categoryTextMapping[countObj as keyof typeof categoryTextMapping]}
