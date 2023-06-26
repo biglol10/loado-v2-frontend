@@ -47,4 +47,17 @@ const getPeriodYearMonthItemPrice = async (itemId: string, year: number, month: 
   return res;
 };
 
-export { getSingleItemPrice, getAllItemPrice, getPeriodYearMonthItemPrice };
+const getMarketPriceByCategoryCode = async (categoryCode: string) => {
+  const res = await BaseService.get(`/api/loadoPrice/getMarketPriceByCategoryCode`, {
+    categoryCode,
+  });
+
+  return res;
+};
+
+export {
+  getSingleItemPrice,
+  getAllItemPrice,
+  getPeriodYearMonthItemPrice,
+  getMarketPriceByCategoryCode,
+};
