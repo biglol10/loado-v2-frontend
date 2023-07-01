@@ -72,20 +72,20 @@ const MainTable = ({
               <StyledRow key={d.Id}>
                 <StyledCell style={{ color: 'white', padding: '8px' }}>
                   <StyledImage src={d.Icon} />
-                  {d.Name}
+                  {d.itemName}
                 </StyledCell>
-                {d.YDayAvgPrice && (
+                {d.yDayAvgPrice && (
                   <StyledCell style={{ color: 'white', padding: '8px' }}>
-                    <TextWithGold text={d.YDayAvgPrice} width="30px" />
+                    <TextWithGold text={d.yDayAvgPrice} width="30px" />
                   </StyledCell>
                 )}
-                {d.RecentPrice && (
+                {d.recentPrice && (
                   <StyledCell style={{ color: 'white', padding: '8px' }}>
-                    <TextWithGold text={d.RecentPrice} width="30px" />
+                    <TextWithGold text={d.recentPrice} width="30px" />
                   </StyledCell>
                 )}
                 <StyledCell style={{ color: 'white', padding: '8px' }}>
-                  <TextWithGold text={d.CurrentMinPrice} width="30px" />
+                  <TextWithGold text={d.currentMinPrice} width="30px" />
                 </StyledCell>
                 <StyledCell style={{ color: 'white', padding: '8px' }}>Icon</StyledCell>
                 <StyledCell style={{ color: 'white', padding: '8px' }}>Icon</StyledCell>

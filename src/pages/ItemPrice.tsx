@@ -8,6 +8,10 @@ import useDeviceType from '@hooks/DeviceTypeHook';
 import { MainTable } from '@components/atoms/table/index';
 import { ITableData } from '@components/atoms/table/Types';
 import { IsMobile } from '@consts/interfaces';
+import { useQuery, QueryKey } from '@tanstack/react-query';
+import { getMarketPriceByCategoryCode } from '@services/ItemPriceService';
+import { toast } from 'react-toastify';
+import { StyledDiv } from '@consts/appStyled';
 
 const TopTab = styled.div<IsMobile>`
   .tab-list {
@@ -44,71 +48,64 @@ const TableWrapper = styled.div`
 
 const ItemPricePage = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'book' | 'material' | 'mylist'>('all');
-  const [marketItems, setMarketItems] = useState([]);
+  const [refinement, setRefinement] = useState([]);
+  const [refinementAdditional, setRefinementAdditional] = useState([]);
+  const [etc, setEtc] = useState([]);
+  const [asder, setAsder] = useState([]);
+  const [engravings, setEngravings] = useState([]);
+  const [jewlery, setJewlery] = useState([]);
   const deviceType = useDeviceType();
+  const initalCategoryCodes = ['50010', '50020', '51000', '51100', '210000'];
+  const [categoryCode, setCategoryCode] = useState<string>('50020');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios({
-        url: LOSTARK_API.market,
-        method: 'post',
-        data: {
-          Sort: 'CURRENT_MIN_PRICE',
-          CategoryCode: 40000,
-          ItemTier: 0,
-          ItemName: '각인서',
-          ItemGrade: '전설',
-          PageNo: 1,
-          SortCondition: 'DESC',
-        },
-        headers: {
-          Authorization: `bearer ${process.env.REACT_APP_SMILEGATE_TOKEN}`,
-        },
-      })
-        .then((res) => {
-          setMarketItems(res.data.Items);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+  const queryKey: QueryKey = ['marketPrice', categoryCode];
 
-    fetchData();
-  }, []);
+  const itemsQuery = useQuery(queryKey, () => getMarketPriceByCategoryCode(categoryCode), {
+    onSuccess: (data: any) => {
+      switch (categoryCode) {
+        case '50010':
+          setRefinement(data);
+          break;
+        case '50020':
+          setRefinementAdditional(data);
+          break;
+        case '51000':
+          setEtc(data);
+          break;
+        case '51100':
+          setAsder(data);
+          break;
+        case '44420':
+          setEngravings(data);
+          break;
+        case '210000':
+          setJewlery(data);
+          break;
+        default:
+          break;
+      }
+    },
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    enabled: true,
+  });
 
-  const data2: ITableData[] = useMemo(
-    () => [
-      {
-        Id: 1,
-        Name: '아바타',
-        CurrentMinPrice: 500,
-        Grade: 'icon',
-        Icon: 'icon',
-      },
-      {
-        Id: 2,
-        Name: '아바타',
-        CurrentMinPrice: 500,
-        Grade: 'icon',
-        bookmark: 'icon',
-      },
-      {
-        Id: 3,
-        Name: '아바타',
-        CurrentMinPrice: 500,
-        Grade: 'icon',
-        Icon: 'icon',
-      },
-    ],
-    [],
-  );
+  if (itemsQuery.status === 'error') {
+    toast.error(<StyledDiv color="black">데이터를 가져오지 못했습니다</StyledDiv>, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+    return null;
+  }
 
   const columns: string[] = useMemo(
     () => ['각인서명', '전일 평균 거래가', '최근 거래가', '최저가', '시세조회', '관심등록'],
     [],
   );
-
-  const columns2: string[] = useMemo(() => ['각인서명', '최저가', '시세조회', '관심등록'], []);
 
   return (
     <>
@@ -117,34 +114,64 @@ const ItemPricePage = () => {
         <ul className="tab-list">
           <li
             className={`tab-item ${activeTab === 'all' ? 'active' : ''}`}
-            onClick={() => setActiveTab('all')}
+            onClick={() => {
+              setActiveTab('all');
+              setCategoryCode('50020');
+            }}
           >
             <span className="tab-link">전체</span>
           </li>
           <li
             className={`tab-item ${activeTab === 'book' ? 'active' : ''}`}
-            onClick={() => setActiveTab('book')}
+            onClick={() => {
+              setActiveTab('book');
+              setCategoryCode('44420');
+            }}
           >
             <span className="tab-link">각인서</span>
           </li>
           <li
             className={`tab-item ${activeTab === 'material' ? 'active' : ''}`}
-            onClick={() => setActiveTab('material')}
+            onClick={() => {
+              setActiveTab('material');
+              setCategoryCode('50010');
+            }}
           >
             <span className="tab-link">재련재료</span>
           </li>
           <li
             className={`tab-item ${activeTab === 'mylist' ? 'active' : ''}`}
-            onClick={() => setActiveTab('mylist')}
+            onClick={() => {
+              setActiveTab('mylist');
+            }}
           >
             <span className="tab-link">내 관심</span>
           </li>
         </ul>
       </TopTab>
       <TableWrapper>
-        <MainTable headerTitle="전설 각인서" data={marketItems} columns={columns} />
-        <MainTable headerTitle="재련 재료" data={marketItems} columns={columns} />
-        <MainTable headerTitle="아바타" data={data2} columns={columns2} />
+        {(activeTab === 'all' || activeTab === 'material') && (
+          <>
+            <MainTable headerTitle="재련 재료" data={refinement ?? []} columns={columns} />
+            <MainTable
+              headerTitle="재련 추가 재료"
+              data={refinementAdditional ?? []}
+              columns={columns}
+            />
+            <MainTable headerTitle="기타 재료" data={etc ?? [] ?? []} columns={columns} />
+          </>
+        )}
+        {(activeTab === 'all' || activeTab === 'book') && (
+          <>
+            <MainTable headerTitle="각인서" data={engravings ?? []} columns={columns} />
+          </>
+        )}
+        {activeTab === 'all' && (
+          <>
+            <MainTable headerTitle="에스더의 기운" data={asder ?? []} columns={columns} />
+            <MainTable headerTitle="보석" data={jewlery ?? []} columns={columns} />
+          </>
+        )}
       </TableWrapper>
     </>
   );
