@@ -5,100 +5,6 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const path = require('path');
 
 const isEnvDevelopment = process.env.REACT_APP_MODE === 'development';
-const isEnvProduction = process.env.REACT_APP_MODE === 'production';
-
-const getConfigDevelopment = (webpackConfig) => {
-  const external = {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  };
-
-  webpackConfig.externals = _.merge(webpackConfig.externals, external);
-  const optimization = {
-    chunkIds: false,
-    moduleIds: false,
-    concatenateModules: true,
-    flagIncludedChunks: true,
-    mergeDuplicateChunks: true,
-    nodeEnv: false,
-    portableRecords: false,
-    providedExports: true,
-    usedExports: true,
-    removeAvailableModules: false,
-    removeEmptyChunks: true,
-    runtimeChunk: 'single',
-    sideEffects: true,
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        minify: TerserPlugin.uglifyJsMinify,
-        test: /\.(ts|tsx)$/,
-        exclude: /\/excludes/,
-        parallel: true,
-        terserOptions: {
-          output: {
-            comments: false,
-          },
-        },
-      }),
-    ],
-  };
-
-  webpackConfig.optimization = _.merge(webpackConfig.optimization, optimization);
-
-  return webpackConfig;
-};
-
-const getConfigProduction = (webpackConfig) => {
-  const external = {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  };
-
-  webpackConfig.externals = _.merge(webpackConfig.externals, external);
-  const optimization = {
-    chunkIds: false,
-    moduleIds: false,
-    concatenateModules: true,
-    flagIncludedChunks: true,
-    mergeDuplicateChunks: true,
-    nodeEnv: 'production',
-    portableRecords: false,
-    providedExports: true,
-    usedExports: true,
-    removeAvailableModules: false,
-    removeEmptyChunks: true,
-    runtimeChunk: 'single',
-    sideEffects: true,
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        minify: TerserPlugin.uglifyJsMinify,
-        test: /\.(ts|tsx)$/,
-        exclude: /\/excludes/,
-        parallel: true,
-        terserOptions: {
-          output: {
-            comments: false,
-          },
-        },
-      }),
-    ],
-  };
-
-  webpackConfig.optimization = _.merge(webpackConfig.optimization, optimization);
-
-  return webpackConfig;
-};
-
-const getConfig = (webpackConfig, paths) => {
-  if (isEnvDevelopment) {
-    return getConfigDevelopment(webpackConfig);
-  } else if (isEnvProduction) {
-    return getConfigProduction(webpackConfig);
-  }
-  return webpackConfig;
-};
 
 const apiProxyTarget = 'https://developer-lostark.game.onstove.com';
 
@@ -123,14 +29,6 @@ module.exports = {
   ],
   devServer: {
     port: 8000,
-    // proxy: [
-    //   {
-    //     context: ['/api'],
-    //     target: 'http://localhost:3066/',
-    //     secure: false,
-    //     changeOrigin: true,
-    //   },
-    // ],
     proxy: [
       {
         context: ['/lostark/markets'],
@@ -174,7 +72,31 @@ module.exports = {
     ],
   },
   configure: (webpackConfig, { paths }) => {
-    return getConfig(webpackConfig, paths);
+    const optimization = {
+      minimize: true, // Enable minimization
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              drop_console: true, // Drop console.* statements
+            },
+            output: {
+              comments: false, // Remove comments
+            },
+          },
+          extractComments: false, // Do not extract comments to separate files
+        }),
+      ],
+      splitChunks: {
+        chunks: 'all', // Split all chunks
+      },
+      runtimeChunk: {
+        name: 'runtime', // Create a separate chunk for the runtime
+      },
+    };
+
+    webpackConfig.optimization = _.merge(webpackConfig.optimization, optimization);
+    return webpackConfig;
   },
   target: 'web',
   devtool: isEnvDevelopment ? 'source-map' : false,
