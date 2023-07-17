@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import LaunchIcon from '@mui/icons-material/Launch';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { TextWithGold } from '../textWithGold';
 
@@ -87,8 +89,12 @@ const MainTable = ({
                 <StyledCell style={{ color: 'white', padding: '8px' }}>
                   <TextWithGold text={d.currentMinPrice} width="30px" />
                 </StyledCell>
-                <StyledCell style={{ color: 'white', padding: '8px' }}>Icon</StyledCell>
-                <StyledCell style={{ color: 'white', padding: '8px' }}>Icon</StyledCell>
+                <StyledCell style={{ color: 'white', padding: '8px' }}>
+                  <MonetizationOnIcon />
+                </StyledCell>
+                <StyledCell style={{ color: 'white', padding: '8px' }}>
+                  <LaunchIcon />
+                </StyledCell>
               </StyledRow>
             ))}
           </StyledBody>
