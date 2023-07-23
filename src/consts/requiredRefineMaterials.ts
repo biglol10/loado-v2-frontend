@@ -5,6 +5,29 @@ type bookProbType = {
   probability: number;
 };
 
+export type GradeType = '일반' | '고급' | '희귀' | '영웅' | '전설' | '유물' | '고대' | '에스더';
+
+type ItemInfo = {
+  Name: string;
+  Grade: GradeType;
+  Icon: string;
+};
+
+export type ItemIdMatch = {
+  [key: string]: ItemInfo;
+};
+
+export const gradeBackgroundColor = {
+  에스더: 'linear-gradient(135deg,#0c2e2c,#2faba8)',
+  고대: 'linear-gradient(135deg,#3d3325,#dcc999)',
+  유물: 'linear-gradient(135deg,#48220b,#a24006)',
+  전설: 'linear-gradient(135deg,#452b06,#9e5f04)',
+  영웅: 'linear-gradient(135deg,#2e123c,#480d5d)',
+  희귀: 'linear-gradient(135deg,#112739,#113d5d)',
+  고급: 'linear-gradient(135deg,#1e2d0b,#304911)',
+  일반: 'linear-gradient(135deg,#313131,#585858)',
+};
+
 const requiredRefineMaterials: any = {
   AbrelNormal: {
     weapon: {
@@ -1000,7 +1023,7 @@ const requiredRefineMaterials: any = {
   },
 } as const;
 
-const marketItemIdMatch = {
+const marketItemIdMatch: ItemIdMatch = {
   '66150010': {
     Name: '에스더의 기운',
     Grade: '에스더',
@@ -1171,7 +1194,47 @@ const marketItemIdMatch = {
     Grade: '일반',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_105.png',
   },
-} as const;
+  gem10_D_66666666: {
+    Name: '10레벨 멸화의 보석',
+    Grade: '유물',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_55.png',
+  },
+  gem10_C_66666666: {
+    Name: '10레벨 홍염의 보석',
+    Grade: '유물',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_65.png',
+  },
+  gem9_D_66666666: {
+    Name: '9레벨 멸화의 보석',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_54.png',
+  },
+  gem9_C_66666666: {
+    Name: '9레벨 홍염의 보석',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_64.png',
+  },
+  gem8_D_66666666: {
+    Name: '8레벨 멸화의 보석',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_53.png',
+  },
+  gem8_C_66666666: {
+    Name: '8레벨 홍염의 보석',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_63.png',
+  },
+  gem7_D_66666666: {
+    Name: '7레벨 멸화의 보석',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_52.png',
+  },
+  gem7_C_66666666: {
+    Name: '7레벨 홍염의 보석',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_9_62.png',
+  },
+};
 
 const marketItemNameMatch = {
   '하급 오레하융화 재료': {
