@@ -1,6 +1,7 @@
 import LOSTARK_API from '@consts/api';
 import BaseService from '@services/BaseService';
 import { itemNameArr } from '@consts/itemNameMatch';
+import dayjs from 'dayjs';
 
 const getSingleItemPrice = async (item: string) => {
   const res = await BaseService.request({
@@ -47,9 +48,32 @@ const getPeriodYearMonthItemPrice = async (itemId: string, year: number, month: 
   return res;
 };
 
+const findNearestTime = () => {
+  const data = ['00:00', '06:00', '12:00', '18:00'];
+
+  const currentTime = dayjs();
+
+  const nearestTime = data.reduce(
+    (nearest, time) => {
+      const timeDate = dayjs(`1970-01-01T${time}:00`);
+      const timeDifference = Math.abs(timeDate.diff(currentTime));
+
+      if (timeDifference < nearest.diff) {
+        return { time, diff: timeDifference };
+      }
+      return nearest;
+    },
+    { time: '', diff: Infinity },
+  );
+
+  return nearestTime.time;
+};
+
 const getMarketPriceByCategoryCode = async (categoryCode: string) => {
+  const nearestTime = findNearestTime();
   const res = await BaseService.get(`/api/loadoPrice/getMarketPriceByCategoryCode`, {
     categoryCode,
+    timeValue: dayjs().format(`YYYY-MM-DD`),
   });
 
   return res;
