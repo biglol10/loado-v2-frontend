@@ -4,6 +4,8 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { gradeBackgroundColor, marketItemIdMatch } from '@consts/requiredRefineMaterials';
 import { Image } from '@components/atoms/image';
+import { ActiveTabType } from '@pages/ItemPrice';
+import { loaImages } from '@consts/imgSrc';
 import { TextWithGold } from '../textWithGold';
 
 const Wrapper = styled.div`
@@ -52,6 +54,17 @@ const StyledImage = styled.img`
   margin-right: 10px;
 `;
 
+interface ItemData {
+  recordId: string;
+  itemName: string;
+  itemId: string;
+  categoryCode: number;
+  date: string;
+  minCurrentMinPrice: number;
+  maxCurrentMinPrice: number;
+  avgCurrentMinPrice: number;
+}
+
 const MainTable = ({
   headerTitle,
   columns,
@@ -76,13 +89,21 @@ const MainTable = ({
             </StyledRow>
           </StyledHead>
           <StyledBody>
-            {data.map((d: any, i: number) => (
-              <StyledRow key={d.Id}>
+            {data.map((d: ItemData, i: number) => (
+              <StyledRow key={d.recordId}>
                 <StyledCell style={{ color: 'white', padding: '8px' }}>
                   <StyledImage
-                    src={marketItemIdMatch[d.itemId].Icon}
+                    src={
+                      headerTitle !== '각인서'
+                        ? marketItemIdMatch[d.itemId].Icon
+                        : loaImages.전설각인서
+                    }
                     style={{
-                      background: `${gradeBackgroundColor[marketItemIdMatch[d.itemId].Grade]}`,
+                      background: `${
+                        gradeBackgroundColor[
+                          headerTitle !== '각인서' ? marketItemIdMatch[d.itemId].Grade : '전설'
+                        ]
+                      }`,
                     }}
                   />
                   {/* <Image
@@ -93,18 +114,18 @@ const MainTable = ({
                   /> */}
                   {d.itemName}
                 </StyledCell>
-                {d.yDayAvgPrice && (
+                {d.minCurrentMinPrice && (
                   <StyledCell style={{ color: 'white', padding: '8px' }}>
-                    <TextWithGold text={d.yDayAvgPrice} width="30px" />
+                    <TextWithGold text={`${d.minCurrentMinPrice}`} width="30px" />
                   </StyledCell>
                 )}
-                {d.recentPrice && (
+                {d.avgCurrentMinPrice && (
                   <StyledCell style={{ color: 'white', padding: '8px' }}>
-                    <TextWithGold text={d.recentPrice} width="30px" />
+                    <TextWithGold text={`${d.avgCurrentMinPrice}`} width="30px" />
                   </StyledCell>
                 )}
                 <StyledCell style={{ color: 'white', padding: '8px' }}>
-                  <TextWithGold text={d.currentMinPrice} width="30px" />
+                  <TextWithGold text={`${d.maxCurrentMinPrice}`} width="30px" />
                 </StyledCell>
                 <StyledCell style={{ color: 'white', padding: '8px' }}>
                   <MonetizationOnIcon />
