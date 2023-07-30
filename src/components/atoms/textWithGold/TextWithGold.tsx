@@ -20,8 +20,8 @@ const TextWithGold = (props: TextWithGoldProps) => {
 
   return (
     <>
-      <StyledSpan>{text}</StyledSpan>
       <StyledImage src={loaImages['골드배경X']} width={width} />
+      <StyledSpan>{text}</StyledSpan>
     </>
   );
 };

@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import BaseService from '@services/BaseService';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -46,8 +46,10 @@ const TableWrapper = styled.div`
   display: inline;
 `;
 
+export type ActiveTabType = 'all' | 'book' | 'material' | 'mylist';
+
 const ItemPricePage = () => {
-  const [activeTab, setActiveTab] = useState<'all' | 'book' | 'material' | 'mylist'>('all');
+  const [activeTab, setActiveTab] = useState<ActiveTabType>('all');
   const [refinement, setRefinement] = useState([]);
   const [refinementAdditional, setRefinementAdditional] = useState([]);
   const [etc, setEtc] = useState([]);
@@ -106,6 +108,16 @@ const ItemPricePage = () => {
     () => ['각인서명', '전일 평균 거래가', '최근 거래가', '최저가', '시세조회', '관심등록'],
     [],
   );
+
+  const MainTableWrapper = ({ children }: { children: React.ReactElement }) => {
+    return (
+      <div>
+        {React.Children.map(children, (el) => {
+          return React.cloneElement(el, { activeTab });
+        })}
+      </div>
+    );
+  };
 
   return (
     <>
