@@ -256,7 +256,6 @@ const ItemPricePage = () => {
                 data={refinementAdditional ?? []}
                 columns={columns}
               />
-              <MainTable headerTitle="엘릭서" data={etc ?? [] ?? []} columns={columns} />
             </>
           )}
           {activeTab === 'book' && (
