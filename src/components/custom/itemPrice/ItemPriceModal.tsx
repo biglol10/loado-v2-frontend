@@ -25,6 +25,7 @@ import { toast } from 'react-toastify';
 import { StyledDiv } from '@consts/appStyled';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import _ from 'lodash';
+import { marketItemIdMatch } from '@consts/requiredRefineMaterials';
 import TableStatistics from './TableStatistics';
 import CustomTooltip from './CustomTooltip';
 
@@ -128,7 +129,8 @@ const ItemPriceModal = ({
 }) => {
   const { hideModal } = useModal();
   const [yearValue, setYearValue] = useState<number>(getYear(new Date()));
-  const [monthValue, setMonthValue] = useState<number>(getMonth(new Date()));
+  const [monthValue, setMonthValue] = useState<number>(getMonth(new Date()) + 1);
+
   const deviceType = useDeviceType();
 
   const itemPriceQuery = useQuery<IGraphData[]>({
@@ -194,7 +196,14 @@ const ItemPriceModal = ({
       <ViewConditionDiv>
         <div>
           <ItemImageDiv>
-            <Image src={loaImages['전설각인서']} imageSize="mini" type="image" circular />
+            <Image
+              src={
+                !itemName.includes('각인서') ? marketItemIdMatch[itemId].Icon : loaImages.전설각인서
+              }
+              imageSize="mini"
+              type="image"
+              circular
+            />
           </ItemImageDiv>
 
           <h2>{itemName}</h2>
@@ -240,7 +249,7 @@ const ItemPriceModal = ({
       <Divider />
       <br />
 
-      {itemPriceQuery && itemPriceQuery.data && itemPriceQuery.data.length > 0 && (
+      {itemPriceQuery && itemPriceQuery.data && itemPriceQuery.data.length > 0 ? (
         <CustomDiv>
           {(() => {
             const cloneArr = _.cloneDeep(itemPriceQuery.data);
@@ -330,6 +339,10 @@ const ItemPriceModal = ({
             )}
           </StyledDiv>
         </CustomDiv>
+      ) : (
+        <StyledDiv display="flex" justifyContent="center">
+          <h3>!! 데이터가 없습니다 !!</h3>
+        </StyledDiv>
       )}
     </div>
   );
