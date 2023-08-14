@@ -112,7 +112,7 @@ const MainLayout = ({ children }: LayoutChildren) => {
           >
             <h3>{deviceType === 'mobile' ? '시뮬' : '재련 시뮬레이션'}</h3>
           </li>
-          {deviceType !== 'mobile' && publicUrl === 'dev' && (
+          {publicUrl === '/dev' && deviceType !== 'mobile' && (
             <li
               className={activePage === ERoute.INPUTEXAMPLE ? 'active' : ''}
               onClick={() => changeRoute(ERoute.INPUTEXAMPLE)}

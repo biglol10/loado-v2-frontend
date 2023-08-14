@@ -1,4 +1,6 @@
+import LOSTARK_API from '@consts/api';
 import axios from 'axios';
+import RequestLimitError from '@error/RequestLimitError';
 
 const BASE_URL = process.env.NODE_ENV === 'development' ? '' : process.env.REACT_APP_BASE_URL;
 
@@ -9,10 +11,7 @@ const axiosInstance = axios.create({
 });
 
 const handleRequest = (config: any) => {
-  if (
-    config.url?.endsWith('/lostark/markets/items') ||
-    config.url?.endsWith('/lostark/auctions/items')
-  ) {
+  if (config.url?.endsWith(LOSTARK_API.market) || config.url?.endsWith(LOSTARK_API.auction)) {
     Object.assign(config.headers, {
       Authorization: `bearer ${process.env.REACT_APP_SMILEGATE_TOKEN}`,
     });
@@ -29,7 +28,7 @@ const handleResponseSuccess = (response: any) => {
   if (response.status === 200) {
     return response.data;
   } else if (response.status === 429) {
-    return Promise.reject(new Error('Request Limit'));
+    return Promise.reject(new RequestLimitError('Request Limit'));
   }
   return response;
 };
@@ -40,8 +39,9 @@ const handleResponseError = (error: any) => {
 
   const { response } = error;
 
+  // 요청을 많이 보내면 여기로 옴 (handleResponseSuccess가 아님)
   if (response.status === 429) {
-    return Promise.reject(new Error('Request Limit'));
+    return Promise.reject(new RequestLimitError('Request Limit'));
   }
 
   if (response && response.data) {

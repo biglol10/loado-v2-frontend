@@ -63,7 +63,6 @@ const refineSimulation: any = ({
   isIncreaseProb,
   memoryArr = [],
 }: refineSimulationType) => {
-  // debugger;
   const maxProb =
     Number(defaultProb) * 2 +
     Number(bookProb) +
