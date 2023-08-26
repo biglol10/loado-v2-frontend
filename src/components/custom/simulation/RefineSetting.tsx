@@ -21,18 +21,32 @@ import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
 import useDeviceType from '@hooks/DeviceTypeHook';
 
-const option1KeyMatch = {
+interface StringNumberMapping {
+  [key: string]: number;
+}
+
+interface StringStringMapping {
+  [key: string]: string;
+}
+
+const weaponAndArmourSetType = {
   아브노말: 'AbrelNormal',
   아브하드: 'AbrelHard',
   일리아칸: 'Illiakan',
 };
 
-const option2KeyMatch = {
+const weaponOrArmour = {
   무기: 'weapon',
   방어구: 'armour',
 };
 
-const refineItemKeyMatch = {
+const materialRankMapping: StringNumberMapping = {
+  AbrelNormal: 1,
+  AbrelHard: 1,
+  Illiakan: 2,
+};
+
+const refineItemKeyMatch: StringStringMapping = {
   weaponStone1: '파괴강석',
   armourStone1: '수호강석',
   leapstone1: '경명돌',
@@ -179,37 +193,44 @@ const RefineSetting = ({
   }, [selectOptionParam.option1]);
 
   const refineMaterialsMatch = useMemo(() => {
-    const itemRank = option1KeyMatch[selectOptionParam.option1 as keyof typeof option1KeyMatch];
-    const weaponOrArmour =
-      option2KeyMatch[selectOptionParam.option2 as keyof typeof option2KeyMatch];
-    const materialRank = itemRank.includes('Abrel') ? '1' : '2';
+    const itemSetType =
+      weaponAndArmourSetType[selectOptionParam.option1 as keyof typeof weaponAndArmourSetType];
+    const weaponOrArmourValue =
+      weaponOrArmour[selectOptionParam.option2 as keyof typeof weaponOrArmour];
+    const materialRank = materialRankMapping[itemSetType];
 
     const refineNumber =
-      itemRank.includes('AbrelNormal') && refineCurrent > '20' ? '20' : refineCurrent;
-    const extracted =
-      requiredRefineMaterials[itemRank][weaponOrArmour][`${weaponOrArmour}${refineNumber}`];
+      itemSetType.includes('AbrelNormal') && refineCurrent > '20' ? '20' : refineCurrent;
+    const requiredRefineMaterialsForOneSimulation =
+      requiredRefineMaterials[itemSetType][weaponOrArmourValue][
+        `${weaponOrArmourValue}${refineNumber}`
+      ];
 
+    // Steel -> 강석, leapStone -> 돌파석, fusionMaterial -> 오레하
     const returnedObj = {
-      weaponOrArmour,
-      mat1: extracted[`${weaponOrArmour}Stone${materialRank}`],
-      mat1Img:
+      weaponOrArmour: weaponOrArmourValue,
+      requiredSteelCount:
+        requiredRefineMaterialsForOneSimulation[`${weaponOrArmourValue}Stone${materialRank}`],
+      requiredSteelImg:
         loaImages[
           refineItemKeyMatch[
-            `${weaponOrArmour}Stone${materialRank}` as RefineItemKeyMatchType
+            `${weaponOrArmourValue}Stone${materialRank}` as RefineItemKeyMatchType
           ] as loaImagesType
         ],
-      mat2: extracted[`leapstone${materialRank}`],
-      mat2Img:
+      requiredLeapStoneCount: requiredRefineMaterialsForOneSimulation[`leapstone${materialRank}`],
+      requiredLeapStoneImg:
         loaImages[
           refineItemKeyMatch[`leapstone${materialRank}` as RefineItemKeyMatchType] as loaImagesType
         ],
-      mat3: extracted[`fusionMaterial${materialRank}`],
-      mat3Img: loaImages[refineItemKeyMatch[`fusionMaterial${materialRank}`] as loaImagesType],
-      ...extracted,
+      requiredFusionMaterialCount:
+        requiredRefineMaterialsForOneSimulation[`fusionMaterial${materialRank}`],
+      requiredFusionMaterialImg:
+        loaImages[refineItemKeyMatch[`fusionMaterial${materialRank}`] as loaImagesType],
+      ...requiredRefineMaterialsForOneSimulation,
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
-    if (itemRank.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
+    if (itemSetType.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
   }, [refineCurrent, selectOptionParam]);
@@ -402,28 +423,28 @@ const RefineSetting = ({
                 <SemanticImage
                   avatar
                   spaced="right"
-                  src={refineMaterialsMatch.mat1Img}
+                  src={refineMaterialsMatch.requiredSteelImg}
                   size="big"
                 />
-                {refineMaterialsMatch.mat1.toLocaleString()}
+                {refineMaterialsMatch.requiredSteelCount.toLocaleString()}
               </Label>
               <Label color="black" style={{ fontSize: '1rem' }}>
                 <SemanticImage
                   avatar
                   spaced="right"
-                  src={refineMaterialsMatch.mat2Img}
+                  src={refineMaterialsMatch.requiredLeapStoneImg}
                   size="big"
                 />
-                {refineMaterialsMatch.mat2}
+                {refineMaterialsMatch.requiredLeapStoneCount}
               </Label>
               <Label color="black" style={{ fontSize: '1rem' }}>
                 <SemanticImage
                   avatar
                   spaced="right"
-                  src={refineMaterialsMatch.mat3Img}
+                  src={refineMaterialsMatch.requiredFusionMaterialImg}
                   size="big"
                 />
-                {refineMaterialsMatch.mat3}
+                {refineMaterialsMatch.requiredFusionMaterialCount}
               </Label>
             </StyledDiv>
             <StyledDiv display="flex" marginTop="5px">

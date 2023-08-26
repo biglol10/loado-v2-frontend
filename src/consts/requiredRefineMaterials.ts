@@ -962,7 +962,7 @@ const requiredRefineMaterials: any = {
         fusionMaterialId: '6861011',
         honorShard: 8000,
         gold: 1290,
-        probability: 4,
+        probability: 1.5,
       },
       armour21: {
         armourStone2: 1030,
