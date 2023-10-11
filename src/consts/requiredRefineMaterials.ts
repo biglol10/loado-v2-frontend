@@ -1724,6 +1724,3 @@ export {
   marketItemNameMatch,
   simulationObjectDashboard2,
 };
-// function getRandomNumberWithDecimal() {
-//   return parseFloat((Math.random() * 100).toFixed(1));
-// }
