@@ -1194,6 +1194,31 @@ const marketItemIdMatch: ItemIdMatch = {
     Grade: '일반',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_105.png',
   },
+  '66172060': {
+    Name: '마력석 조각',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_5_153.png',
+  },
+  '66112541': {
+    Name: '야금술 : 단조 전문',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_7_69.png',
+  },
+  '66112542': {
+    Name: '야금술 : 단조 복합',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_7_69.png',
+  },
+  '66112544': {
+    Name: '재봉술 : 수선 전문',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
+  },
+  '66112545': {
+    Name: '재봉술 : 수선 복합',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
+  },
   gem10_D_66666666: {
     Name: '10레벨 멸화의 보석',
     Grade: '유물',
@@ -1362,6 +1387,16 @@ const marketItemNameMatch = {
     Grade: '고대',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_69.png',
   },
+  '야금술 : 단조 전문': {
+    Id: '66112541',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_7_69.png',
+  },
+  '야금술 : 단조 복합': {
+    Id: '66112542',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_7_69.png',
+  },
   '재봉술 : 수선 숙련': {
     Id: '66112534',
     Grade: '유물',
@@ -1369,6 +1404,16 @@ const marketItemNameMatch = {
   },
   '재봉술 : 수선 특화': {
     Id: '66112535',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
+  },
+  '재봉술 : 수선 전문': {
+    Id: '66112544',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
+  },
+  '재봉술 : 수선 복합': {
+    Id: '66112545',
     Grade: '고대',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
   },
@@ -1406,6 +1451,11 @@ const marketItemNameMatch = {
     Id: '66160320',
     Grade: '전설',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_148.png',
+  },
+  '마력석 조각': {
+    Id: '66172060',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_5_153.png',
   },
 } as const;
 
