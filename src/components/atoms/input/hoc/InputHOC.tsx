@@ -13,7 +13,7 @@ import { InputHOCRefMainType } from '../Types';
 
 interface InputProps {
   value: string | number | object;
-  onChangeHOC?<S extends { value: any }>(value: S): void;
+  onChange?: (e: any) => void;
   multiple?: boolean;
 }
 
@@ -24,7 +24,7 @@ const InputHoc = (
     const [inputValue, setInputValue] = useState<string | number | object>(props.value);
     const inputRef = useRef<Input>();
 
-    const { onChangeHOC } = props;
+    const { onChange } = props as InputProps;
 
     useEffect(() => {
       !isEqual(inputValue, props.value) && setInputValue(props.value);
@@ -33,6 +33,7 @@ const InputHoc = (
 
     const onChangeFn = useCallback(
       (e: ChangeEvent<HTMLInputElement>, data: any = null) => {
+        // alert('I am in onChangeFn');
         const isDropdown = WrappedComponent.displayName === 'InputDropdown';
         const isInputNumber = WrappedComponent.displayName === 'InputDefaultNumber';
 
@@ -43,19 +44,13 @@ const InputHoc = (
           if (!isMatch) {
             setInputValue('');
             debounce(() => {
-              onChangeHOC &&
-                onChangeHOC({
-                  value: '',
-                });
+              onChange && onChange('');
             }, 50)();
           } else {
             setInputValue(Number(e.target.value.replaceAll(',', '')).toLocaleString());
 
             debounce(() => {
-              onChangeHOC &&
-                onChangeHOC({
-                  value: e.target.value, // at this time of point, the input value which is e.target.value is formatted with comma
-                });
+              onChange && onChange(e.target.value); // at this time of point, the input value which is e.target.value is formatted with comma
             }, 50)();
           }
           return;
@@ -64,13 +59,10 @@ const InputHoc = (
         setInputValue(!isDropdown ? e.target.value : data.value);
 
         debounce(() => {
-          onChangeHOC &&
-            onChangeHOC({
-              value: !isDropdown ? e.target.value : data.value,
-            });
+          onChange && onChange(!isDropdown ? e.target.value : data.value);
         }, 50)();
       },
-      [onChangeHOC],
+      [onChange],
     );
 
     useImperativeHandle(ref, () => ({

@@ -105,11 +105,11 @@ const InheritedMaterialsCountPriceDesktop = ({
                 placeholder={
                   countOrPrice === 'count' ? countObjDashboard[countObj][subObjKey].name : ''
                 }
-                onChangeHOC={(obj) => {
+                onChange={(value) => {
                   setCountObjDashboard((prev: any) => {
                     const prevObj = structuredClone(prev);
 
-                    prevObj[countObj][subObjKey].count = obj.value;
+                    prevObj[countObj][subObjKey].count = value;
                     return prevObj;
                   });
                 }}

@@ -104,12 +104,12 @@ const InputExample = () => {
           stretch={false}
           placeholder="제목"
           ref={inputRef1}
-          onChangeHOC={(obj) => {
-            setInputValue1(obj.value);
-            setInputError1(obj.value.includes('z'));
+          onChange={(value) => {
+            setInputValue1(value);
+            setInputError1(value.includes('z'));
             console.log('inputRef1 ref is');
             console.log(inputRef1.current);
-            console.log(`inputValue1 is ${obj.value}`);
+            console.log(`inputValue1 is ${value}`);
           }}
           value={inputValue1}
         />
@@ -144,9 +144,9 @@ const InputExample = () => {
           placeholder="아이디를 입력해주세요 (이메일)"
           value={inputValue2}
           size="mini"
-          onChange={(obj: { value: string }) => {
-            setInputValue2(obj.value);
-            setInputError2(obj.value.includes('z'));
+          onChange={(value) => {
+            setInputValue2(value);
+            setInputError2(value.includes('z'));
           }}
           inputIcon={<Icon name="user" />}
           onEnter={() => {
@@ -177,8 +177,8 @@ const InputExample = () => {
           ref={inputRef3}
           value={inputValue3}
           options={options}
-          onChangeHOC={(obj) => {
-            setInputValue3(obj.value);
+          onChange={(value) => {
+            setInputValue3(value);
           }}
           // onChange={(obj: { value: string | Array<string> }) => {
           //   console.log(obj.value);
