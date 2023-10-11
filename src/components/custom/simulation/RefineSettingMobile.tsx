@@ -526,7 +526,7 @@ const RefineSetting = ({
             value={refineOverallSetting.honingSuccessRate}
             fluid={false}
             size={'mini'}
-            onChange={({ value }: any) => {
+            onChange={(value) => {
               setRefineOverallSetting((prev: any) => ({
                 ...prev,
                 honingSuccessRateManual: value,
@@ -548,7 +548,7 @@ const RefineSetting = ({
             value={refineOverallSetting.artisanEnergy}
             fluid={false}
             size={'mini'}
-            onChange={({ value }: any) => {
+            onChange={(value) => {
               setRefineOverallSetting((prev: any) => ({
                 ...prev,
                 artisanEnergy: value,

@@ -133,6 +133,10 @@ const RefineSetting = ({
     armour2: `${selectOptionParam.option1}방어구2`,
   };
 
+  useEffect(() => {
+    console.log(refineOverallSetting);
+  }, [refineOverallSetting]);
+
   const dropdownOptions = useMemo(() => {
     const objValue = {
       option1: [
