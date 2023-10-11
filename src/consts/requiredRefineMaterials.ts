@@ -719,6 +719,11 @@ const requiredRefineMaterials: any = {
         honorShard: 6500,
         gold: 1290,
         probability: 10,
+        bookProb: {
+          bookType: '야금술전문',
+          bookId: '66112541',
+          probability: 10,
+        },
       },
       weapon13: {
         weaponStone2: 700,
@@ -730,6 +735,11 @@ const requiredRefineMaterials: any = {
         honorShard: 8000,
         gold: 1360,
         probability: 10,
+        bookProb: {
+          bookType: '야금술전문',
+          bookId: '66112541',
+          probability: 10,
+        },
       },
       weapon14: {
         weaponStone2: 750,
@@ -741,6 +751,11 @@ const requiredRefineMaterials: any = {
         honorShard: 8000,
         gold: 1430,
         probability: 5,
+        bookProb: {
+          bookType: '야금술전문',
+          bookId: '66112541',
+          probability: 5,
+        },
       },
       weapon15: {
         weaponStone2: 800,
@@ -752,6 +767,11 @@ const requiredRefineMaterials: any = {
         honorShard: 8000,
         gold: 1520,
         probability: 5,
+        bookProb: {
+          bookType: '야금술전문',
+          bookId: '66112541',
+          probability: 5,
+        },
       },
       weapon16: {
         weaponStone2: 950,
@@ -763,6 +783,11 @@ const requiredRefineMaterials: any = {
         honorShard: 9000,
         gold: 1610,
         probability: 4,
+        bookProb: {
+          bookType: '야금술복합',
+          bookId: '66112542',
+          probability: 4,
+        },
       },
       weapon17: {
         weaponStone2: 1000,
@@ -774,6 +799,11 @@ const requiredRefineMaterials: any = {
         honorShard: 9000,
         gold: 1720,
         probability: 4,
+        bookProb: {
+          bookType: '야금술복합',
+          bookId: '66112542',
+          probability: 4,
+        },
       },
       weapon18: {
         weaponStone2: 1050,
@@ -785,6 +815,11 @@ const requiredRefineMaterials: any = {
         honorShard: 12000,
         gold: 1840,
         probability: 3,
+        bookProb: {
+          bookType: '야금술복합',
+          bookId: '66112542',
+          probability: 3,
+        },
       },
       weapon19: {
         weaponStone2: 1100,
@@ -796,6 +831,11 @@ const requiredRefineMaterials: any = {
         honorShard: 14000,
         gold: 1980,
         probability: 3,
+        bookProb: {
+          bookType: '야금술복합',
+          bookId: '66112542',
+          probability: 3,
+        },
       },
       weapon20: {
         weaponStone2: 1250,
@@ -875,6 +915,11 @@ const requiredRefineMaterials: any = {
         honorShard: 4000,
         gold: 770,
         probability: 10,
+        bookProb: {
+          bookType: '재봉술전문',
+          bookId: '66112544',
+          probability: 10,
+        },
       },
       armour13: {
         armourStone2: 460,
@@ -886,6 +931,11 @@ const requiredRefineMaterials: any = {
         honorShard: 4000,
         gold: 820,
         probability: 10,
+        bookProb: {
+          bookType: '재봉술전문',
+          bookId: '66112544',
+          probability: 10,
+        },
       },
       armour14: {
         armourStone2: 490,
@@ -897,6 +947,11 @@ const requiredRefineMaterials: any = {
         honorShard: 4500,
         gold: 860,
         probability: 5,
+        bookProb: {
+          bookType: '재봉술전문',
+          bookId: '66112544',
+          probability: 5,
+        },
       },
       armour15: {
         armourStone2: 550,
@@ -908,6 +963,11 @@ const requiredRefineMaterials: any = {
         honorShard: 4500,
         gold: 910,
         probability: 5,
+        bookProb: {
+          bookType: '재봉술전문',
+          bookId: '66112544',
+          probability: 5,
+        },
       },
       armour16: {
         armourStone2: 660,
@@ -919,6 +979,11 @@ const requiredRefineMaterials: any = {
         honorShard: 5000,
         gold: 970,
         probability: 4,
+        bookProb: {
+          bookType: '재봉술복합',
+          bookId: '66112545',
+          probability: 4,
+        },
       },
       armour17: {
         armourStone2: 730,
@@ -930,6 +995,11 @@ const requiredRefineMaterials: any = {
         honorShard: 5000,
         gold: 1030,
         probability: 4,
+        bookProb: {
+          bookType: '재봉술복합',
+          bookId: '66112545',
+          probability: 4,
+        },
       },
       armour18: {
         armourStone2: 770,
@@ -941,6 +1011,11 @@ const requiredRefineMaterials: any = {
         honorShard: 6000,
         gold: 1100,
         probability: 3,
+        bookProb: {
+          bookType: '재봉술복합',
+          bookId: '66112545',
+          probability: 3,
+        },
       },
       armour19: {
         armourStone2: 810,
@@ -952,6 +1027,11 @@ const requiredRefineMaterials: any = {
         honorShard: 6000,
         gold: 1190,
         probability: 3,
+        bookProb: {
+          bookType: '재봉술복합',
+          bookId: '66112545',
+          probability: 3,
+        },
       },
       armour20: {
         armourStone2: 940,
@@ -1024,144 +1104,104 @@ const requiredRefineMaterials: any = {
 } as const;
 
 const marketItemIdMatch: ItemIdMatch = {
-  '66150010': {
-    Name: '에스더의 기운',
-    Grade: '에스더',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_10_81.png',
-  },
-  '66112532': {
-    Name: '야금술 : 단조 특화',
-    Grade: '고대',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_69.png',
-  },
-  '66112531': {
-    Name: '야금술 : 단조 숙련',
-    Grade: '유물',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_69.png',
-  },
-  '66112535': {
-    Name: '재봉술 : 수선 특화',
-    Grade: '고대',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
-  },
-  '66112534': {
-    Name: '재봉술 : 수선 숙련',
-    Grade: '유물',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
-  },
-  '66130133': {
-    Name: '명예의 파편 주머니(대)',
-    Grade: '영웅',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_8_227.png',
-  },
-  '66130132': {
-    Name: '명예의 파편 주머니(중)',
-    Grade: '희귀',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_8_226.png',
-  },
-  '66111123': {
-    Name: '태양의 가호',
-    Grade: '영웅',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_163.png',
-  },
-  '66112523': {
-    Name: '야금술 : 단조 심화',
-    Grade: '유물',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_222.png',
-  },
-  '66160320': {
-    Name: '빛나는 지혜의 정수',
-    Grade: '전설',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_148.png',
-  },
-  '66141103': {
-    Name: '현자의 가루',
-    Grade: '영웅',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_181.png',
-  },
-  '66112526': {
-    Name: '재봉술 : 수선 심화',
-    Grade: '유물',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_226.png',
-  },
-  '66130131': {
-    Name: '명예의 파편 주머니(소)',
+  '6861007': {
+    Name: '하급 오레하융화 재료',
     Grade: '고급',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_8_225.png',
-  },
-  '66111122': {
-    Name: '태양의 축복',
-    Grade: '희귀',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_162.png',
-  },
-  '66110224': {
-    Name: '찬란한 명예의 돌파석',
-    Grade: '희귀',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_17.png',
-  },
-  '6861011': {
-    Name: '최상급 오레하 융화 재료',
-    Grade: '영웅',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_29.png',
-  },
-  '66111121': {
-    Name: '태양의 은총',
-    Grade: '고급',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_161.png',
-  },
-  '66102005': {
-    Name: '정제된 파괴강석',
-    Grade: '일반',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_15.png',
-  },
-  '66110223': {
-    Name: '경이로운 명예의 돌파석',
-    Grade: '희귀',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_157.png',
-  },
-  '66110221': {
-    Name: '명예의 돌파석',
-    Grade: '희귀',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_155.png',
-  },
-  '66160220': {
-    Name: '선명한 지혜의 정수',
-    Grade: '영웅',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_149.png',
-  },
-  '6861009': {
-    Name: '상급 오레하 융화 재료',
-    Grade: '영웅',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_8_109.png',
-  },
-  '66110222': {
-    Name: '위대한 명예의 돌파석',
-    Grade: '희귀',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_156.png',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_9_70.png',
   },
   '6861008': {
     Name: '중급 오레하 융화 재료',
     Grade: '희귀',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_9_71.png',
   },
-  '6861007': {
-    Name: '하급 오레하 융화 재료',
-    Grade: '고급',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_9_70.png',
+  '6861009': {
+    Name: '상급 오레하 융화 재료',
+    Grade: '영웅',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_8_109.png',
   },
-  '66112522': {
-    Name: '야금술 : 단조 응용',
-    Grade: '전설',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_222.png',
+  '6861011': {
+    Name: '최상급 오레하 융화 재료',
+    Grade: '영웅',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_29.png',
+  },
+  '66102003': {
+    Name: '파괴석 결정',
+    Grade: '일반',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_105.png',
   },
   '66102004': {
     Name: '파괴강석',
     Grade: '일반',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_10_58.png',
   },
+  '66102005': {
+    Name: '정제된 파괴강석',
+    Grade: '일반',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_15.png',
+  },
+  '66102103': {
+    Name: '수호석 결정',
+    Grade: '일반',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_104.png',
+  },
+  '66102104': {
+    Name: '수호강석',
+    Grade: '일반',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_10_59.png',
+  },
+  '66102105': {
+    Name: '정제된 수호강석',
+    Grade: '일반',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_16.png',
+  },
+  '66110221': {
+    Name: '명예의 돌파석',
+    Grade: '희귀',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_155.png',
+  },
+  '66110222': {
+    Name: '위대한 명예의 돌파석',
+    Grade: '희귀',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_156.png',
+  },
+  '66110223': {
+    Name: '경이로운 명예의 돌파석',
+    Grade: '희귀',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_157.png',
+  },
+  '66110224': {
+    Name: '찬란한 명예의 돌파석',
+    Grade: '희귀',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_17.png',
+  },
+  '66111121': {
+    Name: '태양의 은총',
+    Grade: '고급',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_161.png',
+  },
+  '66111122': {
+    Name: '태양의 축복',
+    Grade: '희귀',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_162.png',
+  },
+  '66111123': {
+    Name: '태양의 가호',
+    Grade: '영웅',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_163.png',
+  },
   '66112521': {
     Name: '야금술 : 단조 기본',
     Grade: '영웅',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_222.png',
+  },
+  '66112522': {
+    Name: '야금술 : 단조 응용',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_222.png',
+  },
+  '66112523': {
+    Name: '야금술 : 단조 심화',
+    Grade: '유물',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_222.png',
   },
   '66112524': {
@@ -1174,30 +1214,20 @@ const marketItemIdMatch: ItemIdMatch = {
     Grade: '전설',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_226.png',
   },
-  '66102105': {
-    Name: '정제된 수호강석',
-    Grade: '일반',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_16.png',
+  '66112526': {
+    Name: '재봉술 : 수선 심화',
+    Grade: '유물',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_226.png',
   },
-  '66102103': {
-    Name: '수호석 결정',
-    Grade: '일반',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_104.png',
+  '66112531': {
+    Name: '야금술 : 단조 숙련',
+    Grade: '유물',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_69.png',
   },
-  '66102104': {
-    Name: '수호강석',
-    Grade: '일반',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_10_59.png',
-  },
-  '66102003': {
-    Name: '파괴석 결정',
-    Grade: '일반',
-    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_105.png',
-  },
-  '66172060': {
-    Name: '마력석 조각',
-    Grade: '전설',
-    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_5_153.png',
+  '66112532': {
+    Name: '야금술 : 단조 특화',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_69.png',
   },
   '66112541': {
     Name: '야금술 : 단조 전문',
@@ -1209,6 +1239,16 @@ const marketItemIdMatch: ItemIdMatch = {
     Grade: '고대',
     Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_7_69.png',
   },
+  '66112534': {
+    Name: '재봉술 : 수선 숙련',
+    Grade: '유물',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
+  },
+  '66112535': {
+    Name: '재봉술 : 수선 특화',
+    Grade: '고대',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
+  },
   '66112544': {
     Name: '재봉술 : 수선 전문',
     Grade: '고대',
@@ -1218,6 +1258,46 @@ const marketItemIdMatch: ItemIdMatch = {
     Name: '재봉술 : 수선 복합',
     Grade: '고대',
     Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_70.png',
+  },
+  '66130131': {
+    Name: '명예의 파편 주머니(소)',
+    Grade: '고급',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_8_225.png',
+  },
+  '66130132': {
+    Name: '명예의 파편 주머니(중)',
+    Grade: '희귀',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_8_226.png',
+  },
+  '66130133': {
+    Name: '명예의 파편 주머니(대)',
+    Grade: '영웅',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_8_227.png',
+  },
+  '66141103': {
+    Name: '현자의 가루',
+    Grade: '영웅',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_181.png',
+  },
+  '66150010': {
+    Name: '에스더의 기운',
+    Grade: '에스더',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_10_81.png',
+  },
+  '66160220': {
+    Name: '선명한 지혜의 정수',
+    Grade: '영웅',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_149.png',
+  },
+  '66160320': {
+    Name: '빛나는 지혜의 정수',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_11_148.png',
+  },
+  '66172060': {
+    Name: '마력석 조각',
+    Grade: '전설',
+    Icon: 'https://cdn-lostark.game.onstove.com/efui_iconatlas/use/use_5_153.png',
   },
   gem10_D_66666666: {
     Name: '10레벨 멸화의 보석',
@@ -1479,6 +1559,22 @@ const simulationObjectDashboard = {
     },
     '66112534': {
       name: '재봉술숙련',
+      count: '',
+    },
+    '66112541': {
+      name: '야금술전문',
+      count: '',
+    },
+    '66112544': {
+      name: '재봉술전문',
+      count: '',
+    },
+    '66112542': {
+      name: '야금술복합',
+      count: '',
+    },
+    '66112545': {
+      name: '재봉술복합',
       count: '',
     },
   },
