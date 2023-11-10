@@ -6,11 +6,13 @@ import {
   InputOnChangeData,
   InputProps,
   StrictLabelProps,
+  StrictInputProps,
+  Dropdown,
 } from 'semantic-ui-react';
 
 // ? Types in InputDefault component
-export interface InputDefaultProps extends InputProps {
-  id: string;
+export interface InputDefaultProps extends StrictInputProps {
+  id?: string;
   placeholder?: string;
   value?: string;
   className?: string;
@@ -30,8 +32,8 @@ export interface InputDefaultProps extends InputProps {
   fluid?: boolean;
 }
 
-export interface InputDefaultPropsNumber extends InputProps {
-  id: string;
+export interface InputDefaultPropsNumber extends StrictInputProps {
+  id?: string;
   placeholder?: string;
   value?: string;
   className?: string;
@@ -102,5 +104,11 @@ export interface InputWithIconProps extends InputDefaultProps {
 }
 
 export type InputHOCRefType = { inputElement: Input | undefined; clear: () => void };
+export type DropdownHOCRefType = {
+  dropdownElement: typeof Dropdown | undefined;
+  clear: () => void;
+};
 
 export type InputHOCRefMainType = React.Ref<InputHOCRefType> | undefined;
+
+// export type DropdownHOCRefMainType = React.Ref<DropdownHOCRefType>
