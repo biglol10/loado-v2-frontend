@@ -9,9 +9,14 @@ import React, {
 } from 'react';
 import { debounce, isEqual } from 'lodash';
 import { Input, InputOnChangeData } from 'semantic-ui-react';
-import { InputDefaultProps, InputHOCRefMainType, InputWithIconProps } from '../Types';
+import {
+  InputDefaultProps,
+  InputHOCRefMainType,
+  InputWithIconProps,
+  InputWithIconProps2,
+} from '../Types';
 
-type InputTypeOverall = InputDefaultProps & InputWithIconProps;
+type InputTypeOverall = InputDefaultProps & InputWithIconProps2;
 
 interface InputProps extends Omit<InputTypeOverall, 'onChange'> {
   onChange?: (value: string) => void;

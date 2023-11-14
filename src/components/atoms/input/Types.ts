@@ -1,4 +1,10 @@
-import React, { ReactNode, JSXElementConstructor as JSX, ChangeEvent, SyntheticEvent } from 'react';
+import React, {
+  ReactNode,
+  JSXElementConstructor as JSX,
+  ChangeEvent,
+  SyntheticEvent,
+  ChangeEventHandler,
+} from 'react';
 import {
   ButtonProps,
   DropdownProps,
@@ -27,8 +33,8 @@ export interface InputDefaultProps extends StrictInputProps {
   // stretch?: boolean;
   error?: boolean;
   onEnter?: Function;
-  clearInputValue?: Function;
-  transparent?: boolean;
+  clearInputValue?: Function; //
+  transparent?: boolean; //
   fluid?: boolean;
 }
 
@@ -112,3 +118,25 @@ export type DropdownHOCRefType = {
 export type InputHOCRefMainType = React.Ref<InputHOCRefType> | undefined;
 
 // export type DropdownHOCRefMainType = React.Ref<DropdownHOCRefType>
+
+export interface InputWithIconProps2 extends Omit<StrictInputProps, 'onChange'> {
+  id?: string;
+  placeholder?: string;
+  value?: string | number;
+  className?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => void;
+  size?: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
+  loading?: boolean;
+  type?: 'default' | 'password' | 'number';
+  readOnly?: boolean;
+  disabled?: boolean;
+  maxLength?: undefined | number;
+  ref?: any;
+  stretch?: boolean;
+  error?: boolean;
+  onEnter?: Function;
+  inputIcon?: React.ReactElement;
+  iconPosition?: 'left';
+  iconClick?: Function;
+  setInputValue?: Function;
+}
