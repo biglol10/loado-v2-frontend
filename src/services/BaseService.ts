@@ -1,6 +1,7 @@
 import store from '@state/store';
 import { showLoader, hideLoader } from '@state/loaderSlice';
 import queryString from 'query-string';
+import RequestLimitError from '@error/RequestLimitError';
 import axiosInstance from './AxiosInstance';
 
 const RPS = 60 * 1020;
@@ -107,20 +108,14 @@ class BaseService {
     data: any,
     retryCnt: number,
   ): Promise<any> {
-    if (error instanceof Error) {
-      const errMsg = error.message;
+    if (error instanceof RequestLimitError) {
+      if (MAX_RETCNT <= retryCnt) return error;
+      await new Promise((res) => setTimeout(res, RPS));
+      const res = await this.request({ method, url, data, retryCnt: retryCnt + 1 });
 
-      if (errMsg === 'Request Limit' && MAX_RETCNT > retryCnt) {
-        await new Promise((res) => setTimeout(res, RPS));
-        const res = await this.request({ method, url, data, retryCnt: retryCnt + 1 });
-
-        return res;
-      } else if (errMsg === 'Request Limit' && MAX_RETCNT <= retryCnt) {
-        return error;
-      }
+      return res;
     }
-
-    return error;
+    return error; // instanceof Error
   }
 }
 

@@ -8,7 +8,8 @@
       "@state/*": ["src/state/*"],
       "@services/*": ["src/services/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@pageStyled/*": ["src/pageStyled/*"]
+      "@pageStyled/*": ["src/pageStyled/*"],
+      "@error/*": ["src/error/*"]
     }
   }
 }

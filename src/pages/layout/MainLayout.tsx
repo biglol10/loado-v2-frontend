@@ -81,6 +81,8 @@ const MainLayout = ({ children }: LayoutChildren) => {
   const navigate = useNavigate();
   const deviceType = useDeviceType();
 
+  const publicUrl = process.env.PUBLIC_URL;
+
   const changeRoute = (nextRoute: string) => {
     setActivePage(nextRoute);
   };
@@ -110,7 +112,7 @@ const MainLayout = ({ children }: LayoutChildren) => {
           >
             <h3>{deviceType === 'mobile' ? '시뮬' : '재련 시뮬레이션'}</h3>
           </li>
-          {deviceType !== 'mobile' && (
+          {publicUrl === '/dev' && deviceType !== 'mobile' && (
             <li
               className={activePage === ERoute.INPUTEXAMPLE ? 'active' : ''}
               onClick={() => changeRoute(ERoute.INPUTEXAMPLE)}

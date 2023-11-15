@@ -94,8 +94,16 @@ const SimulationBarChart = ({
 
   const CustomTooltip: React.FC<CustomTooltipProps> = React.memo(
     ({ active, payload, label }: any) => {
-      const { weaponOrArmour, leapstoneId, fusionMaterialId, gold, honorShard, mat1, mat2, mat3 } =
-        refineMaterialsMatchOverall;
+      const {
+        weaponOrArmour,
+        leapstoneId,
+        fusionMaterialId,
+        gold,
+        honorShard,
+        requiredSteelCount,
+        requiredLeapStoneCount,
+        requiredFusionMaterialCount,
+      } = refineMaterialsMatchOverall;
 
       const goldJanggiSummary = useMemo(() => {
         if (!label) return 0;
@@ -103,9 +111,14 @@ const SimulationBarChart = ({
         const refineStoneId = refineMaterialsMatchOverall[`${weaponOrArmour}StoneId`];
 
         const priceToGetList = [
-          { id: refineStoneId, count: mat1, bundleCount: 10, extraMultiplier: 1 },
-          { id: leapstoneId, count: mat2, bundleCount: 1, extraMultiplier: 1 },
-          { id: fusionMaterialId, count: mat3, bundleCount: 1, extraMultiplier: 1 },
+          { id: refineStoneId, count: requiredSteelCount, bundleCount: 10, extraMultiplier: 1 },
+          { id: leapstoneId, count: requiredLeapStoneCount, bundleCount: 1, extraMultiplier: 1 },
+          {
+            id: fusionMaterialId,
+            count: requiredFusionMaterialCount,
+            bundleCount: 1,
+            extraMultiplier: 1,
+          },
           { id: '66130133', count: 1, bundleCount: 1500, extraMultiplier: honorShard },
         ];
 
@@ -259,9 +272,9 @@ const SimulationBarChart = ({
         honorShard,
         label,
         leapstoneId,
-        mat1,
-        mat2,
-        mat3,
+        requiredSteelCount,
+        requiredLeapStoneCount,
+        requiredFusionMaterialCount,
         weaponOrArmour,
       ]);
 
@@ -303,30 +316,30 @@ const SimulationBarChart = ({
               <TooltipContentDiv>
                 <StyledDiv display="flex" alignItems="center">
                   <Image
-                    src={refineMaterialsMatchOverall.mat1Img}
+                    src={refineMaterialsMatchOverall.requiredSteelImg}
                     imageSize="mini"
                     type="image"
                     circular
                   />
-                  {materialRangeText(refineMaterialsMatchOverall.mat1)}
+                  {materialRangeText(refineMaterialsMatchOverall.requiredSteelCount)}
                 </StyledDiv>
                 <StyledDiv display="flex" alignItems="center">
                   <Image
-                    src={refineMaterialsMatchOverall.mat2Img}
+                    src={refineMaterialsMatchOverall.requiredLeapStoneImg}
                     imageSize="mini"
                     type="image"
                     circular
                   />
-                  {materialRangeText(refineMaterialsMatchOverall.mat2)}
+                  {materialRangeText(refineMaterialsMatchOverall.requiredLeapStoneCount)}
                 </StyledDiv>
                 <StyledDiv display="flex" alignItems="center">
                   <Image
-                    src={refineMaterialsMatchOverall.mat3Img}
+                    src={refineMaterialsMatchOverall.requiredFusionMaterialImg}
                     imageSize="mini"
                     type="image"
                     circular
                   />
-                  {materialRangeText(refineMaterialsMatchOverall.mat3)}
+                  {materialRangeText(refineMaterialsMatchOverall.requiredFusionMaterialCount)}
                 </StyledDiv>
                 <StyledDiv display="flex" alignItems="center">
                   <Image

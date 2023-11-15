@@ -17,19 +17,33 @@ import { toast } from 'react-toastify';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import styled from 'styled-components';
 
+interface StringNumberMapping {
+  [key: string]: number;
+}
+
+interface StringStringMapping {
+  [key: string]: string;
+}
+
 const MarginTopLabel = styled(Label)`
   margin-top: 5px !important;
 `;
 
-const option1KeyMatch = {
+const weaponAndArmourSetType = {
   아브노말: 'AbrelNormal',
   아브하드: 'AbrelHard',
   일리아칸: 'Illiakan',
 };
 
-const option2KeyMatch = {
+const weaponOrArmour = {
   무기: 'weapon',
   방어구: 'armour',
+};
+
+const materialRankMapping: StringNumberMapping = {
+  AbrelNormal: 1,
+  AbrelHard: 1,
+  Illiakan: 2,
 };
 
 const refineItemKeyMatch = {
@@ -184,37 +198,48 @@ const RefineSetting = ({
   }, [selectOptionParam.option1]);
 
   const refineMaterialsMatch = useMemo(() => {
-    const itemRank = option1KeyMatch[selectOptionParam.option1 as keyof typeof option1KeyMatch];
-    const weaponOrArmour =
-      option2KeyMatch[selectOptionParam.option2 as keyof typeof option2KeyMatch];
-    const materialRank = itemRank.includes('Abrel') ? '1' : '2';
+    const itemSetType =
+      weaponAndArmourSetType[selectOptionParam.option1 as keyof typeof weaponAndArmourSetType];
+    const weaponOrArmourValue =
+      weaponOrArmour[selectOptionParam.option2 as keyof typeof weaponOrArmour];
+    const materialRank = materialRankMapping[itemSetType];
 
     const refineNumber =
-      itemRank.includes('AbrelNormal') && refineCurrent > '20' ? '20' : refineCurrent;
-    const extracted =
-      requiredRefineMaterials[itemRank][weaponOrArmour][`${weaponOrArmour}${refineNumber}`];
+      itemSetType.includes('AbrelNormal') && refineCurrent > '20' ? '20' : refineCurrent;
+    const requiredRefineMaterialsForOneSimulation =
+      requiredRefineMaterials[itemSetType][weaponOrArmourValue][
+        `${weaponOrArmourValue}${refineNumber}`
+      ];
 
+    // Steel -> 강석, leapStone -> 돌파석, fusionMaterial -> 오레하
     const returnedObj = {
-      weaponOrArmour,
-      mat1: extracted[`${weaponOrArmour}Stone${materialRank}`],
-      mat1Img:
+      weaponOrArmour: weaponOrArmourValue,
+      requiredSteelCount:
+        requiredRefineMaterialsForOneSimulation[`${weaponOrArmourValue}Stone${materialRank}`],
+      requiredSteelImg:
         loaImages[
           refineItemKeyMatch[
-            `${weaponOrArmour}Stone${materialRank}` as RefineItemKeyMatchType
+            `${weaponOrArmourValue}Stone${materialRank}` as RefineItemKeyMatchType
           ] as loaImagesType
         ],
-      mat2: extracted[`leapstone${materialRank}`],
-      mat2Img:
+      requiredLeapStoneCount: requiredRefineMaterialsForOneSimulation[`leapstone${materialRank}`],
+      requiredLeapStoneImg:
         loaImages[
           refineItemKeyMatch[`leapstone${materialRank}` as RefineItemKeyMatchType] as loaImagesType
         ],
-      mat3: extracted[`fusionMaterial${materialRank}`],
-      mat3Img: loaImages[refineItemKeyMatch[`fusionMaterial${materialRank}`] as loaImagesType],
-      ...extracted,
+      requiredFusionMaterialCount:
+        requiredRefineMaterialsForOneSimulation[`fusionMaterial${materialRank}`],
+      requiredFusionMaterialImg:
+        loaImages[
+          refineItemKeyMatch[
+            `fusionMaterial${materialRank}` as RefineItemKeyMatchType
+          ] as loaImagesType
+        ],
+      ...requiredRefineMaterialsForOneSimulation,
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
-    if (itemRank.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
+    if (itemSetType.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
   }, [refineCurrent, selectOptionParam]);
@@ -386,20 +411,31 @@ const RefineSetting = ({
       </StyledDiv>
       <StyledDiv display="flex" flexWrap="wrap">
         <MarginTopLabel color="black">
-          <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat1Img} size="big" />
-          {refineMaterialsMatch.mat1.toLocaleString()}
+          <SemanticImage
+            avatar
+            spaced="right"
+            src={refineMaterialsMatch.requiredSteelImg}
+            size="big"
+          />
+          {refineMaterialsMatch.requiredSteelCount.toLocaleString()}
         </MarginTopLabel>
         <MarginTopLabel color="black">
-          <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat2Img} size="big" />
-          {refineMaterialsMatch.mat2}
+          <SemanticImage
+            avatar
+            spaced="right"
+            src={refineMaterialsMatch.requiredLeapStoneImg}
+            size="big"
+          />
+          {refineMaterialsMatch.requiredLeapStoneCount}
         </MarginTopLabel>
         <MarginTopLabel color="black">
-          <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat3Img} size="big" />
-          {refineMaterialsMatch.mat3}
-        </MarginTopLabel>
-        <MarginTopLabel color="black">
-          <SemanticImage avatar spaced="right" src={refineMaterialsMatch.mat3Img} size="big" />
-          {refineMaterialsMatch.mat3}
+          <SemanticImage
+            avatar
+            spaced="right"
+            src={refineMaterialsMatch.requiredFusionMaterialImg}
+            size="big"
+          />
+          {refineMaterialsMatch.requiredFusionMaterialCount}
         </MarginTopLabel>
         <MarginTopLabel color="black">
           <SemanticImage avatar spaced="right" src={loaImages['명예의파편']} size="big" />
@@ -490,7 +526,7 @@ const RefineSetting = ({
             value={refineOverallSetting.honingSuccessRate}
             fluid={false}
             size={'mini'}
-            onChange={({ value }: any) => {
+            onChange={(value) => {
               setRefineOverallSetting((prev: any) => ({
                 ...prev,
                 honingSuccessRateManual: value,
@@ -512,7 +548,7 @@ const RefineSetting = ({
             value={refineOverallSetting.artisanEnergy}
             fluid={false}
             size={'mini'}
-            onChange={({ value }: any) => {
+            onChange={(value) => {
               setRefineOverallSetting((prev: any) => ({
                 ...prev,
                 artisanEnergy: value,

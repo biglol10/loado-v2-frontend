@@ -45,8 +45,8 @@ const Home = () => {
         stretch={true}
         placeholder="제목"
         ref={aa}
-        onChange={(obj: { value: string }) => {
-          setInputValue(obj.value);
+        onChange={(value) => {
+          setInputValue(value);
         }}
         value={inputValue}
       />

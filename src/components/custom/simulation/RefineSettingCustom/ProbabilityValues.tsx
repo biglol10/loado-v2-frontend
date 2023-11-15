@@ -22,7 +22,8 @@ const ProbabilityValues = ({ refineOverallSetting, setRefineOverallSetting }: an
           value={refineOverallSetting.honingSuccessRate}
           fluid={false}
           size={'mini'}
-          onChange={({ value }: any) => {
+          onChange={(value) => {
+            // alert('I am in onChange in ProbabilityValues');
             setRefineOverallSetting((prev: any) => ({
               ...prev,
               honingSuccessRateManual: value,
@@ -44,7 +45,7 @@ const ProbabilityValues = ({ refineOverallSetting, setRefineOverallSetting }: an
           value={refineOverallSetting.artisanEnergy}
           fluid={false}
           size={'mini'}
-          onChange={({ value }: any) => {
+          onChange={(value) => {
             setRefineOverallSetting((prev: any) => ({
               ...prev,
               artisanEnergy: value,
