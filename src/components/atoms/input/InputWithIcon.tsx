@@ -9,18 +9,19 @@
 
 import React, { ChangeEvent, forwardRef } from 'react';
 import { Icon } from 'semantic-ui-react';
-import { InputWithIconProps } from './Types';
+import { InputWithIconProps, InputWithIconProps2 } from './Types';
 import { StyledBaseInput } from './Styled';
 import InputHoc from './hoc/InputHOC';
+import InputHoc2 from './hoc/InputHOC2';
 
-const InputWithIcon = forwardRef<null, InputWithIconProps>(
+const InputWithIcon = forwardRef<null, InputWithIconProps2>(
   (
     {
       id = '',
       className = '',
       placeholder = '',
       value = '',
-      onChange = null,
+      onChange = undefined,
       size = 'small',
       error = false,
       loading = false,
@@ -39,10 +40,10 @@ const InputWithIcon = forwardRef<null, InputWithIconProps>(
   ) => {
     const removeText = () => {
       setInputValue && setInputValue('');
-      onChange &&
-        onChange({
-          value: '',
-        });
+      // onChange &&
+      //   onChange(null, {
+      //     value: '',
+      //   });
     };
 
     const IconClone = React.cloneElement(inputIcon as React.ReactElement, {
@@ -70,7 +71,9 @@ const InputWithIcon = forwardRef<null, InputWithIconProps>(
             <input
               ref={ref}
               value={value}
-              onChange={onChange}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                onChange && onChange(e, { value: e.target.value });
+              }}
               type={`${type === 'default' ? '' : type}`}
               placeholder={placeholder}
               readOnly={readOnly}
@@ -85,7 +88,7 @@ const InputWithIcon = forwardRef<null, InputWithIconProps>(
               ref={ref}
               value={value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                onChange && onChange(e);
+                onChange && onChange(e, { value: e.target.value });
               }}
               type={`${type === 'default' ? '' : type}`}
               placeholder={placeholder}
@@ -104,4 +107,4 @@ const InputWithIcon = forwardRef<null, InputWithIconProps>(
 
 InputWithIcon.displayName = 'InputWithIcon';
 
-export default InputHoc(InputWithIcon);
+export default InputHoc2(InputWithIcon);
