@@ -8,11 +8,12 @@
 
 import { forwardRef, useState } from 'react';
 import { Input } from 'semantic-ui-react';
-import { InputDefaultPropsNumber } from './Types';
+import { InputDefaultPropsNumber, InputDefaultWithNumber } from './Types';
 import { StyledBaseInput } from './Styled';
 import InputHoc from './hoc/InputHOC';
+import InputHoc2 from './hoc/InputHOC2';
 
-const InputDefaultNumber = forwardRef<null, InputDefaultPropsNumber>(
+const InputDefaultNumber = forwardRef<null, InputDefaultWithNumber>(
   (
     {
       id = '',
@@ -63,4 +64,4 @@ const InputDefaultNumber = forwardRef<null, InputDefaultPropsNumber>(
 
 InputDefaultNumber.displayName = 'InputDefaultNumber';
 
-export default InputHoc(InputDefaultNumber);
+export default InputHoc2(InputDefaultNumber);

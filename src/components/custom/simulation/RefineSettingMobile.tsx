@@ -523,7 +523,7 @@ const RefineSetting = ({
           inputWidth="80%"
         >
           <InputWithIcon
-            value={refineOverallSetting.honingSuccessRate}
+            value={`${refineOverallSetting.honingSuccessRate}`}
             fluid={false}
             size={'mini'}
             onChange={(value) => {
@@ -532,7 +532,6 @@ const RefineSetting = ({
                 honingSuccessRateManual: value,
               }));
             }}
-            inputIcon={<Icon name="percent" color="black" />}
             type="number"
           />
         </ProbAndRefine>
@@ -545,7 +544,7 @@ const RefineSetting = ({
           inputWidth="80%"
         >
           <InputWithIcon
-            value={refineOverallSetting.artisanEnergy}
+            value={`${refineOverallSetting.honingSuccessRate}`}
             fluid={false}
             size={'mini'}
             onChange={(value) => {
@@ -554,7 +553,6 @@ const RefineSetting = ({
                 artisanEnergy: value,
               }));
             }}
-            inputIcon={<Icon name="percent" color="black" />}
             type="number"
           />
         </ProbAndRefine>

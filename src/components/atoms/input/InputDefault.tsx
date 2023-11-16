@@ -12,6 +12,7 @@ import { InputDefaultProps } from './Types';
 import { StyledBaseInput } from './Styled';
 import InputHoc from './hoc/InputHOC';
 import InputHoc2 from './hoc/InputHOC2';
+import InputHoc3 from './hoc/InputHOC3';
 
 const InputDefault = forwardRef<null, InputDefaultProps>(
   (

@@ -189,7 +189,7 @@ const Simulation = () => {
                   inputWidth={'100px'}
                 >
                   <InputWithIcon
-                    value={topNPercentPoint}
+                    value={`${topNPercentPoint}`}
                     fluid={false}
                     size={'mini'}
                     inputIcon={<Icon name="percent" color="black" />}

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, {
   useState,
   useCallback,
@@ -6,6 +7,7 @@ import React, {
   useRef,
   useImperativeHandle,
   useEffect,
+  ComponentType,
 } from 'react';
 import { debounce, isEqual } from 'lodash';
 import { Input, InputOnChangeData } from 'semantic-ui-react';
@@ -26,6 +28,69 @@ type InputTypeOverall = InputDefaultProps &
 interface InputProps extends Omit<InputTypeOverall, 'onChange'> {
   onChange?: (value: string) => void;
 }
+
+interface CustomInputRef {
+  inputElement: any;
+  clear: () => void;
+}
+
+const InputHoc3 = <P extends InputTypeOverall>(
+  WrappedComponent: ComponentType<P & { ref: React.Ref<CustomInputRef> }>,
+) => {
+  return forwardRef<CustomInputRef, P>((props, ref) => {
+    const [inputValue, setInputValue] = useState<string>(props.value || '');
+    const inputRef = useRef<Input>();
+
+    const { onChange } = props as InputProps;
+
+    useEffect(() => {
+      !isEqual(inputValue, props.value) && setInputValue(props.value || '');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.value]);
+
+    const onChangeFn = useCallback(
+      (e: ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+        const onChangeDebounce = (value: string = '') => {
+          debounce(() => {
+            onChange?.(value);
+          }, 50)();
+        };
+
+        const isInputNumber = WrappedComponent.displayName === 'InputDefaultNumber';
+
+        if (isInputNumber) {
+          const regex = /^[\d,]*$/;
+          const isMatch = regex.test(e.target.value);
+
+          if (!isMatch) {
+            setInputValue('');
+            onChangeDebounce();
+          } else {
+            setInputValue(Number(e.target.value.replaceAll(',', '')).toLocaleString());
+
+            onChangeDebounce(data.value);
+          }
+          return;
+        }
+
+        setInputValue(data.value);
+
+        onChangeDebounce(data.value);
+      },
+      [onChange],
+    );
+
+    useImperativeHandle(ref, () => ({
+      inputElement: inputRef.current,
+      clear: () => {
+        setInputValue('');
+      },
+    }));
+
+    // Now we pass the ref to WrappedComponent
+    return <WrappedComponent {...props} ref={ref} value={inputValue} onChange={onChangeFn} />;
+  });
+};
 
 const InputHoc2 = (WrappedComponent: React.FC<InputTypeOverall>) => {
   const WithInput = (props: InputProps, ref: InputHOCRefMainType) => {
@@ -91,7 +156,7 @@ const InputHoc2 = (WrappedComponent: React.FC<InputTypeOverall>) => {
   return forwardRef(WithInput);
 };
 
-export default InputHoc2;
+export default InputHoc3;
 
 // // props: P & ICommInput
 // const InputHoc = <P extends object>(OriginalComponent: React.ComponentType<P>) => {
