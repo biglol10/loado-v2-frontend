@@ -42,10 +42,15 @@ const InputHoc2 = (WrappedComponent: React.FC<InputTypeOverall>) => {
     const onChangeFn = useCallback(
       (e: ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
         const onChangeDebounce = (value: string = '') => {
+          // // eslint-disable-next-line no-debugger
+          // debugger;
           debounce(() => {
             onChange?.(value);
           }, 50)();
         };
+
+        // // eslint-disable-next-line no-debugger
+        // debugger;
 
         const isInputNumber = WrappedComponent.displayName === 'InputDefaultNumber';
 
@@ -59,7 +64,9 @@ const InputHoc2 = (WrappedComponent: React.FC<InputTypeOverall>) => {
           } else {
             setInputValue(Number(e.target.value.replaceAll(',', '')).toLocaleString());
 
-            onChangeDebounce(data.value);
+            console.log(`datavalue is ${data.value.toLocaleString()}`);
+
+            onChangeDebounce(data.value.toLocaleString());
           }
           return;
         }
