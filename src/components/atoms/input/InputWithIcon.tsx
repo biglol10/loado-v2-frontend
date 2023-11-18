@@ -9,13 +9,11 @@
 
 import React, { ChangeEvent, forwardRef } from 'react';
 import { Icon } from 'semantic-ui-react';
-import { InputWithIconProps, InputWithIconProps2 } from './Types';
+import { InputWithIconProps } from './Types';
 import { StyledBaseInput } from './Styled';
-import InputHoc from './hoc/InputHOC';
-import InputHoc2 from './hoc/InputHOC2';
-import InputHoc3 from './hoc/InputHOC3';
+import InputHOCMain from './hoc/InputHOCMain';
 
-const InputWithIcon = forwardRef<null, InputWithIconProps2>(
+const InputWithIcon = forwardRef<null, InputWithIconProps>(
   (
     {
       id = '',
@@ -108,4 +106,4 @@ const InputWithIcon = forwardRef<null, InputWithIconProps2>(
 
 InputWithIcon.displayName = 'InputWithIcon';
 
-export default InputHoc2(InputWithIcon);
+export default InputHOCMain(InputWithIcon);

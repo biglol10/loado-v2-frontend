@@ -7,12 +7,9 @@
  ********************************************************************************************/
 
 import { forwardRef } from 'react';
-import { Input, InputProps } from 'semantic-ui-react';
 import { InputDefaultProps } from './Types';
 import { StyledBaseInput } from './Styled';
-import InputHoc from './hoc/InputHOC';
-import InputHoc2 from './hoc/InputHOC2';
-import InputHoc3 from './hoc/InputHOC3';
+import InputHOCMain from './hoc/InputHOCMain';
 
 const InputDefault = forwardRef<null, InputDefaultProps>(
   (
@@ -64,4 +61,4 @@ const InputDefault = forwardRef<null, InputDefaultProps>(
 
 InputDefault.displayName = 'InputDefault';
 
-export default InputHoc2(InputDefault);
+export default InputHOCMain(InputDefault);

@@ -9,10 +9,9 @@
 
 import { forwardRef } from 'react';
 import { Input, Icon } from 'semantic-ui-react';
-import { InputSearchProps, InputSearchType } from './Types';
-import InputHoc from './hoc/InputHOC';
+import { InputSearchType } from './Types';
 import { StyledBaseInput } from './Styled';
-import InputHoc2 from './hoc/InputHOC2';
+import InputHOCMain from './hoc/InputHOCMain';
 
 const InputSearch = forwardRef<Input, InputSearchType>(
   (
@@ -61,4 +60,4 @@ const InputSearch = forwardRef<Input, InputSearchType>(
 
 InputSearch.displayName = 'InputSearch';
 
-export default InputHoc2(InputSearch);
+export default InputHOCMain(InputSearch);

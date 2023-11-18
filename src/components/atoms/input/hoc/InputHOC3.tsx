@@ -13,16 +13,15 @@ import { debounce, isEqual } from 'lodash';
 import { Input, InputOnChangeData } from 'semantic-ui-react';
 import {
   InputDefaultProps,
-  InputDefaultWithNumber,
+  InputDefaultNumberProps,
   InputHOCRefMainType,
   InputSearchType,
   InputWithIconProps,
-  InputWithIconProps2,
 } from '../Types';
 
 type InputTypeOverall = InputDefaultProps &
-  InputWithIconProps2 &
-  InputDefaultWithNumber &
+  InputWithIconProps &
+  InputDefaultNumberProps &
   InputSearchType;
 
 interface InputProps extends Omit<InputTypeOverall, 'onChange'> {
@@ -92,7 +91,7 @@ const InputHoc3 = <P extends InputTypeOverall>(
   });
 };
 
-const InputHoc2 = (WrappedComponent: React.FC<InputTypeOverall>) => {
+const InputHOCMain = (WrappedComponent: React.FC<InputTypeOverall>) => {
   const WithInput = (props: InputProps, ref: InputHOCRefMainType) => {
     const [inputValue, setInputValue] = useState<string>(props.value || '');
     const inputRef = useRef<Input>();
