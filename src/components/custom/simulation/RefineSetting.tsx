@@ -87,6 +87,7 @@ export interface RefineOverallSettingType {
   honingSuccessRateManual: number | string;
   artisanEnergy: number | string;
   kamenRoad: boolean;
+  additionalProbability?: number | string;
 }
 
 const simulationNumberOptions = [
@@ -244,6 +245,7 @@ const RefineSetting = ({
       ...prev,
       honingSuccessRate: refineMaterialsMatch.probability,
       honingSuccessRateManual: refineMaterialsMatch.probability,
+      additionalProbability: refineMaterialsMatch.additionalProbability,
       // artisanEnergy: 0,
     }));
   }, [refineMaterialsMatch]);
