@@ -65,7 +65,7 @@ const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
           type="number"
         />
       </InputLayout>
-      <InputLayout
+      {/* <InputLayout
         inputLabel={'추가확률'}
         inputLabelSize={'h6'}
         stretch={false}
@@ -86,7 +86,7 @@ const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
           inputIcon={<Icon name="percent" color="black" />}
           type="number"
         />
-      </InputLayout>
+      </InputLayout> */}
     </StyledGridDiv>
   );
 };
