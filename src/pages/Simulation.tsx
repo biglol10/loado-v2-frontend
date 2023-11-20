@@ -63,7 +63,7 @@ const Simulation = () => {
 
   const [selectedValue, setSelectedValue] = useState('count');
   const [selectOptionParam, setSelectOptionParam] = useState({
-    option1: '아브노말',
+    option1: '유물',
     option2: '무기',
   });
 

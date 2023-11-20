@@ -30,9 +30,9 @@ interface StringStringMapping {
 }
 
 const weaponAndArmourSetType = {
-  아브노말: 'AbrelNormal',
-  아브하드: 'AbrelHard',
-  일리아칸: 'Illiakan',
+  유물: 'AbrelNormal',
+  고대: 'AbrelHard',
+  상위고대: 'Illiakan',
 };
 
 const weaponOrArmour = {
@@ -80,6 +80,15 @@ export interface ISimulationResult {
   lastRefine: Boolean;
 }
 
+export interface RefineOverallSettingType {
+  applyFullSoom: boolean;
+  applyBook: boolean;
+  honingSuccessRate: number | string;
+  honingSuccessRateManual: number | string;
+  artisanEnergy: number | string;
+  kamenRoad: boolean;
+}
+
 const simulationNumberOptions = [
   { key: 'simulation_1000', text: '1000회', value: '1000' },
   { key: 'simulation_5000', text: '5000회', value: '5000' },
@@ -111,18 +120,13 @@ const RefineSetting = ({
 }) => {
   const [refineCurrent, setRefineCurrent] = useState('12');
   const [simulationBtnDisabled, setSimulationBtnDisabled] = useState(false);
-  const [refineOverallSetting, setRefineOverallSetting] = useState<{
-    applyFullSoom: boolean;
-    applyBook: boolean;
-    honingSuccessRate: number | string;
-    honingSuccessRateManual: number | string;
-    artisanEnergy: number | string;
-  }>({
+  const [refineOverallSetting, setRefineOverallSetting] = useState<RefineOverallSettingType>({
     applyFullSoom: false,
     applyBook: false,
     honingSuccessRate: 0,
     honingSuccessRateManual: 0,
     artisanEnergy: 0,
+    kamenRoad: false,
   });
   const deviceType = useDeviceType();
 
@@ -133,27 +137,23 @@ const RefineSetting = ({
     armour2: `${selectOptionParam.option1}방어구2`,
   };
 
-  useEffect(() => {
-    console.log(refineOverallSetting);
-  }, [refineOverallSetting]);
-
   const dropdownOptions = useMemo(() => {
     const objValue = {
       option1: [
         {
-          key: '아브노말',
-          text: '아브노말',
-          value: '아브노말',
+          key: '유물',
+          text: '유물',
+          value: '유물',
         },
         {
-          key: '아브하드',
-          text: '아브하드',
-          value: '아브하드',
+          key: '고대',
+          text: '고대',
+          value: '고대',
         },
         {
-          key: '일리아칸',
-          text: '일리아칸',
-          value: '일리아칸',
+          key: '상위고대',
+          text: '상위고대',
+          value: '상위고대',
         },
       ],
       option2: [
@@ -183,7 +183,7 @@ const RefineSetting = ({
 
   const refineTargetOption = useMemo(() => {
     const arr = Array.from(
-      { length: 14 - (selectOptionParam.option1 === '아브노말' ? 5 : 0) },
+      { length: 14 - (selectOptionParam.option1 === '유물' ? 5 : 0) },
       (_, i) => {
         return {
           key: `refineTargetKey_${i}`,
@@ -254,8 +254,14 @@ const RefineSetting = ({
   }, [refineMaterialsMatch, refineOverallSetting]);
 
   const refineSimulationStart = () => {
-    const { applyFullSoom, artisanEnergy, honingSuccessRate, honingSuccessRateManual, applyBook } =
-      refineOverallSetting;
+    const {
+      applyFullSoom,
+      artisanEnergy,
+      honingSuccessRate,
+      honingSuccessRateManual,
+      applyBook,
+      kamenRoad,
+    } = refineOverallSetting;
 
     const errMsg: string[] = [];
 
@@ -305,6 +311,7 @@ const RefineSetting = ({
         isIncreaseProb: true,
         refineTarget: refineCurrent,
         bookProb: applyBook ? refineMaterialsMatch?.bookProb?.probability : 0,
+        isKamenRoad: kamenRoad,
         memoryArr: [],
       });
 
@@ -508,7 +515,18 @@ const RefineSetting = ({
               }}
               disabled={!refineMaterialsMatch.bookProb}
             />
-
+            <CheckboxDefault
+              id="CheckboxDefault_ID3"
+              spacing={7}
+              label={'카멘로드'}
+              checked={refineOverallSetting.kamenRoad}
+              onClick={({ isChecked }) => {
+                setRefineOverallSetting((prev) => ({
+                  ...prev,
+                  kamenRoad: isChecked,
+                }));
+              }}
+            />
             <FullSoomBookAvailable
               sun1Count={refineMaterialsMatch['태양의은총']}
               sun2Count={refineMaterialsMatch['태양의축복']}

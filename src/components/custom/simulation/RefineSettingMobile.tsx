@@ -16,6 +16,7 @@ import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import styled from 'styled-components';
+import { RefineOverallSettingType } from './RefineSetting';
 
 interface StringNumberMapping {
   [key: string]: number;
@@ -116,18 +117,13 @@ const RefineSetting = ({
 }) => {
   const [refineCurrent, setRefineCurrent] = useState('12');
   const [simulationBtnDisabled, setSimulationBtnDisabled] = useState(false);
-  const [refineOverallSetting, setRefineOverallSetting] = useState<{
-    applyFullSoom: boolean;
-    applyBook: boolean;
-    honingSuccessRate: number | string;
-    honingSuccessRateManual: number | string;
-    artisanEnergy: number | string;
-  }>({
+  const [refineOverallSetting, setRefineOverallSetting] = useState<RefineOverallSettingType>({
     applyFullSoom: false,
     applyBook: false,
     honingSuccessRate: 0,
     honingSuccessRateManual: 0,
     artisanEnergy: 0,
+    kamenRoad: false,
   });
   const deviceType = useDeviceType();
 
@@ -486,6 +482,18 @@ const RefineSetting = ({
             }));
           }}
           disabled={!refineMaterialsMatch.bookProb}
+        />
+        <CheckboxDefault
+          id="CheckboxDefault_ID3"
+          spacing={7}
+          label={'카멘로드'}
+          checked={refineOverallSetting.kamenRoad}
+          onClick={({ isChecked }) => {
+            setRefineOverallSetting((prev) => ({
+              ...prev,
+              kamenRoad: isChecked,
+            }));
+          }}
         />
       </StyledDiv>
       <StyledDiv display="flex" flexWrap="wrap">
