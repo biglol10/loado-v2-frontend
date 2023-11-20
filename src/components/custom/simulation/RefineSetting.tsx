@@ -210,8 +210,6 @@ const RefineSetting = ({
         `${weaponOrArmourValue}${refineNumber}`
       ];
 
-    console.log(requiredRefineMaterialsForOneSimulation);
-
     // Steel -> 강석, leapStone -> 돌파석, fusionMaterial -> 오레하
     const returnedObj = {
       weaponOrArmour: weaponOrArmourValue,
