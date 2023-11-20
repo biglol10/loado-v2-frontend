@@ -43,6 +43,7 @@ const isRefineSuccessFunction = (successProb: number) => {
 type refineSimulationType = {
   defaultProb: number;
   startProb: number;
+  additionalProbability: number;
   tryCnt: number;
   artisanEnergy: number;
   isFullSoom: boolean;
@@ -56,6 +57,7 @@ type refineSimulationType = {
 const refineSimulation: any = ({
   defaultProb,
   startProb,
+  additionalProbability,
   tryCnt,
   artisanEnergy,
   isFullSoom,

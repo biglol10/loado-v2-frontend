@@ -263,6 +263,7 @@ const RefineSetting = ({
       honingSuccessRateManual,
       applyBook,
       kamenRoad,
+      additionalProbability,
     } = refineOverallSetting;
 
     const errMsg: string[] = [];
@@ -270,7 +271,8 @@ const RefineSetting = ({
     if (
       honingSuccessRate === '' ||
       Number(honingSuccessRate) >= 100 ||
-      Number(honingSuccessRate) <= 0
+      Number(honingSuccessRate) <= 0 ||
+      Number(additionalProbability) <= 100
     )
       errMsg.push('최종확률에 올바른 값을 입력해주세요');
     if (artisanEnergy === '' || Number(artisanEnergy) >= 100 || Number(artisanEnergy) < 0)
@@ -308,6 +310,7 @@ const RefineSetting = ({
         defaultProb: Number(honingSuccessRate),
         tryCnt: 1,
         startProb: Number(honingSuccessRateManual),
+        additionalProbability: Number(additionalProbability) ?? 0,
         artisanEnergy: Number(artisanEnergy),
         isFullSoom: applyFullSoom,
         isIncreaseProb: true,
