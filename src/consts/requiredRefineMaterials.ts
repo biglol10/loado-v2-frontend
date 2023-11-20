@@ -29,7 +29,7 @@ export const gradeBackgroundColor = {
 };
 
 const requiredRefineMaterials: any = {
-  AbrelNormal: {
+  유물: {
     weapon: {
       weapon12: {
         weaponStone1: 650,
@@ -313,7 +313,7 @@ const requiredRefineMaterials: any = {
       },
     },
   },
-  AbrelHard: {
+  고대: {
     weapon: {
       weapon12: {
         weaponStone1: 650,
@@ -389,6 +389,7 @@ const requiredRefineMaterials: any = {
         honorShard: 2400,
         gold: 1120,
         probability: 4,
+        additionalProbability: 2,
         bookProb: {
           bookType: '야금술특화',
           bookId: '66112532',
@@ -405,6 +406,7 @@ const requiredRefineMaterials: any = {
         honorShard: 2400,
         gold: 1200,
         probability: 4,
+        additionalProbability: 2,
         bookProb: {
           bookType: '야금술특화',
           bookId: '66112532',
@@ -421,6 +423,7 @@ const requiredRefineMaterials: any = {
         honorShard: 3600,
         gold: 1350,
         probability: 3,
+        additionalProbability: 1.5,
         bookProb: {
           bookType: '야금술특화',
           bookId: '66112532',
@@ -437,6 +440,7 @@ const requiredRefineMaterials: any = {
         honorShard: 3600,
         gold: 1440,
         probability: 3,
+        additionalProbability: 1.5,
         bookProb: {
           bookType: '야금술특화',
           bookId: '66112532',
@@ -585,6 +589,7 @@ const requiredRefineMaterials: any = {
         honorShard: 1440,
         gold: 670,
         probability: 4,
+        additionalProbability: 2,
         bookProb: {
           bookType: '재봉술특화',
           bookId: '66112535',
@@ -601,6 +606,7 @@ const requiredRefineMaterials: any = {
         honorShard: 1440,
         gold: 720,
         probability: 4,
+        additionalProbability: 2,
         bookProb: {
           bookType: '재봉술특화',
           bookId: '66112535',
@@ -617,6 +623,7 @@ const requiredRefineMaterials: any = {
         honorShard: 2160,
         gold: 810,
         probability: 3,
+        additionalProbability: 1.5,
         bookProb: {
           bookType: '재봉술특화',
           bookId: '66112535',
@@ -633,6 +640,7 @@ const requiredRefineMaterials: any = {
         honorShard: 2160,
         gold: 860,
         probability: 3,
+        additionalProbability: 1.5,
         bookProb: {
           bookType: '재봉술특화',
           bookId: '66112535',
@@ -707,7 +715,7 @@ const requiredRefineMaterials: any = {
       },
     },
   },
-  Illiakan: {
+  상위고대: {
     weapon: {
       weapon12: {
         weaponStone2: 650,

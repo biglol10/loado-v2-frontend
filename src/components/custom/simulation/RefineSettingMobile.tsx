@@ -31,9 +31,9 @@ const MarginTopLabel = styled(Label)`
 `;
 
 const weaponAndArmourSetType = {
-  아브노말: 'AbrelNormal',
-  아브하드: 'AbrelHard',
-  일리아칸: 'Illiakan',
+  아브노말: '유물',
+  아브하드: '고대',
+  일리아칸: '상위고대',
 };
 
 const weaponOrArmour = {
@@ -42,9 +42,9 @@ const weaponOrArmour = {
 };
 
 const materialRankMapping: StringNumberMapping = {
-  AbrelNormal: 1,
-  AbrelHard: 1,
-  Illiakan: 2,
+  유물: 1,
+  고대: 1,
+  상위고대: 2,
 };
 
 const refineItemKeyMatch = {
@@ -201,7 +201,7 @@ const RefineSetting = ({
     const materialRank = materialRankMapping[itemSetType];
 
     const refineNumber =
-      itemSetType.includes('AbrelNormal') && refineCurrent > '20' ? '20' : refineCurrent;
+      itemSetType.includes('유물') && refineCurrent > '20' ? '20' : refineCurrent;
     const requiredRefineMaterialsForOneSimulation =
       requiredRefineMaterials[itemSetType][weaponOrArmourValue][
         `${weaponOrArmourValue}${refineNumber}`
@@ -235,7 +235,7 @@ const RefineSetting = ({
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
-    if (itemSetType.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
+    if (itemSetType.includes('유물') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
   }, [refineCurrent, selectOptionParam]);

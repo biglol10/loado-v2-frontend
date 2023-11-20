@@ -30,9 +30,9 @@ interface StringStringMapping {
 }
 
 const weaponAndArmourSetType = {
-  유물: 'AbrelNormal',
-  고대: 'AbrelHard',
-  상위고대: 'Illiakan',
+  유물: '유물',
+  고대: '고대',
+  상위고대: '상위고대',
 };
 
 const weaponOrArmour = {
@@ -41,9 +41,9 @@ const weaponOrArmour = {
 };
 
 const materialRankMapping: StringNumberMapping = {
-  AbrelNormal: 1,
-  AbrelHard: 1,
-  Illiakan: 2,
+  유물: 1,
+  고대: 1,
+  상위고대: 2,
 };
 
 const refineItemKeyMatch: StringStringMapping = {
@@ -204,11 +204,13 @@ const RefineSetting = ({
     const materialRank = materialRankMapping[itemSetType];
 
     const refineNumber =
-      itemSetType.includes('AbrelNormal') && refineCurrent > '20' ? '20' : refineCurrent;
+      itemSetType.includes('유물') && refineCurrent > '20' ? '20' : refineCurrent;
     const requiredRefineMaterialsForOneSimulation =
       requiredRefineMaterials[itemSetType][weaponOrArmourValue][
         `${weaponOrArmourValue}${refineNumber}`
       ];
+
+    console.log(requiredRefineMaterialsForOneSimulation);
 
     // Steel -> 강석, leapStone -> 돌파석, fusionMaterial -> 오레하
     const returnedObj = {
@@ -234,7 +236,7 @@ const RefineSetting = ({
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
-    if (itemSetType.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
+    if (itemSetType.includes('유물') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
   }, [refineCurrent, selectOptionParam]);
