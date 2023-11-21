@@ -44,6 +44,31 @@ const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
         />
       </InputLayout>
       <InputLayout
+        inputLabel={'추가확률'}
+        inputLabelSize={'h6'}
+        stretch={false}
+        showInputLabel={true}
+        spacing={8}
+        inputWidth={'150px'}
+      >
+        <InputWithIcon
+          value={`${
+            refineOverallSetting.kamenRoad ? refineOverallSetting.additionalProbability : '0'
+          }`}
+          fluid={false}
+          size={'mini'}
+          onChange={(value) => {
+            setRefineOverallSetting((prev) => ({
+              ...prev,
+              additionalProbability: value,
+            }));
+          }}
+          inputIcon={<Icon name="percent" color="black" />}
+          type="number"
+          disabled
+        />
+      </InputLayout>
+      <InputLayout
         inputLabel={'장인의기운'}
         inputLabelSize={'h6'}
         stretch={false}
@@ -65,28 +90,6 @@ const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
           type="number"
         />
       </InputLayout>
-      {/* <InputLayout
-        inputLabel={'추가확률'}
-        inputLabelSize={'h6'}
-        stretch={false}
-        showInputLabel={true}
-        spacing={8}
-        inputWidth={'150px'}
-      >
-        <InputWithIcon
-          value={`${refineOverallSetting.artisanEnergy}`}
-          fluid={false}
-          size={'mini'}
-          onChange={(value) => {
-            setRefineOverallSetting((prev) => ({
-              ...prev,
-              artisanEnergy: value,
-            }));
-          }}
-          inputIcon={<Icon name="percent" color="black" />}
-          type="number"
-        />
-      </InputLayout> */}
     </StyledGridDiv>
   );
 };

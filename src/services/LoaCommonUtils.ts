@@ -57,7 +57,7 @@ type refineSimulationType = {
 const refineSimulation: any = ({
   defaultProb,
   startProb,
-  additionalProbability,
+  additionalProbability = 0,
   tryCnt,
   artisanEnergy,
   isFullSoom,
@@ -75,7 +75,7 @@ const refineSimulation: any = ({
     );
 
   const successProb = (() => {
-    if (startProb > maxProb) return startProb;
+    if (startProb > maxProb + additionalProbability) return startProb;
 
     const defaultProbValue = Number(defaultProb);
     const tryCntValue = Number(tryCnt - 1 > 10 ? defaultProb : ((tryCnt - 1) * defaultProb) / 10);
@@ -84,7 +84,7 @@ const refineSimulation: any = ({
       isFullSoom && refineTarget > 23 ? 1 : isFullSoom && refineTarget <= 23 ? defaultProb : 0,
     );
 
-    return defaultProbValue + tryCntValue + bookProbValue + fullSoomValue;
+    return defaultProbValue + tryCntValue + bookProbValue + fullSoomValue + additionalProbability;
   })();
 
   const isSuccess = isRefineSuccessFunction(successProb);
@@ -116,6 +116,7 @@ const refineSimulation: any = ({
       tryCnt: tryCnt + 1,
       startProb,
     });
+    console.log(memoryArr);
 
     return {
       tryCnt: tryCnt + 1,
@@ -137,6 +138,7 @@ const refineSimulation: any = ({
     isIncreaseProb,
     bookProb,
     isKamenRoad,
+    additionalProbability,
     memoryArr,
   });
 };

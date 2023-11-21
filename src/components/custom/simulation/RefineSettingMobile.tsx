@@ -22,10 +22,6 @@ interface StringNumberMapping {
   [key: string]: number;
 }
 
-interface StringStringMapping {
-  [key: string]: string;
-}
-
 const MarginTopLabel = styled(Label)`
   margin-top: 5px !important;
 `;
@@ -138,19 +134,19 @@ const RefineSetting = ({
     const objValue = {
       option1: [
         {
-          key: '아브노말',
-          text: '아브노말',
-          value: '아브노말',
+          key: '유물',
+          text: '유물',
+          value: '유물',
         },
         {
-          key: '아브하드',
-          text: '아브하드',
-          value: '아브하드',
+          key: '고대',
+          text: '고대',
+          value: '고대',
         },
         {
-          key: '일리아칸',
-          text: '일리아칸',
-          value: '일리아칸',
+          key: '상위고대',
+          text: '상위고대',
+          value: '상위고대',
         },
       ],
       option2: [
