@@ -14,6 +14,10 @@ interface ProbabilityValuesProps {
   setRefineOverallSetting: React.Dispatch<React.SetStateAction<RefineOverallSettingType>>;
 }
 
+export const PercentIcon = () => {
+  return <Icon name="percent" color="black" />;
+};
+
 const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
   refineOverallSetting,
   setRefineOverallSetting,
@@ -21,7 +25,7 @@ const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
   return (
     <StyledGridDiv>
       <InputLayout
-        inputLabel={'최종확률'}
+        inputLabel={'제련확률'}
         inputLabelSize={'h6'}
         stretch={false}
         showInputLabel={true}
@@ -39,7 +43,7 @@ const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
               honingSuccessRateManual: value,
             }));
           }}
-          inputIcon={<Icon name="percent" color="black" />}
+          inputIcon={<PercentIcon />}
           type="number"
         />
       </InputLayout>
@@ -63,7 +67,7 @@ const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
               additionalProbability: value,
             }));
           }}
-          inputIcon={<Icon name="percent" color="black" />}
+          inputIcon={<PercentIcon />}
           type="number"
           disabled
         />
@@ -86,7 +90,7 @@ const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
               artisanEnergy: value,
             }));
           }}
-          inputIcon={<Icon name="percent" color="black" />}
+          inputIcon={<PercentIcon />}
           type="number"
         />
       </InputLayout>

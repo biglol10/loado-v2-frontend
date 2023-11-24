@@ -21,32 +21,32 @@ import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
 import useDeviceType from '@hooks/DeviceTypeHook';
 
-interface StringNumberMapping {
+export interface StringNumberMapping {
   [key: string]: number;
 }
 
-interface StringStringMapping {
+export interface MaterialsEngKorMapping {
   [key: string]: string;
 }
 
-const weaponAndArmourSetType = {
+export const weaponAndArmourSetType = {
   유물: '유물',
   고대: '고대',
   상위고대: '상위고대',
 };
 
-const weaponOrArmour = {
+export const weaponOrArmour = {
   무기: 'weapon',
   방어구: 'armour',
 };
 
-const materialRankMapping: StringNumberMapping = {
+export const materialRankMapping: StringNumberMapping = {
   유물: 1,
   고대: 1,
   상위고대: 2,
 };
 
-const refineItemKeyMatch: StringStringMapping = {
+export const refineItemKeyMatch: MaterialsEngKorMapping = {
   weaponStone1: '파괴강석',
   armourStone1: '수호강석',
   leapstone1: '경명돌',
@@ -59,7 +59,7 @@ const refineItemKeyMatch: StringStringMapping = {
   gold: '골드2',
 };
 
-type RefineItemKeyMatchType = keyof typeof refineItemKeyMatch;
+export type RefineItemKeyMatchType = keyof typeof refineItemKeyMatch;
 
 export interface ISimulationResult {
   defaultPropb: number;
@@ -90,7 +90,7 @@ export interface RefineOverallSettingType {
   additionalProbability?: number | string;
 }
 
-const simulationNumberOptions = [
+export const simulationNumberOptions = [
   { key: 'simulation_1000', text: '1000회', value: '1000' },
   { key: 'simulation_5000', text: '5000회', value: '5000' },
   { key: 'simulation_10000', text: '10000회', value: '10000' },
