@@ -55,7 +55,7 @@ const StyledImage = styled.img`
   width: 30px;
   background: tan;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 5px;
 `;
 
 const MainTable = ({

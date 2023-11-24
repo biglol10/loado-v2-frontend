@@ -16,50 +16,26 @@ import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import styled from 'styled-components';
-
-interface StringNumberMapping {
-  [key: string]: number;
-}
-
-interface StringStringMapping {
-  [key: string]: string;
-}
+import {
+  RefineItemKeyMatchType,
+  RefineOverallSettingType,
+  StringNumberMapping,
+  refineItemKeyMatch,
+  simulationNumberOptions,
+  weaponAndArmourSetType,
+  weaponOrArmour,
+} from './RefineSetting';
+import { PercentIcon } from './RefineSettingCustom/ProbabilityValues';
 
 const MarginTopLabel = styled(Label)`
   margin-top: 5px !important;
 `;
 
-const weaponAndArmourSetType = {
-  아브노말: 'AbrelNormal',
-  아브하드: 'AbrelHard',
-  일리아칸: 'Illiakan',
-};
-
-const weaponOrArmour = {
-  무기: 'weapon',
-  방어구: 'armour',
-};
-
 const materialRankMapping: StringNumberMapping = {
-  AbrelNormal: 1,
-  AbrelHard: 1,
-  Illiakan: 2,
+  유물: 1,
+  고대: 1,
+  상위고대: 2,
 };
-
-const refineItemKeyMatch = {
-  weaponStone1: '파괴강석',
-  armourStone1: '수호강석',
-  leapstone1: '경명돌',
-  fusionMaterial1: '상급오레하',
-  weaponStone2: '정제된파괴강석',
-  armourStone2: '정제된수호강석',
-  leapstone2: '찬명돌',
-  fusionMaterial2: '최상급오레하',
-  honorShard: '명예의파편',
-  gold: '골드2',
-};
-
-type RefineItemKeyMatchType = keyof typeof refineItemKeyMatch;
 
 export interface ISimulationResult {
   defaultPropb: number;
@@ -84,12 +60,6 @@ const ProbAndRefine = styled(InputLayout)`
   padding: 0px;
   width: 90%;
 `;
-
-const simulationNumberOptions = [
-  { key: 'simulation_1000', text: '1000회', value: '1000' },
-  { key: 'simulation_5000', text: '5000회', value: '5000' },
-  { key: 'simulation_10000', text: '10000회', value: '10000' },
-];
 
 const RefineSetting = ({
   selectOptionParam,
@@ -116,20 +86,21 @@ const RefineSetting = ({
 }) => {
   const [refineCurrent, setRefineCurrent] = useState('12');
   const [simulationBtnDisabled, setSimulationBtnDisabled] = useState(false);
-  const [refineOverallSetting, setRefineOverallSetting] = useState<{
-    applyFullSoom: boolean;
-    applyBook: boolean;
-    honingSuccessRate: number | string;
-    honingSuccessRateManual: number | string;
-    artisanEnergy: number | string;
-  }>({
+  const [refineOverallSetting, setRefineOverallSetting] = useState<RefineOverallSettingType>({
     applyFullSoom: false,
     applyBook: false,
     honingSuccessRate: 0,
     honingSuccessRateManual: 0,
     artisanEnergy: 0,
+    kamenRoad: false,
   });
   const deviceType = useDeviceType();
+
+  useEffect(() => {
+    console.log(
+      `refineOverallSetting.additionalProbability is ${refineOverallSetting.additionalProbability}`,
+    );
+  }, [refineOverallSetting]);
 
   const imgSrc = {
     weapon: `${selectOptionParam.option1}무기`,
@@ -142,19 +113,19 @@ const RefineSetting = ({
     const objValue = {
       option1: [
         {
-          key: '아브노말',
-          text: '아브노말',
-          value: '아브노말',
+          key: '유물',
+          text: '유물',
+          value: '유물',
         },
         {
-          key: '아브하드',
-          text: '아브하드',
-          value: '아브하드',
+          key: '고대',
+          text: '고대',
+          value: '고대',
         },
         {
-          key: '일리아칸',
-          text: '일리아칸',
-          value: '일리아칸',
+          key: '상위고대',
+          text: '상위고대',
+          value: '상위고대',
         },
       ],
       option2: [
@@ -205,7 +176,7 @@ const RefineSetting = ({
     const materialRank = materialRankMapping[itemSetType];
 
     const refineNumber =
-      itemSetType.includes('AbrelNormal') && refineCurrent > '20' ? '20' : refineCurrent;
+      itemSetType.includes('유물') && refineCurrent > '20' ? '20' : refineCurrent;
     const requiredRefineMaterialsForOneSimulation =
       requiredRefineMaterials[itemSetType][weaponOrArmourValue][
         `${weaponOrArmourValue}${refineNumber}`
@@ -230,16 +201,12 @@ const RefineSetting = ({
       requiredFusionMaterialCount:
         requiredRefineMaterialsForOneSimulation[`fusionMaterial${materialRank}`],
       requiredFusionMaterialImg:
-        loaImages[
-          refineItemKeyMatch[
-            `fusionMaterial${materialRank}` as RefineItemKeyMatchType
-          ] as loaImagesType
-        ],
+        loaImages[refineItemKeyMatch[`fusionMaterial${materialRank}`] as loaImagesType],
       ...requiredRefineMaterialsForOneSimulation,
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
-    if (itemSetType.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
+    if (itemSetType.includes('유물') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
   }, [refineCurrent, selectOptionParam]);
@@ -249,8 +216,11 @@ const RefineSetting = ({
       ...prev,
       honingSuccessRate: refineMaterialsMatch.probability,
       honingSuccessRateManual: refineMaterialsMatch.probability,
+      additionalProbability: refineMaterialsMatch.additionalProbability,
       // artisanEnergy: 0,
     }));
+    console.log(`refineMaterialsMatch is`);
+    console.log(refineMaterialsMatch);
   }, [refineMaterialsMatch]);
 
   useEffect(() => {
@@ -259,8 +229,15 @@ const RefineSetting = ({
   }, [refineMaterialsMatch, refineOverallSetting]);
 
   const refineSimulationStart = () => {
-    const { applyFullSoom, artisanEnergy, honingSuccessRate, honingSuccessRateManual, applyBook } =
-      refineOverallSetting;
+    const {
+      applyFullSoom,
+      artisanEnergy,
+      honingSuccessRate,
+      honingSuccessRateManual,
+      applyBook,
+      kamenRoad,
+      additionalProbability,
+    } = refineOverallSetting;
 
     const errMsg: string[] = [];
 
@@ -305,11 +282,14 @@ const RefineSetting = ({
         defaultProb: Number(honingSuccessRate),
         tryCnt: 1,
         startProb: Number(honingSuccessRateManual),
+        additionalProbability:
+          kamenRoad && additionalProbability ? Number(additionalProbability) : 0,
         artisanEnergy: Number(artisanEnergy),
         isFullSoom: applyFullSoom,
         isIncreaseProb: true,
         refineTarget: refineCurrent,
         bookProb: applyBook ? refineMaterialsMatch?.bookProb?.probability : 0,
+        isKamenRoad: kamenRoad && additionalProbability,
         memoryArr: [],
       });
 
@@ -487,6 +467,18 @@ const RefineSetting = ({
           }}
           disabled={!refineMaterialsMatch.bookProb}
         />
+        <CheckboxDefault
+          id="CheckboxDefault_ID3"
+          spacing={7}
+          label={'카멘로드'}
+          checked={refineOverallSetting.kamenRoad}
+          onClick={({ isChecked }) => {
+            setRefineOverallSetting((prev) => ({
+              ...prev,
+              kamenRoad: isChecked,
+            }));
+          }}
+        />
       </StyledDiv>
       <StyledDiv display="flex" flexWrap="wrap">
         <MarginTopLabel color="black">
@@ -515,7 +507,7 @@ const RefineSetting = ({
       </StyledDiv>
       <StyledDiv marginTop="20px" display="grid" gridTemplateColumns="1fr 1fr">
         <ProbAndRefine
-          inputLabel={'최종확률'}
+          inputLabel={'제련확률'}
           inputLabelSize={'h6'}
           stretch={false}
           showInputLabel={true}
@@ -523,17 +515,42 @@ const RefineSetting = ({
           inputWidth="80%"
         >
           <InputWithIcon
-            value={refineOverallSetting.honingSuccessRate}
+            value={`${refineOverallSetting.honingSuccessRate}`}
             fluid={false}
             size={'mini'}
             onChange={(value) => {
-              setRefineOverallSetting((prev: any) => ({
+              setRefineOverallSetting((prev) => ({
                 ...prev,
                 honingSuccessRateManual: value,
               }));
             }}
-            inputIcon={<Icon name="percent" color="black" />}
+            inputIcon={<PercentIcon />}
             type="number"
+          />
+        </ProbAndRefine>
+        <ProbAndRefine
+          inputLabel={'추가확률'}
+          inputLabelSize={'h6'}
+          stretch={false}
+          showInputLabel={true}
+          spacing={8}
+          inputWidth="80%"
+        >
+          <InputWithIcon
+            value={`${
+              refineOverallSetting.kamenRoad ? refineOverallSetting.additionalProbability : '0'
+            }`}
+            fluid={false}
+            size={'mini'}
+            onChange={(value) => {
+              setRefineOverallSetting((prev) => ({
+                ...prev,
+                additionalProbability: value,
+              }));
+            }}
+            inputIcon={<PercentIcon />}
+            type="number"
+            disabled
           />
         </ProbAndRefine>
         <ProbAndRefine
@@ -545,16 +562,16 @@ const RefineSetting = ({
           inputWidth="80%"
         >
           <InputWithIcon
-            value={refineOverallSetting.artisanEnergy}
+            value={`${refineOverallSetting.artisanEnergy}`}
             fluid={false}
             size={'mini'}
             onChange={(value) => {
-              setRefineOverallSetting((prev: any) => ({
+              setRefineOverallSetting((prev) => ({
                 ...prev,
                 artisanEnergy: value,
               }));
             }}
-            inputIcon={<Icon name="percent" color="black" />}
+            inputIcon={<PercentIcon />}
             type="number"
           />
         </ProbAndRefine>

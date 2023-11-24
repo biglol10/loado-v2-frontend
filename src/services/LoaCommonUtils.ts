@@ -43,24 +43,28 @@ const isRefineSuccessFunction = (successProb: number) => {
 type refineSimulationType = {
   defaultProb: number;
   startProb: number;
+  additionalProbability: number;
   tryCnt: number;
   artisanEnergy: number;
   isFullSoom: boolean;
   bookProb?: number;
   refineTarget: number;
   isIncreaseProb: boolean;
+  isKamenRoad: boolean;
   memoryArr?: any[];
 };
 
 const refineSimulation: any = ({
   defaultProb,
   startProb,
+  additionalProbability = 0,
   tryCnt,
   artisanEnergy,
   isFullSoom,
   bookProb = 0,
   refineTarget,
   isIncreaseProb,
+  isKamenRoad,
   memoryArr = [],
 }: refineSimulationType) => {
   const maxProb =
@@ -71,7 +75,7 @@ const refineSimulation: any = ({
     );
 
   const successProb = (() => {
-    if (startProb > maxProb) return startProb;
+    if (startProb > maxProb + additionalProbability) return startProb;
 
     const defaultProbValue = Number(defaultProb);
     const tryCntValue = Number(tryCnt - 1 > 10 ? defaultProb : ((tryCnt - 1) * defaultProb) / 10);
@@ -80,13 +84,13 @@ const refineSimulation: any = ({
       isFullSoom && refineTarget > 23 ? 1 : isFullSoom && refineTarget <= 23 ? defaultProb : 0,
     );
 
-    return defaultProbValue + tryCntValue + bookProbValue + fullSoomValue;
+    return defaultProbValue + tryCntValue + bookProbValue + fullSoomValue + additionalProbability;
   })();
 
   const isSuccess = isRefineSuccessFunction(successProb);
   // const newArtisanEnergyNotFullSoom = Number((successProb - defaultProb) / 2.15);
   // const newArtisanEnergyFullSoom = Number(successProb / 2.15);
-  const addArtisanEnergy = Number(successProb / 2.15);
+  const addArtisanEnergy = Number(successProb / 2.15) * (isKamenRoad ? 2 : 1);
 
   memoryArr.push({
     successProb,
@@ -112,6 +116,8 @@ const refineSimulation: any = ({
       tryCnt: tryCnt + 1,
       startProb,
     });
+    console.log(memoryArr);
+
     return {
       tryCnt: tryCnt + 1,
       lastRefine: true,
@@ -131,6 +137,8 @@ const refineSimulation: any = ({
     refineTarget,
     isIncreaseProb,
     bookProb,
+    isKamenRoad,
+    additionalProbability,
     memoryArr,
   });
 };

@@ -63,7 +63,7 @@ const Simulation = () => {
 
   const [selectedValue, setSelectedValue] = useState('count');
   const [selectOptionParam, setSelectOptionParam] = useState({
-    option1: '아브노말',
+    option1: '유물',
     option2: '무기',
   });
 
@@ -189,7 +189,7 @@ const Simulation = () => {
                   inputWidth={'100px'}
                 >
                   <InputWithIcon
-                    value={topNPercentPoint}
+                    value={`${topNPercentPoint}`}
                     fluid={false}
                     size={'mini'}
                     inputIcon={<Icon name="percent" color="black" />}

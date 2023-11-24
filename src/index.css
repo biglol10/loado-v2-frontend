@@ -26,3 +26,7 @@
 .custom-toast-body div {
   color: black !important;
 }
+
+input:disabled {
+  background-color: #dcdbdb !important;
+}

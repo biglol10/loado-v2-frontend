@@ -1,16 +1,15 @@
-import React, { ReactNode, JSXElementConstructor as JSX, ChangeEvent, SyntheticEvent } from 'react';
+import React, { SyntheticEvent } from 'react';
 import {
-  ButtonProps,
   DropdownProps,
   Input,
   InputOnChangeData,
-  InputProps,
-  StrictLabelProps,
+  StrictInputProps,
+  Dropdown,
 } from 'semantic-ui-react';
 
 // ? Types in InputDefault component
-export interface InputDefaultProps extends InputProps {
-  id: string;
+export interface InputDefaultProps extends StrictInputProps {
+  id?: string;
   placeholder?: string;
   value?: string;
   className?: string;
@@ -22,16 +21,16 @@ export interface InputDefaultProps extends InputProps {
   disabled?: boolean;
   maxLength?: undefined | number;
   ref?: any;
-  // stretch?: boolean;
+  stretch?: boolean;
   error?: boolean;
-  onEnter?: Function;
-  clearInputValue?: Function;
-  transparent?: boolean;
+  onEnter?: () => void;
+  clearInputValue?: Function; //
+  transparent?: boolean; //
   fluid?: boolean;
 }
 
-export interface InputDefaultPropsNumber extends InputProps {
-  id: string;
+export interface InputDefaultPropsNumber extends StrictInputProps {
+  id?: string;
   placeholder?: string;
   value?: string;
   className?: string;
@@ -43,10 +42,52 @@ export interface InputDefaultPropsNumber extends InputProps {
   disabled?: boolean;
   maxLength?: undefined | number;
   ref?: any;
-  // stretch?: boolean;
+  stretch?: boolean;
   error?: boolean;
-  onEnter?: Function;
+  onEnter?: () => void;
   clearInputValue?: Function;
+  transparent?: boolean;
+  fluid?: boolean;
+}
+
+export interface InputWithIconProps extends StrictInputProps {
+  id?: string;
+  placeholder?: string;
+  value?: string;
+  className?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => void;
+  size?: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
+  loading?: boolean;
+  type?: 'default' | 'password' | 'number';
+  readOnly?: boolean;
+  disabled?: boolean;
+  maxLength?: undefined | number;
+  ref?: any;
+  stretch?: boolean;
+  error?: boolean;
+  onEnter?: () => void;
+  inputIcon?: React.ReactElement;
+  iconPosition?: 'left';
+  iconClick?: Function;
+  setInputValue?: Function;
+}
+
+export interface InputDefaultNumberProps extends StrictInputProps {
+  id?: string;
+  className?: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => void;
+  size?: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
+  loading?: boolean;
+  type?: 'default' | 'password' | 'number';
+  readOnly?: boolean;
+  disabled?: boolean;
+  maxLength?: undefined | number;
+  ref?: any;
+  stretch?: boolean;
+  error?: boolean;
+  onEnter?: () => void;
   transparent?: boolean;
   fluid?: boolean;
 }
@@ -64,7 +105,7 @@ export interface InputDropdownProps extends DropdownProps {
   disabled?: boolean;
   stretch?: boolean;
   error?: boolean;
-  onEnter?: Function;
+  onEnter?: () => void;
   keyboardInput?: boolean;
   compact?: boolean;
 }
@@ -92,15 +133,38 @@ export interface InputSearchProps extends InputDefaultProps {
 }
 
 // ? Types in InputWithIcon component
-export interface InputWithIconProps extends InputDefaultProps {
-  inputIcon?: React.ReactElement;
-  iconPosition?: 'left' | undefined;
-  iconClick?: Function;
-  setInputValue?: Function;
-  stretch?: boolean;
-  onChange?: any;
-}
+// export interface InputWithIconProps extends InputDefaultProps {
+//   inputIcon?: React.ReactElement;
+//   iconPosition?: 'left' | undefined;
+//   iconClick?: Function;
+//   setInputValue?: Function;
+//   stretch?: boolean;
+//   onChange?: any;
+// }
 
 export type InputHOCRefType = { inputElement: Input | undefined; clear: () => void };
+export type DropdownHOCRefType = {
+  dropdownElement: typeof Dropdown | undefined;
+  clear: () => void;
+};
 
 export type InputHOCRefMainType = React.Ref<InputHOCRefType> | undefined;
+
+// export type DropdownHOCRefMainType = React.Ref<DropdownHOCRefType>
+
+export interface InputSearchType extends StrictInputProps {
+  id?: string;
+  className?: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => void;
+  size?: 'mini' | 'small' | 'large' | 'big' | 'huge' | 'massive';
+  loading?: boolean;
+  type?: 'default' | 'password' | 'number';
+  readOnly?: boolean;
+  disabled?: boolean;
+  maxLength?: undefined | number;
+  onSearchIconClick?: () => void;
+  error?: boolean;
+  onEnter?: () => void;
+}

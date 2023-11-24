@@ -90,7 +90,7 @@ class BaseService {
     retryCnt?: number;
   }) {
     try {
-      store.dispatch(showLoader());
+      if (store.getState().modal.modalOpen) store.dispatch(showLoader());
       const res = await this.requestMethod[method](url, data);
 
       store.dispatch(hideLoader());

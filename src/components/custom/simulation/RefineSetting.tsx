@@ -21,32 +21,32 @@ import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
 import useDeviceType from '@hooks/DeviceTypeHook';
 
-interface StringNumberMapping {
+export interface StringNumberMapping {
   [key: string]: number;
 }
 
-interface StringStringMapping {
+export interface MaterialsEngKorMapping {
   [key: string]: string;
 }
 
-const weaponAndArmourSetType = {
-  아브노말: 'AbrelNormal',
-  아브하드: 'AbrelHard',
-  일리아칸: 'Illiakan',
+export const weaponAndArmourSetType = {
+  유물: '유물',
+  고대: '고대',
+  상위고대: '상위고대',
 };
 
-const weaponOrArmour = {
+export const weaponOrArmour = {
   무기: 'weapon',
   방어구: 'armour',
 };
 
-const materialRankMapping: StringNumberMapping = {
-  AbrelNormal: 1,
-  AbrelHard: 1,
-  Illiakan: 2,
+export const materialRankMapping: StringNumberMapping = {
+  유물: 1,
+  고대: 1,
+  상위고대: 2,
 };
 
-const refineItemKeyMatch: StringStringMapping = {
+export const refineItemKeyMatch: MaterialsEngKorMapping = {
   weaponStone1: '파괴강석',
   armourStone1: '수호강석',
   leapstone1: '경명돌',
@@ -59,7 +59,7 @@ const refineItemKeyMatch: StringStringMapping = {
   gold: '골드2',
 };
 
-type RefineItemKeyMatchType = keyof typeof refineItemKeyMatch;
+export type RefineItemKeyMatchType = keyof typeof refineItemKeyMatch;
 
 export interface ISimulationResult {
   defaultPropb: number;
@@ -80,7 +80,17 @@ export interface ISimulationResult {
   lastRefine: Boolean;
 }
 
-const simulationNumberOptions = [
+export interface RefineOverallSettingType {
+  applyFullSoom: boolean;
+  applyBook: boolean;
+  honingSuccessRate: number | string;
+  honingSuccessRateManual: number | string;
+  artisanEnergy: number | string;
+  kamenRoad: boolean;
+  additionalProbability?: number | string;
+}
+
+export const simulationNumberOptions = [
   { key: 'simulation_1000', text: '1000회', value: '1000' },
   { key: 'simulation_5000', text: '5000회', value: '5000' },
   { key: 'simulation_10000', text: '10000회', value: '10000' },
@@ -111,18 +121,13 @@ const RefineSetting = ({
 }) => {
   const [refineCurrent, setRefineCurrent] = useState('12');
   const [simulationBtnDisabled, setSimulationBtnDisabled] = useState(false);
-  const [refineOverallSetting, setRefineOverallSetting] = useState<{
-    applyFullSoom: boolean;
-    applyBook: boolean;
-    honingSuccessRate: number | string;
-    honingSuccessRateManual: number | string;
-    artisanEnergy: number | string;
-  }>({
+  const [refineOverallSetting, setRefineOverallSetting] = useState<RefineOverallSettingType>({
     applyFullSoom: false,
     applyBook: false,
     honingSuccessRate: 0,
     honingSuccessRateManual: 0,
     artisanEnergy: 0,
+    kamenRoad: false,
   });
   const deviceType = useDeviceType();
 
@@ -133,27 +138,23 @@ const RefineSetting = ({
     armour2: `${selectOptionParam.option1}방어구2`,
   };
 
-  useEffect(() => {
-    console.log(refineOverallSetting);
-  }, [refineOverallSetting]);
-
   const dropdownOptions = useMemo(() => {
     const objValue = {
       option1: [
         {
-          key: '아브노말',
-          text: '아브노말',
-          value: '아브노말',
+          key: '유물',
+          text: '유물',
+          value: '유물',
         },
         {
-          key: '아브하드',
-          text: '아브하드',
-          value: '아브하드',
+          key: '고대',
+          text: '고대',
+          value: '고대',
         },
         {
-          key: '일리아칸',
-          text: '일리아칸',
-          value: '일리아칸',
+          key: '상위고대',
+          text: '상위고대',
+          value: '상위고대',
         },
       ],
       option2: [
@@ -183,7 +184,7 @@ const RefineSetting = ({
 
   const refineTargetOption = useMemo(() => {
     const arr = Array.from(
-      { length: 14 - (selectOptionParam.option1 === '아브노말' ? 5 : 0) },
+      { length: 14 - (selectOptionParam.option1 === '유물' ? 5 : 0) },
       (_, i) => {
         return {
           key: `refineTargetKey_${i}`,
@@ -204,7 +205,7 @@ const RefineSetting = ({
     const materialRank = materialRankMapping[itemSetType];
 
     const refineNumber =
-      itemSetType.includes('AbrelNormal') && refineCurrent > '20' ? '20' : refineCurrent;
+      itemSetType.includes('유물') && refineCurrent > '20' ? '20' : refineCurrent;
     const requiredRefineMaterialsForOneSimulation =
       requiredRefineMaterials[itemSetType][weaponOrArmourValue][
         `${weaponOrArmourValue}${refineNumber}`
@@ -234,7 +235,7 @@ const RefineSetting = ({
       ...returnFullSoomValues(Number(refineCurrent)),
     };
 
-    if (itemSetType.includes('AbrelNormal') && refineCurrent > '20') setRefineCurrent('20');
+    if (itemSetType.includes('유물') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
   }, [refineCurrent, selectOptionParam]);
@@ -244,6 +245,7 @@ const RefineSetting = ({
       ...prev,
       honingSuccessRate: refineMaterialsMatch.probability,
       honingSuccessRateManual: refineMaterialsMatch.probability,
+      additionalProbability: refineMaterialsMatch.additionalProbability,
       // artisanEnergy: 0,
     }));
   }, [refineMaterialsMatch]);
@@ -254,8 +256,15 @@ const RefineSetting = ({
   }, [refineMaterialsMatch, refineOverallSetting]);
 
   const refineSimulationStart = () => {
-    const { applyFullSoom, artisanEnergy, honingSuccessRate, honingSuccessRateManual, applyBook } =
-      refineOverallSetting;
+    const {
+      applyFullSoom,
+      artisanEnergy,
+      honingSuccessRate,
+      honingSuccessRateManual,
+      applyBook,
+      kamenRoad,
+      additionalProbability,
+    } = refineOverallSetting;
 
     const errMsg: string[] = [];
 
@@ -300,11 +309,14 @@ const RefineSetting = ({
         defaultProb: Number(honingSuccessRate),
         tryCnt: 1,
         startProb: Number(honingSuccessRateManual),
+        additionalProbability:
+          kamenRoad && additionalProbability ? Number(additionalProbability) : 0,
         artisanEnergy: Number(artisanEnergy),
         isFullSoom: applyFullSoom,
         isIncreaseProb: true,
         refineTarget: refineCurrent,
         bookProb: applyBook ? refineMaterialsMatch?.bookProb?.probability : 0,
+        isKamenRoad: kamenRoad && additionalProbability,
         memoryArr: [],
       });
 
@@ -508,7 +520,18 @@ const RefineSetting = ({
               }}
               disabled={!refineMaterialsMatch.bookProb}
             />
-
+            <CheckboxDefault
+              id="CheckboxDefault_ID3"
+              spacing={7}
+              label={'카멘로드'}
+              checked={refineOverallSetting.kamenRoad}
+              onClick={({ isChecked }) => {
+                setRefineOverallSetting((prev) => ({
+                  ...prev,
+                  kamenRoad: isChecked,
+                }));
+              }}
+            />
             <FullSoomBookAvailable
               sun1Count={refineMaterialsMatch['태양의은총']}
               sun2Count={refineMaterialsMatch['태양의축복']}

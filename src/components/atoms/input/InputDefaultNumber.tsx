@@ -6,13 +6,12 @@
  * 1      변지욱     2023-01-31   feature/JW/input            최초작성
  ********************************************************************************************/
 
-import { forwardRef, useState } from 'react';
-import { Input } from 'semantic-ui-react';
-import { InputDefaultPropsNumber } from './Types';
+import { forwardRef } from 'react';
+import { InputDefaultNumberProps } from './Types';
 import { StyledBaseInput } from './Styled';
-import InputHoc from './hoc/InputHOC';
+import InputHOCMain from './hoc/InputHOCMain';
 
-const InputDefaultNumber = forwardRef<null, InputDefaultPropsNumber>(
+const InputDefaultNumber = forwardRef<null, InputDefaultNumberProps>(
   (
     {
       id = '',
@@ -63,4 +62,4 @@ const InputDefaultNumber = forwardRef<null, InputDefaultPropsNumber>(
 
 InputDefaultNumber.displayName = 'InputDefaultNumber';
 
-export default InputHoc(InputDefaultNumber);
+export default InputHOCMain(InputDefaultNumber);
