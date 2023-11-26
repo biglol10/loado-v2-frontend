@@ -2,6 +2,9 @@ import store from '@state/store';
 import { showLoader, hideLoader } from '@state/loaderSlice';
 import queryString from 'query-string';
 import RequestLimitError from '@error/RequestLimitError';
+import { setUserRequests } from '@state/appCommonSlice';
+import _ from 'lodash';
+import dayjs from 'dayjs';
 import axiosInstance from './AxiosInstance';
 
 const RPS = 60 * 1020;
@@ -90,6 +93,22 @@ class BaseService {
     retryCnt?: number;
   }) {
     try {
+      try {
+        const reqData = {
+          method,
+          url,
+          date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        };
+        const userRequestDataForRedux = _.merge(
+          reqData,
+          data ? { data: JSON.stringify(data) } : {},
+        );
+
+        store.dispatch(setUserRequests(userRequestDataForRedux));
+      } catch {}
+
+      console.log(store.getState());
+
       if (store.getState().modal.modalOpen) store.dispatch(showLoader());
       const res = await this.requestMethod[method](url, data);
 
