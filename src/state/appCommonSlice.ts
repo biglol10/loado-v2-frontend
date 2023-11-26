@@ -31,6 +31,7 @@ const appCommonSlice = createSlice({
     setDeviceType: (state, action: PayloadAction<'desktop' | 'tab' | 'mobile'>) => {
       state.deviceType = action.payload;
     },
+    // userAgent정보 추가 필요
     setUserAppId: (state, action: PayloadAction<string>) => {
       state.userAppId = action.payload;
     },
