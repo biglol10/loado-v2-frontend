@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { isMobile } from 'react-device-detect';
@@ -49,6 +49,16 @@ const App = () => {
   const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
   const appCommonState = useSelector((state: RootState) => state.appCommon);
 
+  const appCommonMemo = useMemo(() => {
+    const { userAppId: id, visitedPages, userRequests } = appCommonState;
+
+    return {
+      id,
+      visitedPages,
+      userRequests,
+    };
+  }, [appCommonState]);
+
   useEffect(() => {
     dispatch(setDeviceType(isMobile ? 'mobile' : 'desktop'));
 
@@ -62,12 +72,10 @@ const App = () => {
 
   useEffect(() => {
     return () => {
-      const { userAppId: id, visitedPages, userRequests } = appCommonState;
-
-      sendUserLogs(id, visitedPages, userRequests);
+      sendUserLogs(appCommonMemo);
       alert('ASDF');
     };
-  }, [appCommonState]);
+  }, [appCommonMemo]);
 
   const RouteElements = RouteElementMatch.map((el, idx) => {
     const DynamicElement = lazy(() => import(`${el.elementPath}`));
