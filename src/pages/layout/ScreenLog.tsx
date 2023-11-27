@@ -14,7 +14,6 @@ const ScreenLog: React.FC<ScreenLogProps> = (props) => {
 
   useEffect(() => {
     if (pageIdRef.current === pageId) return;
-    console.log(`pageId is ${pageId}`);
     pageIdRef.current = pageId;
     dispatch(setVisitedPages({ pageId, date: dayjs().format('YYYY-MM-DD HH:mm:ss') }));
   }, [pageId, dispatch]);

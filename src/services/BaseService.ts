@@ -107,8 +107,6 @@ class BaseService {
         store.dispatch(setUserRequests(userRequestDataForRedux));
       } catch {}
 
-      console.log(store.getState());
-
       if (store.getState().modal.modalOpen) store.dispatch(showLoader());
       const res = await this.requestMethod[method](url, data);
 

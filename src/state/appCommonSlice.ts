@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface VisitedPage {
+export interface VisitedPage {
   pageId: string;
   date: string;
 }
 
-interface UserRequest {
+export interface UserRequest {
   method: 'get' | 'post' | 'put';
   url: string;
   date: string;

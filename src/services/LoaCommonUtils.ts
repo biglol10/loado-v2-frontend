@@ -1,3 +1,6 @@
+import { UserRequest, VisitedPage } from '@state/appCommonSlice';
+import BaseService from './BaseService';
+
 const returnFullSoomValues = (refineNumber: number) => {
   if (refineNumber >= 12 && refineNumber <= 13) {
     return {
@@ -116,7 +119,7 @@ const refineSimulation: any = ({
       tryCnt: tryCnt + 1,
       startProb,
     });
-    console.log(memoryArr);
+    // console.log(memoryArr);
 
     return {
       tryCnt: tryCnt + 1,
@@ -143,4 +146,22 @@ const refineSimulation: any = ({
   });
 };
 
-export { returnFullSoomValues, isRefineSuccessFunction, refineSimulation };
+const sendUserLogs = (
+  userAppId: string,
+  visitedPages: VisitedPage[],
+  userRequests: UserRequest[],
+) => {
+  try {
+    BaseService.request({
+      method: 'post',
+      url: '/api/loadoCommon/userlog',
+      data: {
+        userAppId,
+        visitedPages,
+        userRequests,
+      },
+    });
+  } catch {}
+};
+
+export { returnFullSoomValues, isRefineSuccessFunction, refineSimulation, sendUserLogs };

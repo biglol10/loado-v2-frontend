@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import ScreenLog from '@pages/layout/ScreenLog';
 import { nanoid } from '@reduxjs/toolkit';
+import { sendUserLogs } from '@services/LoaCommonUtils';
 import './App.css';
 
 const DynamicModal = lazy(() => import('@components/modal'));
@@ -45,6 +46,8 @@ const App = () => {
   const publicUrl = process.env.PUBLIC_URL;
   const dispatch = useDispatch();
   const userAppId = useRef('');
+  const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
+  const appCommonState = useSelector((state: RootState) => state.appCommon);
 
   useEffect(() => {
     dispatch(setDeviceType(isMobile ? 'mobile' : 'desktop'));
@@ -59,11 +62,13 @@ const App = () => {
 
   useEffect(() => {
     return () => {
+      const { userAppId: id, visitedPages, userRequests } = appCommonState;
+
+      sendUserLogs(id, visitedPages, userRequests);
       alert('ASDF');
     };
-  }, []);
+  }, [appCommonState]);
 
-  const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
   const RouteElements = RouteElementMatch.map((el, idx) => {
     const DynamicElement = lazy(() => import(`${el.elementPath}`));
     const routeElement = <DynamicElement />;
