@@ -47,17 +47,6 @@ const App = () => {
   const dispatch = useDispatch();
   const userAppId = useRef('');
   const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
-  const appCommonState = useSelector((state: RootState) => state.appCommon);
-
-  const appCommonMemo = useMemo(() => {
-    const { userAppId: id, visitedPages, userRequests } = appCommonState;
-
-    return {
-      id,
-      visitedPages,
-      userRequests,
-    };
-  }, [appCommonState]);
 
   useEffect(() => {
     dispatch(setDeviceType(isMobile ? 'mobile' : 'desktop'));
@@ -72,10 +61,9 @@ const App = () => {
 
   useEffect(() => {
     return () => {
-      sendUserLogs(appCommonMemo);
-      alert('ASDF');
+      sendUserLogs();
     };
-  }, [appCommonMemo]);
+  }, []);
 
   const RouteElements = RouteElementMatch.map((el, idx) => {
     const DynamicElement = lazy(() => import(`${el.elementPath}`));
