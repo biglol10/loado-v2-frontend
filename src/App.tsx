@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { isMobile } from 'react-device-detect';
@@ -12,7 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import ScreenLog from '@pages/layout/ScreenLog';
 import { nanoid } from '@reduxjs/toolkit';
-import { sendUserLogs } from '@services/LoaCommonUtils';
 import './App.css';
 
 const DynamicModal = lazy(() => import('@components/modal'));
@@ -58,12 +57,6 @@ const App = () => {
       dispatch(setUserAppId(uniqueUserAppId));
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    return () => {
-      sendUserLogs();
-    };
-  }, []);
 
   const RouteElements = RouteElementMatch.map((el, idx) => {
     const DynamicElement = lazy(() => import(`${el.elementPath}`));

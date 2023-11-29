@@ -93,21 +93,23 @@ class BaseService {
     retryCnt?: number;
   }) {
     try {
-      try {
-        const reqData = {
-          method,
-          url,
-          date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-        };
-        const userRequestDataForRedux = _.merge(
-          reqData,
-          data ? { data: JSON.stringify(data) } : {},
-        );
+      if (url !== '/api/loadoCommon/userlog') {
+        try {
+          const reqData = {
+            method,
+            url,
+            date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+          };
+          const userRequestDataForRedux = _.merge(
+            reqData,
+            data ? { data: JSON.stringify(data) } : {},
+          );
 
-        store.dispatch(setUserRequests(userRequestDataForRedux));
-      } catch {}
+          store.dispatch(setUserRequests(userRequestDataForRedux));
+        } catch {}
+      }
 
-      if (store.getState().modal.modalOpen) store.dispatch(showLoader());
+      if (!store.getState().modal.modalOpen) store.dispatch(showLoader());
       const res = await this.requestMethod[method](url, data);
 
       store.dispatch(hideLoader());

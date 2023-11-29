@@ -146,7 +146,7 @@ const refineSimulation: any = ({
   });
 };
 
-const sendUserLogs = () => {
+const sendUserLogs = async () => {
   try {
     const { userAppId, visitedPages, userRequests } = store.getState().appCommon;
 

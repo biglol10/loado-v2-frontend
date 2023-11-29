@@ -7,6 +7,7 @@ import { IsMobile } from '@consts/interfaces';
 import { UseQueryResult, useQueries } from '@tanstack/react-query';
 import { getMarketPriceByCategoryCode } from '@services/ItemPriceService';
 import _ from 'lodash';
+import { sendUserLogs } from '@services/LoaCommonUtils';
 
 const TopTab = styled.div<IsMobile>`
   .tab-list {
@@ -285,6 +286,7 @@ const ItemPricePage = () => {
           )}
         </TableWrapper>
       )}
+      <button onClick={() => sendUserLogs()}>asdf</button>
     </>
   );
 };
