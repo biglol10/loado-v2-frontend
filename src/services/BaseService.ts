@@ -108,7 +108,7 @@ class BaseService {
         store.dispatch(showLoader());
       const res = await this.requestMethod[method](url, data);
 
-      store.dispatch(hideLoader());
+      if (url !== '/api/loadoCommon/userlog') store.dispatch(hideLoader());
       return res;
     } catch (error: any) {
       store.dispatch(hideLoader());
