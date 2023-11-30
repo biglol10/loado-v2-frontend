@@ -2,10 +2,9 @@ import store from '@state/store';
 import { showLoader, hideLoader } from '@state/loaderSlice';
 import queryString from 'query-string';
 import RequestLimitError from '@error/RequestLimitError';
-import { setUserRequests } from '@state/appCommonSlice';
 import _ from 'lodash';
-import dayjs from 'dayjs';
 import axiosInstance from './AxiosInstance';
+import { sendUserLog } from './LoaCommonUtils';
 
 const RPS = 60 * 1020;
 const MAX_RETCNT = 2;
@@ -98,14 +97,10 @@ class BaseService {
           const reqData = {
             method,
             url,
-            date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
           };
-          const userRequestDataForRedux = _.merge(
-            reqData,
-            data ? { data: JSON.stringify(data) } : {},
-          );
+          const userRequestDataLog = _.merge(reqData, data ? { data: JSON.stringify(data) } : {});
 
-          store.dispatch(setUserRequests(userRequestDataForRedux));
+          sendUserLog('request', null, userRequestDataLog);
         } catch {}
       }
 

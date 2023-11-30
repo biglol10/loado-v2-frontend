@@ -1,4 +1,6 @@
 import store from '@state/store';
+import _ from 'lodash';
+import { UserRequest } from '@state/appCommonSlice';
 import BaseService from './BaseService';
 
 const returnFullSoomValues = (refineNumber: number) => {
@@ -146,20 +148,22 @@ const refineSimulation: any = ({
   });
 };
 
-const sendUserLogs = async () => {
+const sendUserLog = (
+  type: 'screen' | 'request',
+  visitedPage: string | null,
+  userRequest: UserRequest | null,
+) => {
   try {
-    const { userAppId, visitedPages, userRequests } = store.getState().appCommon;
+    const { userAppId } = store.getState().appCommon;
+
+    const data = _.merge({ userAppId }, type === 'screen' ? { visitedPage } : { userRequest });
 
     BaseService.request({
       method: 'post',
       url: '/api/loadoCommon/userlog',
-      data: {
-        userAppId,
-        visitedPages,
-        userRequests,
-      },
+      data,
     });
   } catch {}
 };
 
-export { returnFullSoomValues, isRefineSuccessFunction, refineSimulation, sendUserLogs };
+export { returnFullSoomValues, isRefineSuccessFunction, refineSimulation, sendUserLog };
