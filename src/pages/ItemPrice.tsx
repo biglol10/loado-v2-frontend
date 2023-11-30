@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import { MainTable } from '@components/atoms/table/index';
 import { IsMobile } from '@consts/interfaces';
-import { useQueries } from '@tanstack/react-query';
+import { UseQueryResult, useQueries } from '@tanstack/react-query';
 import { getMarketPriceByCategoryCode } from '@services/ItemPriceService';
 import _ from 'lodash';
 
@@ -85,6 +85,8 @@ const dataOrderInAdditionalRefineType = [
   '재봉술 : 수선 특화',
 ];
 
+const initalCategoryCodes = ['44410', '44420', '50010', '50020', '51000', '51100', '210000'];
+
 const ItemPricePage = () => {
   const [activeTab, setActiveTab] = useState<ActiveTabType>('all');
   const [refinement, setRefinement] = useState<ItemData[]>([]);
@@ -95,8 +97,6 @@ const ItemPricePage = () => {
   const [characterEngravings, setCharacterEngravings] = useState<ItemData[]>([]);
   const [jewlery, setJewlery] = useState<ItemData[]>([]);
   const deviceType = useDeviceType();
-  const initalCategoryCodes = ['44410', '44420', '50010', '50020', '51000', '51100', '210000'];
-  // const [categoryCode, setCategoryCode] = useState<string>('50020');
 
   const returnDataByStringArray = (data: ItemData[], arr: string[]) => {
     const orderedData = _.orderBy(data, (item) => {
@@ -108,42 +108,11 @@ const ItemPricePage = () => {
     return orderedData;
   };
 
-  const queries = useQueries({
+  const queries: UseQueryResult<ItemData[], any>[] = useQueries({
     queries: initalCategoryCodes.map((code) => {
       return {
         queryKey: ['marketPrice2', code],
         queryFn: () => getMarketPriceByCategoryCode(code),
-        onSuccess: (data: ItemData[]) => {
-          switch (code) {
-            case '44410':
-              setEngravings(data.sort((a, b) => b.minCurrentMinPrice - a.minCurrentMinPrice));
-              break;
-            case '44420':
-              setCharacterEngravings(
-                data.sort((a, b) => b.minCurrentMinPrice - a.minCurrentMinPrice),
-              );
-              break;
-            case '50010':
-              setRefinement(returnDataByStringArray(data, dataOrderInRefineType));
-              break;
-            case '50020':
-              setRefinementAdditional(
-                returnDataByStringArray(data, dataOrderInAdditionalRefineType),
-              );
-              break;
-            case '51000':
-              setEtc(data);
-              break;
-            case '51100':
-              setAsder(data);
-              break;
-            case '210000':
-              setJewlery(data);
-              break;
-            default:
-              break;
-          }
-        },
         onError: (error: any) => {
           console.log('Error:', error);
         },
@@ -154,10 +123,45 @@ const ItemPricePage = () => {
     }),
   });
 
+  // ! 캐싱 적용하는 의미가 없어서 주석처리
+  // useEffect(() => {
+  //   queries.forEach((query) => query.refetch());
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   useEffect(() => {
-    queries.forEach((query) => query.refetch());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    queries.forEach((query, index) => {
+      const code = initalCategoryCodes[index];
+
+      const data = query.data || [];
+
+      switch (code) {
+        case '44410':
+          setEngravings(data.sort((a, b) => b.minCurrentMinPrice - a.minCurrentMinPrice));
+          break;
+        case '44420':
+          setCharacterEngravings(data.sort((a, b) => b.minCurrentMinPrice - a.minCurrentMinPrice));
+          break;
+        case '50010':
+          setRefinement(returnDataByStringArray(data, dataOrderInRefineType));
+          break;
+        case '50020':
+          setRefinementAdditional(returnDataByStringArray(data, dataOrderInAdditionalRefineType));
+          break;
+        case '51000':
+          setEtc(data);
+          break;
+        case '51100':
+          setAsder(data);
+          break;
+        case '210000':
+          setJewlery(data);
+          break;
+        default:
+          break;
+      }
+    });
+  }, [queries]);
 
   const columns = useMemo(() => {
     if (deviceType === 'mobile') {

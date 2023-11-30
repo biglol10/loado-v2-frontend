@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { isMobile } from 'react-device-detect';
@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import RouteElementMatch from '@pages/index';
 import { RootState } from '@state/store';
-import { setDeviceType } from '@state/appCommonSlice';
+import { setDeviceType, setUserAppId } from '@state/appCommonSlice';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import ScreenLog from '@pages/layout/ScreenLog';
+import { nanoid } from '@reduxjs/toolkit';
 import './App.css';
 
 const DynamicModal = lazy(() => import('@components/modal'));
@@ -42,12 +44,20 @@ const CenteredLoader = ({ useDimmer = false }: { useDimmer?: boolean }) => {
 const App = () => {
   const publicUrl = process.env.PUBLIC_URL;
   const dispatch = useDispatch();
+  const userAppId = useRef('');
+  const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
 
   useEffect(() => {
     dispatch(setDeviceType(isMobile ? 'mobile' : 'desktop'));
+
+    if (!userAppId.current) {
+      const uniqueUserAppId = nanoid();
+
+      userAppId.current = uniqueUserAppId;
+      dispatch(setUserAppId(uniqueUserAppId));
+    }
   }, [dispatch]);
 
-  const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
   const RouteElements = RouteElementMatch.map((el, idx) => {
     const DynamicElement = lazy(() => import(`${el.elementPath}`));
     const routeElement = <DynamicElement />;
@@ -58,23 +68,25 @@ const App = () => {
         key={`pageElement_${idx}`}
         path={el.path}
         element={
-          <Suspense fallback={<CenteredLoader />}>
-            {Layout ? (
-              <Layout>
-                {routeElement}
-                <DynamicModal />
-                <ToastContainer />
-                {isShowLoading && <CenteredLoader useDimmer={true} />}
-              </Layout>
-            ) : (
-              <>
-                {routeElement}
-                <DynamicModal />
-                <ToastContainer className="custom-toast" bodyClassName="custom-toast-body" />
-                {isShowLoading && <CenteredLoader useDimmer={true} />}
-              </>
-            )}
-          </Suspense>
+          <ScreenLog pageId={el.path.substring(1)} key={el.path}>
+            <Suspense fallback={<CenteredLoader />}>
+              {Layout ? (
+                <Layout>
+                  {routeElement}
+                  <DynamicModal />
+                  <ToastContainer />
+                  {isShowLoading && <CenteredLoader useDimmer={true} />}
+                </Layout>
+              ) : (
+                <>
+                  {routeElement}
+                  <DynamicModal />
+                  <ToastContainer className="custom-toast" bodyClassName="custom-toast-body" />
+                  {isShowLoading && <CenteredLoader useDimmer={true} />}
+                </>
+              )}
+            </Suspense>
+          </ScreenLog>
         }
       />
     );

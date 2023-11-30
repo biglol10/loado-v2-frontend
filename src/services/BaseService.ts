@@ -2,7 +2,9 @@ import store from '@state/store';
 import { showLoader, hideLoader } from '@state/loaderSlice';
 import queryString from 'query-string';
 import RequestLimitError from '@error/RequestLimitError';
+import _ from 'lodash';
 import axiosInstance from './AxiosInstance';
+import { sendUserLog } from './LoaCommonUtils';
 
 const RPS = 60 * 1020;
 const MAX_RETCNT = 2;
@@ -90,7 +92,19 @@ class BaseService {
     retryCnt?: number;
   }) {
     try {
-      if (store.getState().modal.modalOpen) store.dispatch(showLoader());
+      if (url !== '/api/loadoCommon/userlog') {
+        try {
+          const reqData = {
+            method,
+            url,
+          };
+          const userRequestDataLog = _.merge(reqData, data ? { data: JSON.stringify(data) } : {});
+
+          sendUserLog('request', null, userRequestDataLog);
+        } catch {}
+      }
+
+      if (!store.getState().modal.modalOpen) store.dispatch(showLoader());
       const res = await this.requestMethod[method](url, data);
 
       store.dispatch(hideLoader());

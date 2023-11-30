@@ -1,3 +1,8 @@
+import store from '@state/store';
+import _ from 'lodash';
+import { UserRequest } from '@state/appCommonSlice';
+import BaseService from './BaseService';
+
 const returnFullSoomValues = (refineNumber: number) => {
   if (refineNumber >= 12 && refineNumber <= 13) {
     return {
@@ -116,7 +121,7 @@ const refineSimulation: any = ({
       tryCnt: tryCnt + 1,
       startProb,
     });
-    console.log(memoryArr);
+    // console.log(memoryArr);
 
     return {
       tryCnt: tryCnt + 1,
@@ -143,4 +148,22 @@ const refineSimulation: any = ({
   });
 };
 
-export { returnFullSoomValues, isRefineSuccessFunction, refineSimulation };
+const sendUserLog = (
+  type: 'screen' | 'request',
+  visitedPage: string | null,
+  userRequest: UserRequest | null,
+) => {
+  try {
+    const { userAppId } = store.getState().appCommon;
+
+    const data = _.merge({ userAppId }, type === 'screen' ? { visitedPage } : { userRequest });
+
+    BaseService.request({
+      method: 'post',
+      url: '/api/loadoCommon/userlog',
+      data,
+    });
+  } catch {}
+};
+
+export { returnFullSoomValues, isRefineSuccessFunction, refineSimulation, sendUserLog };
