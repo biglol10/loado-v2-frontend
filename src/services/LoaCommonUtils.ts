@@ -3,6 +3,13 @@ import _ from 'lodash';
 import { UserRequest } from '@state/appCommonSlice';
 import BaseService from './BaseService';
 
+interface NavigatorWithUserAgentData extends Navigator {
+  userAgentData?: {
+    mobile: boolean;
+    platform: string;
+  };
+}
+
 const returnFullSoomValues = (refineNumber: number) => {
   if (refineNumber >= 12 && refineNumber <= 13) {
     return {
@@ -154,9 +161,19 @@ const sendUserLog = (
   userRequest: UserRequest | null,
 ) => {
   try {
-    const { userAppId } = store.getState().appCommon;
+    const { userAppId, deviceType } = store.getState().appCommon;
 
-    const data = _.merge({ userAppId }, type === 'screen' ? { visitedPage } : { userRequest });
+    const data = _.merge(
+      {
+        userAppId,
+        isMobile: deviceType === 'mobile',
+        platform:
+          'userAgentData' in navigator
+            ? (navigator as NavigatorWithUserAgentData).userAgentData?.platform ?? ''
+            : '',
+      },
+      type === 'screen' ? { visitedPage } : { userRequest },
+    );
 
     BaseService.request({
       method: 'post',
