@@ -104,7 +104,8 @@ class BaseService {
         } catch {}
       }
 
-      if (!store.getState().modal.modalOpen) store.dispatch(showLoader());
+      if (!store.getState().modal.modalOpen && url !== '/api/loadoCommon/userlog')
+        store.dispatch(showLoader());
       const res = await this.requestMethod[method](url, data);
 
       store.dispatch(hideLoader());
