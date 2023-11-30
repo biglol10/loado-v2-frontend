@@ -163,6 +163,8 @@ const sendUserLog = (
   try {
     const { userAppId, deviceType } = store.getState().appCommon;
 
+    if (!userAppId) return;
+
     const data = _.merge(
       {
         userAppId,
