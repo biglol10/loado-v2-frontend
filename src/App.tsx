@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef } from 'react';
+import { lazy, Suspense, useLayoutEffect, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { isMobile } from 'react-device-detect';
@@ -47,7 +47,8 @@ const App = () => {
   const userAppId = useRef('');
   const { loaderShow: isShowLoading } = useSelector((state: RootState) => state.loader);
 
-  useEffect(() => {
+  // useEffect에선 /itemPrice바로 진입 시 ScreenLog의 useEffect가 먼저 작동할 수 있어 screenLog함수에서 userAppId가 ""가 되는 현상 방지하기 위해 useLayoutEffect
+  useLayoutEffect(() => {
     dispatch(setDeviceType(isMobile ? 'mobile' : 'desktop'));
 
     if (!userAppId.current) {
