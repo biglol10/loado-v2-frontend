@@ -7,7 +7,7 @@
 
 <h1 align="center">로스트아크 아이템 시세조회 및 재련시뮬레이션 제공 서비스</h1>
 <p align="center">
-  <a href="https://github.com/Ratheshan03/readme-typing-svg"><img src="https://readme-typing-svg.herokuapp.com?lines=Loado V2;로스트아크 시세조회;로스트아크 시뮬레이션&center=true&width=500&height=50"></a>
+  <img src="https://readme-typing-svg.herokuapp.com?lines=Loado V2;로스트아크 시세조회;로스트아크 시뮬레이션&center=true&width=500&height=50">
 </p>
 
 <br/>
@@ -21,6 +21,7 @@
 1. 전체적인 아이템 시세조회
 2. 특정 아이템의 월별 시세조회
 3. 재련 시뮬레이션
+4. 모바일 사이즈 지원
 
 <br/>
 
@@ -49,5 +50,22 @@
 - 시세정보를 그래프 형태로 제공
 - 그래프에 마우스 가져다대면 그날 최소가격, 평균가격, 최대가격 확인할 수 있는 창 등장
 - 시세정보를 테이블 형태로 제공 및 날짜 순서변경 기능 제공
-- 엘릭서
-- 엘릭서, 보석
+
+![ItemPrice Modal](/readmeImages/itemPriceModal.png)
+
+<br/>
+
+---
+
+<br/>
+
+<h3>✨ 재련 시뮬레이션 - 시뮬레이션을 통해 재련의 평균적인 비용이랑 운이 상위 n%일 때 들어가는 비용 정보 제공</h3>
+
+- 현재 날짜 재련 재료들의 최소가격을 기준으로 들어가는 재련 비용 계산
+- 귀속 재료 개수를 입력하면 귀속재료를 제외한 금액 표시
+- 시뮬레이션 결과를 그래프 형태로 제공
+- 그래프 막대바를 클릭 시 들어가는 재련재료 개수와 비용을 계산하여 표시
+
+![Simulation Page1](/readmeImages/simulationPage1.png)
+<br/><br/>
+![Simulation Page2](/readmeImages/simulationPage2.png)
