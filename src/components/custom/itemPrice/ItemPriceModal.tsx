@@ -341,7 +341,7 @@ const ItemPriceModal = ({
         </CustomDiv>
       ) : (
         <StyledDiv display="flex" justifyContent="center">
-          <h3>!! 데이터가 없습니다 !!</h3>
+          <h3>!! 데이터가 없거나 조회를 눌러주세요 !!</h3>
         </StyledDiv>
       )}
     </div>
