@@ -5,11 +5,6 @@
 **Loado V2**는 예전 [Loado](https://github.com/biglol10/loado-react) 숙제관리+시세조회 서비스의 연장선으로 새롭게 개발된 사이트입니다.  
 이 서비스에선 월별 아이템의 시세를 조회할 수 있으며 재련 시뮬레이션을 통해 각 재련 횟수 구간에 따라 어느정도의 골드가 소요되는지 볼 수 있습니다.
 
-<h1 align="center">로스트아크 아이템 시세조회 및 재련시뮬레이션 제공 서비스</h1>
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?lines=Loado V2;로스트아크 시세조회;로스트아크 시뮬레이션&center=true&width=500&height=50">
-</p>
-
 <br/>
 
 ---
