@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
   InheritedMaterialsCountPriceDesktop,
   InputLayout,
@@ -17,6 +17,7 @@ import { Icon, Label } from 'semantic-ui-react';
 import { Image } from '@components/atoms/image';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import RefineSettingMobile from '@components/custom/simulation/RefineSettingMobile';
+import { InputHOCRefType } from '@components/atoms/input/Types';
 
 type ProcessedDataItem = {
   range: string;
@@ -34,6 +35,7 @@ const Simulation = () => {
   const [topNPercentPoint, setTopNPercentPoint] = useState(30);
   const [refineMaterialsMatchOverall, setRefineMaterialsMatchOverall] = useState<any>(null);
   const [simulationCount, setSimulationCount] = useState('1000');
+  // const inputRef = useRef<InputHOCRefType>(null);
 
   const itemsQuery = useQuery({
     queryKey: ['itemsPrice'],
@@ -197,6 +199,7 @@ const Simulation = () => {
                     onChange={(value) => {
                       setTopNPercentPoint(Number(value));
                     }}
+                    // ref={inputRef}
                   />
                 </InputLayout>
               </StyledDiv>
