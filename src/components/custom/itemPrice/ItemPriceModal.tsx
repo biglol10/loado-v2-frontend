@@ -215,6 +215,7 @@ const ItemPriceModal = ({
             <Dropdown
               className="button icon"
               floating
+              scrolling
               options={yearOptions}
               trigger={<></>}
               value={yearValue}
@@ -228,6 +229,7 @@ const ItemPriceModal = ({
             <Dropdown
               className="button icon"
               floating
+              scrolling
               options={monthOptions}
               trigger={<></>}
               value={monthValue}
