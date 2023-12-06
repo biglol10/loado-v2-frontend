@@ -42,6 +42,72 @@ const CenteredLoader = ({ useDimmer = false }: { useDimmer?: boolean }) => {
   );
 };
 
+// const routeElementMatch = [
+//   {
+//     path: '/',
+//     elementPath: './pages/Home',
+//     layout: MainLayout,
+//     children: [
+//       {
+//         path: 'nestedRoute',
+//         elementPath: './pages/NestedRoute',
+//         layout: MainLayout,
+//       },
+//       // ... more nested routes as needed ...
+//     ],
+//   },
+//   // ... other routes ...
+// ];
+
+// const createRoutes = (routes) => {
+//   return routes.map((route, idx) => {
+//     const DynamicElement = lazy(() => import(`${route.elementPath}`));
+//     const routeElement = <DynamicElement />;
+//     const Layout = route.layout;
+
+//     const nestedRoutes = route.children ? createRoutes(route.children) : null;
+
+//     return (
+//       <Route
+//         key={`pageElement_${idx}`}
+//         path={route.path}
+//         element={
+//           <ScreenLog pageId={route.path.substring(1)} key={route.path}>
+//             <Suspense fallback={<CenteredLoader />}>
+//               {Layout ? (
+//                 <Layout>
+//                   {routeElement}
+//                   {nestedRoutes}
+//                   <DynamicModal />
+//                   <ToastContainer />
+//                   {isShowLoading && <CenteredLoader useDimmer={true} />}
+//                 </Layout>
+//               ) : (
+//                 <>
+//                   {routeElement}
+//                   {nestedRoutes}
+//                   <DynamicModal />
+//                   <ToastContainer className="custom-toast" bodyClassName="custom-toast-body" />
+//                   {isShowLoading && <CenteredLoader useDimmer={true} />}
+//                 </>
+//               )}
+//             </Suspense>
+//           </ScreenLog>
+//         }
+//       >
+//         {nestedRoutes && nestedRoutes.length > 0 ? (
+//           <>
+//             {nestedRoutes}
+//             <Route path="*" element={<NotFound />} />
+//           </>
+//         ) : null}
+//       </Route>
+//     );
+//   });
+// };
+
+// const RouteElements = createRoutes(routeElementMatch);
+
 const App = () => {
   const publicUrl = process.env.PUBLIC_URL;
   const dispatch = useDispatch();
