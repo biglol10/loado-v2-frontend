@@ -39,7 +39,7 @@ const handleResponseError = (error: any) => {
 
   const { response } = error;
 
-  // 요청을 많이 보내면 여기로 옴 (handleResponseSuccess가 아님)
+  // ! 요청을 많이 보내면 여기로 옴 (handleResponseSuccess가 아님)
   if (response.status === 429) {
     return Promise.reject(new RequestLimitError('Request Limit'));
   }

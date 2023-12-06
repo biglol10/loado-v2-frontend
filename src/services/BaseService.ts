@@ -98,7 +98,10 @@ class BaseService {
             method,
             url,
           };
-          const userRequestDataLog = _.merge(reqData, data ? { data: JSON.stringify(data) } : {});
+          const userRequestDataLog = _.merge(
+            reqData,
+            data ? { data: JSON.stringify(data).substring(0, 100) } : {},
+          );
 
           sendUserLog('request', null, userRequestDataLog);
         } catch {}
