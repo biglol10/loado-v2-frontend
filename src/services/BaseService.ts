@@ -103,7 +103,10 @@ class BaseService {
             data ? { data: JSON.stringify(data).substring(0, 100) } : {},
           );
 
-          sendUserLog('request', null, userRequestDataLog);
+          // Network탭에서 api - userlog - api - userlog... 대신 api-api-userlog-userlog로 표시하게끔 로그 보내는 시간을 조금 늦춤
+          setTimeout(() => {
+            sendUserLog('request', null, userRequestDataLog);
+          }, 1000);
         } catch {}
       }
 
