@@ -17,6 +17,7 @@ import { Icon, Label } from 'semantic-ui-react';
 import { Image } from '@components/atoms/image';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import RefineSettingMobile from '@components/custom/simulation/RefineSettingMobile';
+import { ItemGradeType, ItemType } from '@consts/interfaces';
 
 type SimulationResultGroupPointResult = {
   range: string;
@@ -27,6 +28,11 @@ export type SimulationResultGraphData = {
   simulationResultGroupPointResultList: SimulationResultGroupPointResult[];
   top30PercentPoint?: SimulationResultGroupPointResult;
 };
+
+export interface TargetRefineOption {
+  itemGrade: ItemGradeType;
+  itemType: ItemType;
+}
 
 const Simulation = () => {
   const [countObjDashboard, setCountObjDashboard] = useState(itemNameAndCountByGroupPerId);
@@ -62,10 +68,10 @@ const Simulation = () => {
     } else return {};
   }, [itemsQuery]);
 
-  const [selectedValue, setSelectedValue] = useState('count');
-  const [selectOptionParam, setSelectOptionParam] = useState({
-    option1: '유물',
-    option2: '무기',
+  const [dashboardType, setDashboardType] = useState('count');
+  const [targetRefineOption, setTargetRefineOption] = useState<TargetRefineOption>({
+    itemGrade: '유물',
+    itemType: '무기',
   });
 
   const graphData = useMemo<SimulationResultGraphData | null>(() => {
@@ -132,8 +138,8 @@ const Simulation = () => {
             { label: '귀속재료개수', value: 'count' },
             { label: '재료가격', value: 'price' },
           ]}
-          selectedValue={selectedValue}
-          onChange={(value: string) => setSelectedValue(value)}
+          selectedValue={dashboardType}
+          onChange={(value: string) => setDashboardType(value)}
         />
       </StyledDiv>
       <br />
@@ -142,7 +148,7 @@ const Simulation = () => {
         <ExistingMaterialCountAndMaterialPriceStatusBoard
           countObjDashboard={countObjDashboard}
           setCountObjDashboard={setCountObjDashboard}
-          countOrPrice={selectedValue}
+          countOrPrice={dashboardType}
           itemPriceInfoMapping={itemPriceInfoMapping}
         />
       </InheritedMaterials>
@@ -150,8 +156,8 @@ const Simulation = () => {
       <br />
       {deviceType !== 'mobile' ? (
         <RefineSetting
-          selectOptionParam={selectOptionParam}
-          setSelectOptionParam={setSelectOptionParam}
+          targetRefineOption={targetRefineOption}
+          setTargetRefineOption={setTargetRefineOption}
           setSimulationResult={setSimulationResult}
           updateRefineMaterialsMatch={updateRefineMaterialsMatch}
           simulationCount={simulationCount}
@@ -159,8 +165,8 @@ const Simulation = () => {
         />
       ) : (
         <RefineSettingMobile
-          selectOptionParam={selectOptionParam}
-          setSelectOptionParam={setSelectOptionParam}
+          targetRefineOption={targetRefineOption}
+          setTargetRefineOption={setTargetRefineOption}
           setSimulationResult={setSimulationResult}
           updateRefineMaterialsMatch={updateRefineMaterialsMatch}
           simulationCount={simulationCount}
