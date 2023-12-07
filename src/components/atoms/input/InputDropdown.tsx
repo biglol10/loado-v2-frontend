@@ -12,6 +12,7 @@ import { InputDropdownProps } from './Types';
 // import InputDropdownHOC from './hoc/InputDropdownHOC';
 import InputHoc from './hoc/InputHOC';
 import { StyledBaseDropdown } from './Styled';
+import InputDropdownHOC from './hoc/InputDropdownHOC';
 
 const InputDropdown = forwardRef<null, InputDropdownProps>(
   (
@@ -30,6 +31,7 @@ const InputDropdown = forwardRef<null, InputDropdownProps>(
       error = false,
       onEnter = null,
       compact = false,
+      ...rest
     },
     ref,
   ) => {
@@ -42,6 +44,7 @@ const InputDropdown = forwardRef<null, InputDropdownProps>(
 
     return (
       <StyledBaseDropdown
+        {...rest}
         ref={ref}
         id={id}
         className={className}
@@ -74,4 +77,4 @@ const InputDropdown = forwardRef<null, InputDropdownProps>(
 
 InputDropdown.displayName = 'InputDropdown';
 
-export default InputHoc(InputDropdown);
+export default InputDropdownHOC(InputDropdown);

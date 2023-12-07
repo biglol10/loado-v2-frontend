@@ -34,6 +34,7 @@ const InputWithIcon = forwardRef<null, InputWithIconProps>(
       iconPosition = undefined,
       iconClick = null,
       setInputValue = null,
+      ...rest
     },
     ref,
   ) => {
@@ -54,6 +55,7 @@ const InputWithIcon = forwardRef<null, InputWithIconProps>(
 
     return (
       <StyledBaseInput
+        {...rest}
         id={id}
         className={className}
         loading={loading}

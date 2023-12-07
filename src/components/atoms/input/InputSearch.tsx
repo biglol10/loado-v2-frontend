@@ -31,11 +31,13 @@ const InputSearch = forwardRef<Input, InputSearchType>(
       // stretch = false,
       error = false,
       onEnter = null,
+      ...rest
     },
     ref,
   ) => {
     return (
       <StyledBaseInput
+        {...rest}
         id={id}
         className={className}
         loading={loading}

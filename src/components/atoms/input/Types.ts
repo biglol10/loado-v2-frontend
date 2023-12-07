@@ -5,6 +5,7 @@ import {
   InputOnChangeData,
   StrictInputProps,
   Dropdown,
+  StrictDropdownProps,
 } from 'semantic-ui-react';
 
 // ? Types in InputDefault component
@@ -93,7 +94,7 @@ export interface InputDefaultNumberProps extends StrictInputProps {
 }
 
 // ? Types in InputDropdown component
-export interface InputDropdownProps extends DropdownProps {
+export interface InputDropdownProps extends StrictDropdownProps {
   id?: string;
   className?: string;
   placeholder?: string;
@@ -108,6 +109,7 @@ export interface InputDropdownProps extends DropdownProps {
   onEnter?: () => void;
   keyboardInput?: boolean;
   compact?: boolean;
+  ref?: React.Ref<HTMLSelectElement | any>;
 }
 
 // ? Types in InputLayout component
@@ -144,13 +146,12 @@ export interface InputSearchProps extends InputDefaultProps {
 
 export type InputHOCRefType = { inputElement: Input | undefined; clear: () => void };
 export type DropdownHOCRefType = {
-  dropdownElement: typeof Dropdown | undefined;
+  dropdownElement: HTMLSelectElement | null;
   clear: () => void;
 };
 
 export type InputHOCRefMainType = React.Ref<InputHOCRefType> | undefined;
-
-// export type DropdownHOCRefMainType = React.Ref<DropdownHOCRefType>
+export type DropdownHOCRefMainType = React.Ref<DropdownHOCRefType> | undefined;
 
 export interface InputSearchType extends StrictInputProps {
   id?: string;

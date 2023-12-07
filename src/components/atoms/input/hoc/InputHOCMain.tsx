@@ -28,7 +28,7 @@ interface InputProps extends Omit<InputTypeOverall, 'onChange'> {
 
 const InputHOCMain = (InputComponent: React.FC<InputTypeOverall>) => {
   const WithInput = (props: InputProps, ref: InputHOCRefMainType) => {
-    const [inputValue, setInputValue] = useState<string>(props.value || '');
+    const [inputValue, setInputValue] = useState<string>(props.value ?? '');
     const inputRef = useRef<Input>();
 
     const { onChange } = props;
