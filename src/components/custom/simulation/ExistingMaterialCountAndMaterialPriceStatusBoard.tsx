@@ -44,16 +44,16 @@ const HeaderSpan = styled.span`
   margin-left: 5px;
 `;
 
-const InheritedMaterialsCountPriceDesktop = ({
+const ExistingMaterialCountAndMaterialPriceStatusBoard = ({
   countObjDashboard,
   setCountObjDashboard,
   countOrPrice = 'count',
   itemPriceInfoMapping = {},
 }: any) => {
   const categoryTextMapping = {
-    categoryObj1: '🛑 명파 + 야금술 (귀속)',
-    categoryObj2: '🛑 강화석 + 명돌 (귀속)',
-    categoryObj3: '🛑 특수/융화 재료 (귀속)',
+    bookAndHonorShard: '🛑 명파 + 야금술 (귀속)',
+    weaponAndArmorStone: '🛑 강화석 + 명돌 (귀속)',
+    accelerantStone: '🛑 특수/융화 재료 (귀속)',
   };
 
   const deviceType = useDeviceType();
@@ -133,4 +133,4 @@ const InheritedMaterialsCountPriceDesktop = ({
   );
 };
 
-export default InheritedMaterialsCountPriceDesktop;
+export default ExistingMaterialCountAndMaterialPriceStatusBoard;

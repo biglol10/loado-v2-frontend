@@ -1,6 +1,6 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
-  InheritedMaterialsCountPriceDesktop,
+  ExistingMaterialCountAndMaterialPriceStatusBoard,
   InputLayout,
   InputWithIcon,
   RadioButtonGroup,
@@ -12,25 +12,24 @@ import RefineSetting, { ISimulationResult } from '@components/custom/simulation/
 import { StyledDiv, StyledSpan } from '@consts/appStyled';
 import SimulationBarChart from '@components/custom/simulation/SimulationBarChart';
 import _ from 'lodash';
-import { simulationObjectDashboard } from '@consts/requiredRefineMaterials';
+import { itemNameAndCountByGroupPerId } from '@consts/requiredRefineMaterials';
 import { Icon, Label } from 'semantic-ui-react';
 import { Image } from '@components/atoms/image';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import RefineSettingMobile from '@components/custom/simulation/RefineSettingMobile';
-import { InputHOCRefType } from '@components/atoms/input/Types';
 
-type ProcessedDataItem = {
+type SimulationResultGroupPointResult = {
   range: string;
   count: number;
 };
 
-type GraphDataType = {
-  processedData: ProcessedDataItem[];
-  top30PercentCategory?: ProcessedDataItem;
+export type SimulationResultGraphData = {
+  simulationResultGroupPointResultList: SimulationResultGroupPointResult[];
+  top30PercentPoint?: SimulationResultGroupPointResult;
 };
 
 const Simulation = () => {
-  const [countObjDashboard, setCountObjDashboard] = useState(simulationObjectDashboard);
+  const [countObjDashboard, setCountObjDashboard] = useState(itemNameAndCountByGroupPerId);
   const [simulationResult, setSimulationResult] = useState<ISimulationResult[]>([]);
   const [topNPercentPoint, setTopNPercentPoint] = useState(30);
   const [refineMaterialsMatchOverall, setRefineMaterialsMatchOverall] = useState<any>(null);
@@ -69,7 +68,7 @@ const Simulation = () => {
     option2: '무기',
   });
 
-  const graphData = useMemo<GraphDataType | null>(() => {
+  const graphData = useMemo<SimulationResultGraphData | null>(() => {
     const dataPoints = simulationResult
       .map((item: ISimulationResult) => item.tryCnt)
       .sort((a: Number, b: Number) => (a as number) - (b as number)) as number[];
@@ -90,7 +89,7 @@ const Simulation = () => {
       histogramData[binIndex] += 1;
     });
 
-    const processedData = histogramData.map((count, index) => ({
+    const simulationResultGroupPointResultList = histogramData.map((count, index) => ({
       range:
         max < 25
           ? `${index + 1}`
@@ -102,12 +101,12 @@ const Simulation = () => {
 
     // 상위 30%를 찾는 부분
     if (!topNPercentPoint || topNPercentPoint > 100 || topNPercentPoint < 1)
-      return { processedData };
+      return { simulationResultGroupPointResultList };
     const totalDataPoints = dataPoints.length;
     const top30PercentIndex = Math.floor((totalDataPoints * Number(topNPercentPoint)) / 100);
 
     const top30PercentValue = dataPoints[top30PercentIndex];
-    const top30PercentCategory = processedData.find((category) => {
+    const top30PercentPoint = simulationResultGroupPointResultList.find((category) => {
       const rangeValues = category.range.split('-').map(Number);
       const rangeMin = rangeValues[0];
       const rangeMax = rangeValues.length > 1 ? rangeValues[1] : rangeMin;
@@ -115,7 +114,7 @@ const Simulation = () => {
       return top30PercentValue >= rangeMin && top30PercentValue <= rangeMax;
     });
 
-    return { processedData, top30PercentCategory };
+    return { simulationResultGroupPointResultList, top30PercentPoint };
   }, [simulationResult, topNPercentPoint]);
 
   const updateRefineMaterialsMatch = (obj: any) => {
@@ -140,7 +139,7 @@ const Simulation = () => {
       <br />
 
       <InheritedMaterials>
-        <InheritedMaterialsCountPriceDesktop
+        <ExistingMaterialCountAndMaterialPriceStatusBoard
           countObjDashboard={countObjDashboard}
           setCountObjDashboard={setCountObjDashboard}
           countOrPrice={selectedValue}
@@ -171,7 +170,7 @@ const Simulation = () => {
 
       <br />
 
-      {graphData && graphData.processedData && simulationResult && (
+      {graphData && graphData.simulationResultGroupPointResultList && simulationResult && (
         <StyledDiv>
           <StyledDiv display="flex" marginLeft={deviceType === 'mobile' ? '0px' : '50px'}>
             <Label style={{ backgroundColor: 'beige' }}>
