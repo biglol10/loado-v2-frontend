@@ -482,9 +482,9 @@ const SimulationBarChart = ({
             ]}
           />
           <Bar dataKey="count" fill="#8884d8" background={{ fill: '#0E0F15' }} />
-          {graphData.top30PercentPoint && (
+          {graphData.topNPercentPointRange && (
             <ReferenceLine
-              x={graphData.top30PercentPoint.range}
+              x={graphData.topNPercentPointRange.range}
               stroke="orange"
               label={{ value: `Top ${topNPercentPoint}%`, position: 'top', stroke: 'orange' }}
             />

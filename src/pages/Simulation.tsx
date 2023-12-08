@@ -18,6 +18,7 @@ import { Image } from '@components/atoms/image';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import RefineSettingMobile from '@components/custom/simulation/RefineSettingMobile';
 import { ItemGradeType, ItemType } from '@consts/interfaces';
+import { LOADO_QUERYKEY } from '@consts/api';
 
 type SimulationResultGroupPointResult = {
   range: string;
@@ -26,7 +27,7 @@ type SimulationResultGroupPointResult = {
 
 export type SimulationResultGraphData = {
   simulationResultGroupPointResultList: SimulationResultGroupPointResult[];
-  top30PercentPoint?: SimulationResultGroupPointResult;
+  topNPercentPointRange?: SimulationResultGroupPointResult;
 };
 
 export interface TargetRefineOption {
@@ -42,20 +43,20 @@ const Simulation = () => {
   const [simulationCount, setSimulationCount] = useState('1000');
   // const inputRef = useRef<InputHOCRefType>(null);
 
-  const itemsQuery = useQuery({
-    queryKey: ['itemsPrice'],
+  const dashboardItemsData = useQuery({
+    queryKey: LOADO_QUERYKEY.REFINE_ITEM_PRICE,
     queryFn: getAllItemPrice,
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
   });
 
   const itemPriceInfoMapping = useMemo(() => {
-    if (itemsQuery.status === 'success') {
+    if (dashboardItemsData.status === 'success') {
       const itemPriceMapping: {
         [_ in string]: number;
       } = {};
 
-      itemsQuery.data.resultArr?.map((item: any) => {
+      dashboardItemsData.data.resultArr?.map((item: any) => {
         if (item) {
           const { itemId, currentMinPrice } = item;
 
@@ -66,7 +67,7 @@ const Simulation = () => {
 
       return itemPriceMapping;
     } else return {};
-  }, [itemsQuery]);
+  }, [dashboardItemsData]);
 
   const [dashboardType, setDashboardType] = useState('count');
   const [targetRefineOption, setTargetRefineOption] = useState<TargetRefineOption>({
@@ -77,7 +78,7 @@ const Simulation = () => {
   const graphData = useMemo<SimulationResultGraphData | null>(() => {
     const dataPoints = simulationResult
       .map((item: ISimulationResult) => item.tryCnt)
-      .sort((a: Number, b: Number) => (a as number) - (b as number)) as number[];
+      .sort((a: number, b: number) => a - b) as number[];
 
     if (_.isEmpty(dataPoints)) return null;
 
@@ -109,18 +110,18 @@ const Simulation = () => {
     if (!topNPercentPoint || topNPercentPoint > 100 || topNPercentPoint < 1)
       return { simulationResultGroupPointResultList };
     const totalDataPoints = dataPoints.length;
-    const top30PercentIndex = Math.floor((totalDataPoints * Number(topNPercentPoint)) / 100);
+    const topNPercentIndex = Math.floor((totalDataPoints * Number(topNPercentPoint)) / 100);
 
-    const top30PercentValue = dataPoints[top30PercentIndex];
-    const top30PercentPoint = simulationResultGroupPointResultList.find((category) => {
+    const topNPercentDatumPoint = dataPoints[topNPercentIndex];
+    const topNPercentPointRange = simulationResultGroupPointResultList.find((category) => {
       const rangeValues = category.range.split('-').map(Number);
       const rangeMin = rangeValues[0];
       const rangeMax = rangeValues.length > 1 ? rangeValues[1] : rangeMin;
 
-      return top30PercentValue >= rangeMin && top30PercentValue <= rangeMax;
+      return topNPercentDatumPoint >= rangeMin && topNPercentDatumPoint <= rangeMax;
     });
 
-    return { simulationResultGroupPointResultList, top30PercentPoint };
+    return { simulationResultGroupPointResultList, topNPercentPointRange };
   }, [simulationResult, topNPercentPoint]);
 
   const updateRefineMaterialsMatch = (obj: any) => {
@@ -218,7 +219,9 @@ const Simulation = () => {
             lastRefineResult={simulationResult.find((item) => item.lastRefine)!.memoryArr}
             isFullSoom={refineMaterialsMatchOverall.applyFullSoom}
             isApplyBook={refineMaterialsMatchOverall.applyBook}
-            itemsQueryData={itemsQuery.status === 'success' ? itemsQuery.data : null}
+            itemsQueryData={
+              dashboardItemsData.status === 'success' ? dashboardItemsData.data : null
+            }
             countObjDashboard={countObjDashboard}
             topNPercentPoint={topNPercentPoint}
           />

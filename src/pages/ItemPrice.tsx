@@ -7,6 +7,7 @@ import { IsMobile } from '@consts/interfaces';
 import { UseQueryResult, useQueries } from '@tanstack/react-query';
 import { getMarketPriceByCategoryCode } from '@services/ItemPriceService';
 import _ from 'lodash';
+import { LOADO_QUERYKEY } from '@consts/api';
 
 const TopTab = styled.div<IsMobile>`
   .tab-list {
@@ -111,7 +112,7 @@ const ItemPricePage = () => {
   const queries: UseQueryResult<ItemData[], any>[] = useQueries({
     queries: initalCategoryCodes.map((code) => {
       return {
-        queryKey: ['marketPrice2', code],
+        queryKey: LOADO_QUERYKEY.ITEM_PRICE_TODAY(code),
         queryFn: () => getMarketPriceByCategoryCode(code),
         onError: (error: any) => {
           console.log('Error:', error);

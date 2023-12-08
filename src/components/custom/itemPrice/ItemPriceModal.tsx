@@ -26,6 +26,7 @@ import { StyledDiv } from '@consts/appStyled';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import _ from 'lodash';
 import { marketItemIdMatch } from '@consts/requiredRefineMaterials';
+import { LOADO_QUERYKEY } from '@consts/api';
 import TableStatistics from './TableStatistics';
 import CustomTooltip from './CustomTooltip';
 
@@ -134,7 +135,7 @@ const ItemPriceModal = ({
   const deviceType = useDeviceType();
 
   const itemPriceQuery = useQuery<IGraphData[]>({
-    queryKey: ['itemPeriodPrice', itemId, yearValue, monthValue],
+    queryKey: LOADO_QUERYKEY.ITEM_PRICE_HISTORY(itemId, yearValue, monthValue),
     queryFn: () => getPeriodYearMonthItemPrice(itemId, yearValue, monthValue),
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
