@@ -14,7 +14,7 @@ module.exports = {
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         reportFilename: path.resolve(__dirname, 'bundleReport', 'report.html'), // npm run build && webpack-bundle-analyzer build/static/stats.json
-        openAnalyzer: false,
+        openAnalyzer: true,
       }),
     ],
   },
