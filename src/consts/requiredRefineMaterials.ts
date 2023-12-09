@@ -1547,8 +1547,8 @@ const marketItemNameMatch = {
   },
 } as const;
 
-const simulationObjectDashboard = {
-  categoryObj1: {
+const itemNameAndCountByGroupPerId = {
+  bookAndHonorShard: {
     '66130133': {
       name: '명예의파편',
       count: '',
@@ -1586,7 +1586,7 @@ const simulationObjectDashboard = {
       count: '',
     },
   },
-  categoryObj2: {
+  weaponAndArmorStone: {
     '66102004': {
       name: '파괴강석',
       count: '',
@@ -1612,7 +1612,7 @@ const simulationObjectDashboard = {
       count: '',
     },
   },
-  categoryObj3: {
+  accelerantStone: {
     '66111121': {
       name: '태양의은총',
       count: '',
@@ -1636,8 +1636,8 @@ const simulationObjectDashboard = {
   },
 };
 
-const simulationObjectDashboard2 = {
-  categoryObj1: {
+const itemIdCountPriceByGroupPerName = {
+  bookAndHonorShard: {
     명예의파편: {
       id: 66130133,
       count: '',
@@ -1664,7 +1664,7 @@ const simulationObjectDashboard2 = {
       price: '',
     },
   },
-  categoryObj2: {
+  weaponAndArmorStone: {
     파괴강석: {
       id: 66102004,
       count: '',
@@ -1696,7 +1696,7 @@ const simulationObjectDashboard2 = {
       price: '',
     },
   },
-  categoryObj3: {
+  accelerantStone: {
     태양의은총: {
       id: 66111121,
       count: '',
@@ -1727,8 +1727,8 @@ const simulationObjectDashboard2 = {
 
 export {
   requiredRefineMaterials,
-  simulationObjectDashboard,
+  itemNameAndCountByGroupPerId,
   marketItemIdMatch,
   marketItemNameMatch,
-  simulationObjectDashboard2,
+  itemIdCountPriceByGroupPerName,
 };

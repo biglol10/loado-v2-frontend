@@ -16,6 +16,7 @@ import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import styled from 'styled-components';
+import { TargetRefineOption } from '@pages/Simulation';
 import {
   RefineItemKeyMatchType,
   RefineOverallSettingType,
@@ -62,23 +63,15 @@ const ProbAndRefine = styled(InputLayout)`
 `;
 
 const RefineSetting = ({
-  selectOptionParam,
-  setSelectOptionParam,
+  targetRefineOption,
+  setTargetRefineOption,
   setSimulationResult,
   updateRefineMaterialsMatch,
   simulationCount,
   setSimulationCount,
 }: {
-  selectOptionParam: {
-    option1: string;
-    option2: string;
-  };
-  setSelectOptionParam: React.Dispatch<
-    React.SetStateAction<{
-      option1: string;
-      option2: string;
-    }>
-  >;
+  targetRefineOption: TargetRefineOption;
+  setTargetRefineOption: React.Dispatch<React.SetStateAction<TargetRefineOption>>;
   setSimulationResult: React.Dispatch<React.SetStateAction<ISimulationResult[]>>;
   updateRefineMaterialsMatch: Function;
   simulationCount: string;
@@ -103,15 +96,15 @@ const RefineSetting = ({
   }, [refineOverallSetting]);
 
   const imgSrc = {
-    weapon: `${selectOptionParam.option1}무기`,
-    armour: `${selectOptionParam.option1}방어구`,
-    weapon2: `${selectOptionParam.option1}무기2`,
-    armour2: `${selectOptionParam.option1}방어구2`,
+    weapon: `${targetRefineOption.itemGrade}무기`,
+    armour: `${targetRefineOption.itemGrade}방어구`,
+    weapon2: `${targetRefineOption.itemGrade}무기2`,
+    armour2: `${targetRefineOption.itemGrade}방어구2`,
   };
 
   const dropdownOptions = useMemo(() => {
     const objValue = {
-      option1: [
+      itemGrade: [
         {
           key: '유물',
           text: '유물',
@@ -128,7 +121,7 @@ const RefineSetting = ({
           value: '상위고대',
         },
       ],
-      option2: [
+      itemType: [
         {
           key: '무기',
           text: '무기',
@@ -155,7 +148,7 @@ const RefineSetting = ({
 
   const refineTargetOption = useMemo(() => {
     const arr = Array.from(
-      { length: 14 - (selectOptionParam.option1 === '아브노말' ? 5 : 0) },
+      { length: 14 - (targetRefineOption.itemGrade === '유물' ? 5 : 0) },
       (_, i) => {
         return {
           key: `refineTargetKey_${i}`,
@@ -166,13 +159,13 @@ const RefineSetting = ({
     );
 
     return arr;
-  }, [selectOptionParam.option1]);
+  }, [targetRefineOption.itemGrade]);
 
   const refineMaterialsMatch = useMemo(() => {
     const itemSetType =
-      weaponAndArmourSetType[selectOptionParam.option1 as keyof typeof weaponAndArmourSetType];
+      weaponAndArmourSetType[targetRefineOption.itemGrade as keyof typeof weaponAndArmourSetType];
     const weaponOrArmourValue =
-      weaponOrArmour[selectOptionParam.option2 as keyof typeof weaponOrArmour];
+      weaponOrArmour[targetRefineOption.itemType as keyof typeof weaponOrArmour];
     const materialRank = materialRankMapping[itemSetType];
 
     const refineNumber =
@@ -209,7 +202,7 @@ const RefineSetting = ({
     if (itemSetType.includes('유물') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
-  }, [refineCurrent, selectOptionParam]);
+  }, [refineCurrent, targetRefineOption]);
 
   useEffect(() => {
     setRefineOverallSetting((prev) => ({
@@ -314,11 +307,11 @@ const RefineSetting = ({
           style={{ marginRight: '20px' }}
         />
         <Dropdown
-          value={selectOptionParam.option1}
+          value={targetRefineOption.itemGrade}
           compact
-          options={dropdownOptions.option1}
+          options={dropdownOptions.itemGrade}
           onChange={(_, data) => {
-            setSelectOptionParam((prev) => {
+            setTargetRefineOption((prev) => {
               return {
                 ...prev,
                 option1: data.value as string,
@@ -339,12 +332,12 @@ const RefineSetting = ({
           style={{ marginRight: '20px' }}
         />
         <Dropdown
-          value={selectOptionParam.option2}
+          value={targetRefineOption.itemType}
           compact
-          options={dropdownOptions.option2}
+          options={dropdownOptions.itemType}
           style={{ marginTop: '15px' }}
           onChange={(_, data) => {
-            setSelectOptionParam((prev) => {
+            setTargetRefineOption((prev) => {
               return {
                 ...prev,
                 option2: data.value as string,
@@ -457,7 +450,7 @@ const RefineSetting = ({
         <CheckboxDefault
           id="CheckboxDefault_ID2"
           spacing={7}
-          label={selectOptionParam.option2 === '무기' ? '야금술적용' : '재봉술적용'}
+          label={targetRefineOption.itemType === '무기' ? '야금술적용' : '재봉술적용'}
           checked={refineOverallSetting.applyBook}
           onClick={({ isChecked }) => {
             setRefineOverallSetting((prev) => ({

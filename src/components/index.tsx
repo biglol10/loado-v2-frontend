@@ -18,7 +18,7 @@ import { Toggle } from './atoms/toggle';
 import ModalPopup from './modal';
 import { CheckboxDefault, CheckboxListDefault } from './atoms/checkbox';
 import { Avatar, Image } from './atoms/image';
-import InheritedMaterialsCountPriceDesktop from './custom/simulation/InheritedMaterialsCountPriceDesktop';
+import ExistingMaterialCountAndMaterialPriceStatusBoard from './custom/simulation/ExistingMaterialCountAndMaterialPriceStatusBoard';
 import RadioButtonGroup from './atoms/radioButton/RadioButtonGroup';
 import FullSoomBookAvailable from './custom/simulation/RefineSettingCustom/FullSoomBookAvailable';
 import ProbabilityValues from './custom/simulation/RefineSettingCustom/ProbabilityValues';
@@ -48,7 +48,7 @@ export {
   CheckboxListDefault,
   Avatar,
   Image,
-  InheritedMaterialsCountPriceDesktop,
+  ExistingMaterialCountAndMaterialPriceStatusBoard,
   RadioButtonGroup,
   FullSoomBookAvailable,
   ProbabilityValues,

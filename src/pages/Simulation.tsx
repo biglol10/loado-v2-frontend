@@ -1,6 +1,6 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
-  InheritedMaterialsCountPriceDesktop,
+  ExistingMaterialCountAndMaterialPriceStatusBoard,
   InputLayout,
   InputWithIcon,
   RadioButtonGroup,
@@ -12,45 +12,51 @@ import RefineSetting, { ISimulationResult } from '@components/custom/simulation/
 import { StyledDiv, StyledSpan } from '@consts/appStyled';
 import SimulationBarChart from '@components/custom/simulation/SimulationBarChart';
 import _ from 'lodash';
-import { simulationObjectDashboard } from '@consts/requiredRefineMaterials';
+import { itemNameAndCountByGroupPerId } from '@consts/requiredRefineMaterials';
 import { Icon, Label } from 'semantic-ui-react';
 import { Image } from '@components/atoms/image';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import RefineSettingMobile from '@components/custom/simulation/RefineSettingMobile';
-import { InputHOCRefType } from '@components/atoms/input/Types';
+import { ItemGradeType, ItemType } from '@consts/interfaces';
+import { LOADO_QUERYKEY } from '@consts/api';
 
-type ProcessedDataItem = {
+type SimulationResultGroupPointResult = {
   range: string;
   count: number;
 };
 
-type GraphDataType = {
-  processedData: ProcessedDataItem[];
-  top30PercentCategory?: ProcessedDataItem;
+export type SimulationResultGraphData = {
+  simulationResultGroupPointResultList: SimulationResultGroupPointResult[];
+  topNPercentPointRange?: SimulationResultGroupPointResult;
 };
 
+export interface TargetRefineOption {
+  itemGrade: ItemGradeType;
+  itemType: ItemType;
+}
+
 const Simulation = () => {
-  const [countObjDashboard, setCountObjDashboard] = useState(simulationObjectDashboard);
+  const [countObjDashboard, setCountObjDashboard] = useState(itemNameAndCountByGroupPerId);
   const [simulationResult, setSimulationResult] = useState<ISimulationResult[]>([]);
   const [topNPercentPoint, setTopNPercentPoint] = useState(30);
   const [refineMaterialsMatchOverall, setRefineMaterialsMatchOverall] = useState<any>(null);
   const [simulationCount, setSimulationCount] = useState('1000');
   // const inputRef = useRef<InputHOCRefType>(null);
 
-  const itemsQuery = useQuery({
-    queryKey: ['itemsPrice'],
+  const dashboardItemsData = useQuery({
+    queryKey: LOADO_QUERYKEY.REFINE_ITEM_PRICE,
     queryFn: getAllItemPrice,
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
   });
 
   const itemPriceInfoMapping = useMemo(() => {
-    if (itemsQuery.status === 'success') {
+    if (dashboardItemsData.status === 'success') {
       const itemPriceMapping: {
         [_ in string]: number;
       } = {};
 
-      itemsQuery.data.resultArr?.map((item: any) => {
+      dashboardItemsData.data.resultArr?.map((item: any) => {
         if (item) {
           const { itemId, currentMinPrice } = item;
 
@@ -61,18 +67,18 @@ const Simulation = () => {
 
       return itemPriceMapping;
     } else return {};
-  }, [itemsQuery]);
+  }, [dashboardItemsData]);
 
-  const [selectedValue, setSelectedValue] = useState('count');
-  const [selectOptionParam, setSelectOptionParam] = useState({
-    option1: '유물',
-    option2: '무기',
+  const [dashboardType, setDashboardType] = useState('count');
+  const [targetRefineOption, setTargetRefineOption] = useState<TargetRefineOption>({
+    itemGrade: '유물',
+    itemType: '무기',
   });
 
-  const graphData = useMemo<GraphDataType | null>(() => {
+  const graphData = useMemo<SimulationResultGraphData | null>(() => {
     const dataPoints = simulationResult
       .map((item: ISimulationResult) => item.tryCnt)
-      .sort((a: Number, b: Number) => (a as number) - (b as number)) as number[];
+      .sort((a: number, b: number) => a - b) as number[];
 
     if (_.isEmpty(dataPoints)) return null;
 
@@ -90,7 +96,7 @@ const Simulation = () => {
       histogramData[binIndex] += 1;
     });
 
-    const processedData = histogramData.map((count, index) => ({
+    const simulationResultGroupPointResultList = histogramData.map((count, index) => ({
       range:
         max < 25
           ? `${index + 1}`
@@ -102,20 +108,20 @@ const Simulation = () => {
 
     // 상위 30%를 찾는 부분
     if (!topNPercentPoint || topNPercentPoint > 100 || topNPercentPoint < 1)
-      return { processedData };
+      return { simulationResultGroupPointResultList };
     const totalDataPoints = dataPoints.length;
-    const top30PercentIndex = Math.floor((totalDataPoints * Number(topNPercentPoint)) / 100);
+    const topNPercentIndex = Math.floor((totalDataPoints * Number(topNPercentPoint)) / 100);
 
-    const top30PercentValue = dataPoints[top30PercentIndex];
-    const top30PercentCategory = processedData.find((category) => {
+    const topNPercentDatumPoint = dataPoints[topNPercentIndex];
+    const topNPercentPointRange = simulationResultGroupPointResultList.find((category) => {
       const rangeValues = category.range.split('-').map(Number);
       const rangeMin = rangeValues[0];
       const rangeMax = rangeValues.length > 1 ? rangeValues[1] : rangeMin;
 
-      return top30PercentValue >= rangeMin && top30PercentValue <= rangeMax;
+      return topNPercentDatumPoint >= rangeMin && topNPercentDatumPoint <= rangeMax;
     });
 
-    return { processedData, top30PercentCategory };
+    return { simulationResultGroupPointResultList, topNPercentPointRange };
   }, [simulationResult, topNPercentPoint]);
 
   const updateRefineMaterialsMatch = (obj: any) => {
@@ -133,17 +139,17 @@ const Simulation = () => {
             { label: '귀속재료개수', value: 'count' },
             { label: '재료가격', value: 'price' },
           ]}
-          selectedValue={selectedValue}
-          onChange={(value: string) => setSelectedValue(value)}
+          selectedValue={dashboardType}
+          onChange={(value: string) => setDashboardType(value)}
         />
       </StyledDiv>
       <br />
 
       <InheritedMaterials>
-        <InheritedMaterialsCountPriceDesktop
+        <ExistingMaterialCountAndMaterialPriceStatusBoard
           countObjDashboard={countObjDashboard}
           setCountObjDashboard={setCountObjDashboard}
-          countOrPrice={selectedValue}
+          countOrPrice={dashboardType}
           itemPriceInfoMapping={itemPriceInfoMapping}
         />
       </InheritedMaterials>
@@ -151,8 +157,8 @@ const Simulation = () => {
       <br />
       {deviceType !== 'mobile' ? (
         <RefineSetting
-          selectOptionParam={selectOptionParam}
-          setSelectOptionParam={setSelectOptionParam}
+          targetRefineOption={targetRefineOption}
+          setTargetRefineOption={setTargetRefineOption}
           setSimulationResult={setSimulationResult}
           updateRefineMaterialsMatch={updateRefineMaterialsMatch}
           simulationCount={simulationCount}
@@ -160,8 +166,8 @@ const Simulation = () => {
         />
       ) : (
         <RefineSettingMobile
-          selectOptionParam={selectOptionParam}
-          setSelectOptionParam={setSelectOptionParam}
+          targetRefineOption={targetRefineOption}
+          setTargetRefineOption={setTargetRefineOption}
           setSimulationResult={setSimulationResult}
           updateRefineMaterialsMatch={updateRefineMaterialsMatch}
           simulationCount={simulationCount}
@@ -171,7 +177,7 @@ const Simulation = () => {
 
       <br />
 
-      {graphData && graphData.processedData && simulationResult && (
+      {graphData && graphData.simulationResultGroupPointResultList && simulationResult && (
         <StyledDiv>
           <StyledDiv display="flex" marginLeft={deviceType === 'mobile' ? '0px' : '50px'}>
             <Label style={{ backgroundColor: 'beige' }}>
@@ -213,7 +219,9 @@ const Simulation = () => {
             lastRefineResult={simulationResult.find((item) => item.lastRefine)!.memoryArr}
             isFullSoom={refineMaterialsMatchOverall.applyFullSoom}
             isApplyBook={refineMaterialsMatchOverall.applyBook}
-            itemsQueryData={itemsQuery.status === 'success' ? itemsQuery.data : null}
+            itemsQueryData={
+              dashboardItemsData.status === 'success' ? dashboardItemsData.data : null
+            }
             countObjDashboard={countObjDashboard}
             topNPercentPoint={topNPercentPoint}
           />

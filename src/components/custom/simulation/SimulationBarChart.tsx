@@ -18,22 +18,13 @@ import { loaImages } from '@consts/imgSrc';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import styled from 'styled-components';
 import { isEqual } from 'lodash';
+import { SimulationResultGraphData } from '@pages/Simulation';
 
 interface CustomTooltipProps extends TooltipProps<number, string> {
   active?: boolean;
   payload?: any[];
   label?: string;
 }
-
-type ProcessedDataItem = {
-  range: string;
-  count: number;
-};
-
-type GraphDataType = {
-  processedData: ProcessedDataItem[];
-  top30PercentCategory?: ProcessedDataItem;
-};
 
 const StyledMobileToolDiv = styled.div`
   display: flex;
@@ -67,7 +58,7 @@ const SimulationBarChart = ({
   lastRefineResult,
   topNPercentPoint,
 }: {
-  graphData: GraphDataType;
+  graphData: SimulationResultGraphData;
   refineMaterialsMatchOverall: any;
   isFullSoom: Boolean;
   isApplyBook: Boolean;
@@ -86,9 +77,9 @@ const SimulationBarChart = ({
 }) => {
   const countObjDashboardSpread = useMemo(() => {
     return {
-      ...countObjDashboard.categoryObj1,
-      ...countObjDashboard.categoryObj2,
-      ...countObjDashboard.categoryObj3,
+      ...countObjDashboard.bookAndHonorShard,
+      ...countObjDashboard.weaponAndArmorStone,
+      ...countObjDashboard.accelerantStone,
     };
   }, [countObjDashboard]);
 
@@ -464,7 +455,7 @@ const SimulationBarChart = ({
     <StyledDiv display="flex">
       <ResponsiveContainer width={deviceType === 'mobile' ? '100%' : '55%'} height={350}>
         <BarChart
-          data={graphData.processedData}
+          data={graphData.simulationResultGroupPointResultList}
           margin={{
             top: 20,
             right: deviceType === 'mobile' ? 0 : 30,
@@ -491,9 +482,9 @@ const SimulationBarChart = ({
             ]}
           />
           <Bar dataKey="count" fill="#8884d8" background={{ fill: '#0E0F15' }} />
-          {graphData.top30PercentCategory && (
+          {graphData.topNPercentPointRange && (
             <ReferenceLine
-              x={graphData.top30PercentCategory.range}
+              x={graphData.topNPercentPointRange.range}
               stroke="orange"
               label={{ value: `Top ${topNPercentPoint}%`, position: 'top', stroke: 'orange' }}
             />
