@@ -7,7 +7,6 @@ import {
   Label,
   Image as SemanticImage,
   Button as SemanticButton,
-  Icon,
 } from 'semantic-ui-react';
 import { loaImages, loaImagesType } from '@consts/imgSrc';
 import { requiredRefineMaterials } from '@consts/requiredRefineMaterials';
@@ -17,6 +16,7 @@ import { toast } from 'react-toastify';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import styled from 'styled-components';
 import { TargetRefineOption } from '@pages/Simulation';
+import { ItemGradeType, ItemType } from '@consts/interfaces';
 import {
   RefineItemKeyMatchType,
   RefineOverallSettingType,
@@ -314,7 +314,7 @@ const RefineSetting = ({
             setTargetRefineOption((prev) => {
               return {
                 ...prev,
-                option1: data.value as string,
+                itemGrade: data.value as ItemGradeType,
               };
             });
           }}
@@ -340,7 +340,7 @@ const RefineSetting = ({
             setTargetRefineOption((prev) => {
               return {
                 ...prev,
-                option2: data.value as string,
+                itemType: data.value as ItemType,
               };
             });
           }}
