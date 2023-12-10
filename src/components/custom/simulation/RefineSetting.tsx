@@ -21,6 +21,7 @@ import { StyledDiv } from '@consts/appStyled';
 import { toast } from 'react-toastify';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import { TargetRefineOption } from '@pages/Simulation';
+import { ItemGradeType, ItemType } from '@consts/interfaces';
 
 export interface StringNumberMapping {
   [key: string]: number;
@@ -191,6 +192,8 @@ const RefineSetting = ({
   }, [targetRefineOption.itemGrade]);
 
   const refineMaterialsMatch = useMemo(() => {
+    // eslint-disable-next-line no-debugger
+    debugger;
     const itemSetType =
       weaponAndArmourSetType[targetRefineOption.itemGrade as keyof typeof weaponAndArmourSetType];
     const weaponOrArmourValue =
@@ -344,7 +347,7 @@ const RefineSetting = ({
                 setTargetRefineOption((prev) => {
                   return {
                     ...prev,
-                    option1: data.value as string,
+                    itemGrade: data.value as ItemGradeType,
                   };
                 });
               }}
@@ -370,7 +373,7 @@ const RefineSetting = ({
                 setTargetRefineOption((prev) => {
                   return {
                     ...prev,
-                    option2: data.value as string,
+                    itemType: data.value as ItemType,
                   };
                 });
               }}
