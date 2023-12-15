@@ -118,7 +118,7 @@ export const colorMapping = {
 const getMonthDay = (date: string) => {
   const dateObj = new Date(date);
 
-  return `${getMonth(dateObj)}-${getDate(dateObj)}`;
+  return `${getMonth(dateObj) + 1}-${getDate(dateObj)}`;
 };
 
 const ItemPriceModal = ({
