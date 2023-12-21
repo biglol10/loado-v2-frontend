@@ -192,8 +192,6 @@ const RefineSetting = ({
   }, [targetRefineOption.itemGrade]);
 
   const refineMaterialsMatch = useMemo(() => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     const itemSetType =
       weaponAndArmourSetType[targetRefineOption.itemGrade as keyof typeof weaponAndArmourSetType];
     const weaponOrArmourValue =
