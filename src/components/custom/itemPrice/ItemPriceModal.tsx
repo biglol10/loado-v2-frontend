@@ -257,7 +257,7 @@ const ItemPriceModal = ({
           {(() => {
             const cloneArr = _.cloneDeep(itemPriceQuery.data);
             const chartData =
-              deviceType === 'mobile'
+              deviceType === 'mobile' && cloneArr.length > 15
                 ? [cloneArr.slice(0, cloneArr.length / 2), cloneArr.slice(cloneArr.length / 2)]
                 : [cloneArr];
 

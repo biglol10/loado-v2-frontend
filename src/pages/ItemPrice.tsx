@@ -1,5 +1,4 @@
-/* eslint-disable no-await-in-loop */
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import useDeviceType from '@hooks/DeviceTypeHook';
 import { MainTable } from '@components/atoms/table/index';
@@ -310,7 +309,7 @@ const ItemPricePage = () => {
                 data={[...asder, ...jewlery] ?? []}
                 columns={columns}
               />
-              <MainTable headerTitle="엘릭서" data={etc ?? [] ?? []} columns={columns} />
+              <MainTable headerTitle="엘릭서" data={etc ?? []} columns={columns} />
             </>
           )}
         </TableWrapper>
