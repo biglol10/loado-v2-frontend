@@ -6,7 +6,7 @@ import { MainTable } from '@components/atoms/table/index';
 import { IsMobile } from '@consts/interfaces';
 import { UseQueryResult, useQueries } from '@tanstack/react-query';
 import { getMarketPriceByCategoryCode } from '@services/ItemPriceService';
-import _ from 'lodash';
+import _, { isEqual } from 'lodash';
 import { LOADO_QUERYKEY } from '@consts/api';
 
 const TopTab = styled.div<IsMobile>`
@@ -138,25 +138,54 @@ const ItemPricePage = () => {
 
       switch (code) {
         case '44410':
-          setEngravings(data.sort((a, b) => b.minCurrentMinPrice - a.minCurrentMinPrice));
+          setEngravings((prev) => {
+            const newData = data.sort((a, b) => b.minCurrentMinPrice - a.minCurrentMinPrice);
+
+            if (isEqual(prev, newData)) return prev;
+            return newData;
+          });
           break;
         case '44420':
-          setCharacterEngravings(data.sort((a, b) => b.minCurrentMinPrice - a.minCurrentMinPrice));
+          setCharacterEngravings((prev) => {
+            const newData = data.sort((a, b) => b.minCurrentMinPrice - a.minCurrentMinPrice);
+
+            if (isEqual(prev, newData)) return prev;
+            return newData;
+          });
           break;
         case '50010':
-          setRefinement(returnDataByStringArray(data, dataOrderInRefineType));
+          setRefinement((prev) => {
+            const newData = returnDataByStringArray(data, dataOrderInRefineType);
+
+            if (isEqual(prev, newData)) return prev;
+            return newData;
+          });
           break;
         case '50020':
-          setRefinementAdditional(returnDataByStringArray(data, dataOrderInAdditionalRefineType));
+          setRefinementAdditional((prev) => {
+            const newData = returnDataByStringArray(data, dataOrderInAdditionalRefineType);
+
+            if (isEqual(prev, newData)) return prev;
+            return newData;
+          });
           break;
         case '51000':
-          setEtc(data);
+          setEtc((prev) => {
+            if (isEqual(prev, data)) return prev;
+            return data;
+          });
           break;
         case '51100':
-          setAsder(data);
+          setAsder((prev) => {
+            if (isEqual(prev, data)) return prev;
+            return data;
+          });
           break;
         case '210000':
-          setJewlery(data);
+          setJewlery((prev) => {
+            if (isEqual(prev, data)) return prev;
+            return data;
+          });
           break;
         default:
           break;
@@ -253,7 +282,7 @@ const ItemPricePage = () => {
         </TableWrapper>
       )}
       {activeTab !== 'all' && (
-        <TableWrapper>
+        <TableWrapper isMobile={deviceType === 'mobile'}>
           {activeTab === 'material' && (
             <>
               <MainTable headerTitle="재련 재료" data={refinement ?? []} columns={columns} />
