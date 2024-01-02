@@ -62,7 +62,7 @@ type refineSimulationType = {
   bookProb?: number;
   refineTarget: number;
   isIncreaseProb: boolean;
-  isKamenRoad: boolean;
+  isMokokoSupport: boolean;
   memoryArr?: any[];
 };
 
@@ -76,7 +76,7 @@ const refineSimulation: any = ({
   bookProb = 0,
   refineTarget,
   isIncreaseProb,
-  isKamenRoad,
+  isMokokoSupport,
   memoryArr = [],
 }: refineSimulationType) => {
   const maxProb =
@@ -102,7 +102,7 @@ const refineSimulation: any = ({
   const isSuccess = isRefineSuccessFunction(successProb);
   // const newArtisanEnergyNotFullSoom = Number((successProb - defaultProb) / 2.15);
   // const newArtisanEnergyFullSoom = Number(successProb / 2.15);
-  const addArtisanEnergy = Number(successProb / 2.15) * (isKamenRoad ? 2 : 1);
+  const addArtisanEnergy = Number(successProb / 2.15) * (isMokokoSupport ? 2 : 1);
 
   memoryArr.push({
     successProb,
@@ -149,7 +149,7 @@ const refineSimulation: any = ({
     refineTarget,
     isIncreaseProb,
     bookProb,
-    isKamenRoad,
+    isMokokoSupport,
     additionalProbability,
     memoryArr,
   });

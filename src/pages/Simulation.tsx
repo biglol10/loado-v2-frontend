@@ -71,7 +71,7 @@ const Simulation = () => {
 
   const [dashboardType, setDashboardType] = useState('count');
   const [targetRefineOption, setTargetRefineOption] = useState<TargetRefineOption>({
-    itemGrade: '유물',
+    itemGrade: '고대',
     itemType: '무기',
   });
 

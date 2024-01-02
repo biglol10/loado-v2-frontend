@@ -85,7 +85,7 @@ const RefineSetting = ({
     honingSuccessRate: 0,
     honingSuccessRateManual: 0,
     artisanEnergy: 0,
-    kamenRoad: false,
+    mokokoSupport: false,
   });
   const deviceType = useDeviceType();
 
@@ -175,24 +175,65 @@ const RefineSetting = ({
         `${weaponOrArmourValue}${refineNumber}`
       ];
 
+    const weaponOrArmourStoneKey = `${weaponOrArmourValue}Stone${materialRank}`;
+
+    const isKeyExistInSimulationValue = (key: string) => {
+      return Object.hasOwn(requiredRefineMaterialsForOneSimulation, key);
+    };
+
+    const { mokokoSupport } = refineOverallSetting;
+
     // Steel -> 강석, leapStone -> 돌파석, fusionMaterial -> 오레하
     const returnedObj = {
       weaponOrArmour: weaponOrArmourValue,
       requiredSteelCount:
-        requiredRefineMaterialsForOneSimulation[`${weaponOrArmourValue}Stone${materialRank}`],
+        requiredRefineMaterialsForOneSimulation[
+          `${
+            weaponOrArmourStoneKey +
+            (mokokoSupport && isKeyExistInSimulationValue(`${weaponOrArmourStoneKey}GrowthSupport`)
+              ? 'GrowthSupport'
+              : '')
+          }`
+        ],
       requiredSteelImg:
         loaImages[
-          refineItemKeyMatch[
-            `${weaponOrArmourValue}Stone${materialRank}` as RefineItemKeyMatchType
-          ] as loaImagesType
+          refineItemKeyMatch[`${weaponOrArmourStoneKey}` as RefineItemKeyMatchType] as loaImagesType
         ],
-      requiredLeapStoneCount: requiredRefineMaterialsForOneSimulation[`leapstone${materialRank}`],
+      requiredLeapStoneCount:
+        requiredRefineMaterialsForOneSimulation[
+          `leapstone${materialRank}${
+            mokokoSupport && isKeyExistInSimulationValue(`leapstone${materialRank}GrowthSupport`)
+              ? 'GrowthSupport'
+              : ''
+          }`
+        ],
       requiredLeapStoneImg:
         loaImages[
           refineItemKeyMatch[`leapstone${materialRank}` as RefineItemKeyMatchType] as loaImagesType
         ],
       requiredFusionMaterialCount:
-        requiredRefineMaterialsForOneSimulation[`fusionMaterial${materialRank}`],
+        requiredRefineMaterialsForOneSimulation[
+          `fusionMaterial${materialRank}${
+            mokokoSupport &&
+            isKeyExistInSimulationValue(`fusionMaterial${materialRank}GrowthSupport`)
+              ? 'GrowthSupport'
+              : ''
+          }`
+        ],
+      requiredHonorShard:
+        requiredRefineMaterialsForOneSimulation[
+          `honorShard${
+            mokokoSupport && isKeyExistInSimulationValue(`honorShardGrowthSupport`)
+              ? 'GrowthSupport'
+              : ''
+          }`
+        ],
+      requiredGold:
+        requiredRefineMaterialsForOneSimulation[
+          `gold${
+            mokokoSupport && isKeyExistInSimulationValue(`goldGrowthSupport`) ? 'GrowthSupport' : ''
+          }`
+        ],
       requiredFusionMaterialImg:
         loaImages[refineItemKeyMatch[`fusionMaterial${materialRank}`] as loaImagesType],
       ...requiredRefineMaterialsForOneSimulation,
@@ -202,7 +243,7 @@ const RefineSetting = ({
     if (itemSetType.includes('유물') && refineCurrent > '20') setRefineCurrent('20');
 
     return returnedObj;
-  }, [refineCurrent, targetRefineOption]);
+  }, [refineCurrent, targetRefineOption, refineOverallSetting.mokokoSupport]);
 
   useEffect(() => {
     setRefineOverallSetting((prev) => ({
@@ -212,8 +253,6 @@ const RefineSetting = ({
       additionalProbability: refineMaterialsMatch.additionalProbability,
       // artisanEnergy: 0,
     }));
-    console.log(`refineMaterialsMatch is`);
-    console.log(refineMaterialsMatch);
   }, [refineMaterialsMatch]);
 
   useEffect(() => {
@@ -228,7 +267,7 @@ const RefineSetting = ({
       honingSuccessRate,
       honingSuccessRateManual,
       applyBook,
-      kamenRoad,
+      mokokoSupport,
       additionalProbability,
     } = refineOverallSetting;
 
@@ -276,13 +315,13 @@ const RefineSetting = ({
         tryCnt: 1,
         startProb: Number(honingSuccessRateManual),
         additionalProbability:
-          kamenRoad && additionalProbability ? Number(additionalProbability) : 0,
+          mokokoSupport && additionalProbability ? Number(additionalProbability) : 0,
         artisanEnergy: Number(artisanEnergy),
         isFullSoom: applyFullSoom,
         isIncreaseProb: true,
         refineTarget: refineCurrent,
         bookProb: applyBook ? refineMaterialsMatch?.bookProb?.probability : 0,
-        isKamenRoad: kamenRoad && additionalProbability,
+        isMokokoSupport: mokokoSupport && additionalProbability,
         memoryArr: [],
       });
 
@@ -412,7 +451,7 @@ const RefineSetting = ({
         </MarginTopLabel>
         <MarginTopLabel color="black">
           <SemanticImage avatar spaced="right" src={loaImages['명예의파편']} size="big" />
-          {refineMaterialsMatch.honorShard.toLocaleString()}
+          {refineMaterialsMatch.requiredHonorShard.toLocaleString()}
         </MarginTopLabel>
         <MarginTopLabel color="black">
           <SemanticImage
@@ -421,7 +460,7 @@ const RefineSetting = ({
             src={'./assets/images/items/goldImage.webp'}
             size="big"
           />
-          {refineMaterialsMatch.gold.toLocaleString()}
+          {refineMaterialsMatch.requiredGold.toLocaleString()}
         </MarginTopLabel>
       </StyledDiv>
       <Label
@@ -463,12 +502,12 @@ const RefineSetting = ({
         <CheckboxDefault
           id="CheckboxDefault_ID3"
           spacing={7}
-          label={'카멘로드'}
-          checked={refineOverallSetting.kamenRoad}
+          label={'슈모익'}
+          checked={refineOverallSetting.mokokoSupport}
           onClick={({ isChecked }) => {
             setRefineOverallSetting((prev) => ({
               ...prev,
-              kamenRoad: isChecked,
+              mokokoSupport: isChecked,
             }));
           }}
         />
@@ -531,7 +570,7 @@ const RefineSetting = ({
         >
           <InputWithIcon
             value={`${
-              refineOverallSetting.kamenRoad ? refineOverallSetting.additionalProbability : '0'
+              refineOverallSetting.mokokoSupport ? refineOverallSetting.additionalProbability : '0'
             }`}
             fluid={false}
             size={'mini'}

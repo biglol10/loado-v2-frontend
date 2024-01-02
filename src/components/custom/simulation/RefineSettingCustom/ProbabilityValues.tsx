@@ -57,7 +57,7 @@ const ProbabilityValues: React.FC<ProbabilityValuesProps> = ({
       >
         <InputWithIcon
           value={`${
-            refineOverallSetting.kamenRoad ? refineOverallSetting.additionalProbability : '0'
+            refineOverallSetting.mokokoSupport ? refineOverallSetting.additionalProbability : '0'
           }`}
           fluid={false}
           size={'mini'}
